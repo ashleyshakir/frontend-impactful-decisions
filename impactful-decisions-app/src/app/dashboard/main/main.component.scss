@@ -5,6 +5,7 @@
   
     .top-section, .middle-section, .bottom-section {
       padding: 20px;
+      margin-bottom: 30px;
     }
   
     .top-section {
@@ -15,11 +16,16 @@
   
     .middle-section {
       flex: 2;
-      background-color: #eaeaea;
+      // background-color: #eaeaea;
   
       .stat-container {
         flex: 1;
         padding: 10px;
+      }
+      .stats{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
       }
     }
   
