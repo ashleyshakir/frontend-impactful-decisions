@@ -1,13 +1,8 @@
-:host {
-    width: 250px;
-    background-color: #444;
-    color: white;
-  }
-  .nav-items {
-    padding-top: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.nav-items {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
     .add-decision{
         display: flex;
         flex-direction: row;
