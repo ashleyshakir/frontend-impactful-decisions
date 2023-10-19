@@ -11,15 +11,28 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(private http : HttpClient) { }
-
   private baseUrl = 'http://localhost:9093';
   user: User | null = null; // Initialize as null
+
+  constructor(private http : HttpClient) {
+    this.initializeUserFromLocalStorage();
+   }
+
+  private initializeUserFromLocalStorage(): void {
+    const token = this.getToken();
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (token && user) {
+      this.user = user;
+    }
+  }
 
     // Store the JWT token in localStorage
     storeToken(token: string): void {
       localStorage.setItem('token', token);
+     }
+     storeUser(user: User): void {
+      localStorage.setItem('user', JSON.stringify(user));
+      this.user = user;
     }
   
     // Retrieve the JWT token from localStorage
@@ -31,28 +44,28 @@ export class AuthService {
     const url = `${this.baseUrl}/auth/users/login/`;
     return this.http.post(url, credentials).pipe(
       tap((response: any) => {
+        console.log("Response: ", response);
         if (response && response.jwt) {
           // Store the JWT token in localStorage
           this.storeToken(response.jwt);
-
-        // After storing the token, retrieve user information
-        // this.getUserInformation().subscribe(
-        //   (userData) => {
-            // Create a User instance from the received user data
-        //     this.user = new User(
-        //       userData.username,
-        //       userData.emailAddress,
-        //       userData.password
-        //     );
-        //   },
-        //   (error) => {
-        //     console.error('Error retrieving user information:', error);
-        //   }
-        // );
+          this.storeUser(response.user);
         }
       })
     );
   }
+
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    return !!token; // Returns true if the token is present, false otherwise
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');  
+    this.user = null; 
+    console.log('Logged out!');
+  }
+
   register(user : User): Observable<any> {
     const url = `${this.baseUrl}/auth/users/register/`;
     return this.http.post(url, user).pipe(

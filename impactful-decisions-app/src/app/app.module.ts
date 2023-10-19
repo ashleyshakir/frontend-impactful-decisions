@@ -18,9 +18,14 @@ import { MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+// Font Awesome Module
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DashboardContainerComponent } from './dashboard/dashboard-container/dashboard-container.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
     UserLoginComponent,
     HeaderComponent,
     MainComponent,
-    SideNavComponent
+    SideNavComponent,
+    DashboardContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +48,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     MatSnackBarModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
