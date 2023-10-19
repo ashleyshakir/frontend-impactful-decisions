@@ -3,6 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import { User } from './user.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -50,4 +53,14 @@ export class AuthService {
       })
     );
   }
+  register(user : User): Observable<any> {
+    const url = `${this.baseUrl}/auth/users/register/`;
+    return this.http.post(url, user).pipe(
+      catchError((error)=> {
+        return throwError(error);
+      })
+    )
+  }
+
+
 }

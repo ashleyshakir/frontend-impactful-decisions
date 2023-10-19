@@ -1,1 +1,37 @@
-<p>user-registration works!</p>
+<mat-card class="container">
+    <div class="left-section">
+      <img mat-card-image src="assets/logo-image.jpeg" alt="logo image" class="card-image" />
+    </div>
+  
+    <mat-card-content class="right-section">
+      <div class="auth-nav">
+        <span [routerLink]="['/login']">Sign in</span>
+        <span class="active">Sign up</span>
+      </div>
+      <div class="form-group">
+        <div class="create-account">
+          <p>Welcome!</p>
+          <h1>Create Account</h1>
+        </div>
+        <form #form="ngForm" (submit)="registerUser()" class="form-container">
+          <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" name="username" [(ngModel)]="username" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" name="emailAddress" [(ngModel)]="emailAddress" required />
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" name="password" [(ngModel)]="password" required />
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <button class="login-button" mat-raised-button color="primary" type="submit">Sign Up</button>
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
