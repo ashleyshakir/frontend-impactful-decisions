@@ -9,9 +9,16 @@ import { HeaderComponent } from './dashboard/header/header.component';
 import { MainComponent } from './dashboard/main/main.component';
 import { SideNavComponent } from './dashboard/side-nav/side-nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// Angular Material Components
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +35,11 @@ import { MatInputModule } from '@angular/material/input';
     BrowserAnimationsModule,
     MatCardModule, 
     MatFormFieldModule, 
-    MatInputModule
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
