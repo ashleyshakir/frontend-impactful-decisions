@@ -8,6 +8,8 @@ import { UserLoginComponent } from './auth/user-login/user-login.component';
 import { HeaderComponent } from './dashboard/header/header.component';
 import { MainComponent } from './dashboard/main/main.component';
 import { SideNavComponent } from './dashboard/side-nav/side-nav.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { SideNavComponent } from './dashboard/side-nav/side-nav.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
