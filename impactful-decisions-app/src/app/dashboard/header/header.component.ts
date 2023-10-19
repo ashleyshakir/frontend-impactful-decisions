@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faBell, faHouse, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +14,9 @@ export class HeaderComponent implements OnInit{
 
   currentDate: string | null = null;
   currentDay: string | null = null;
+  public username: string = '';
 
-  constructor() { }
+  constructor(private authService : AuthService) { }
 
   ngOnInit(): void {
     const date = new Date();
@@ -22,6 +24,9 @@ export class HeaderComponent implements OnInit{
 
     this.currentDate = date.toLocaleDateString('en-US', options);
     this.currentDay = date.toLocaleDateString('en-US', { weekday: 'long' });
+    
+    console.log("User in AuthService: ", this.authService.user);
+    this.username = this.authService.user? this.authService.user.username : '';
     
   }
 }
