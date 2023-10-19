@@ -26,6 +26,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardContainerComponent } from './dashboard/dashboard-container/dashboard-container.component';
+import { HelloComponent } from './dashboard/main-components/hello/hello.component';
+import { DecisionStatsComponent } from './dashboard/main-components/decision-stats/decision-stats.component';
+import { RecentDecisionsComponent } from './dashboard/main-components/recent-decisions/recent-decisions.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { DashboardContainerComponent } from './dashboard/dashboard-container/das
     HeaderComponent,
     MainComponent,
     SideNavComponent,
-    DashboardContainerComponent
+    DashboardContainerComponent,
+    HelloComponent,
+    DecisionStatsComponent,
+    RecentDecisionsComponent
   ],
   imports: [
     BrowserModule,

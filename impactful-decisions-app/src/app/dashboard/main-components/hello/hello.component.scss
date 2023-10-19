@@ -1,0 +1,51 @@
+// SCSS variables for easier management
+$mobile-breakpoint: 768px;
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 900px; //make responsive later
+  height: auto;
+  margin: 0 auto;
+
+  .text-container {
+    flex: 1;
+    padding: 20px;
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      font-weight: 300;
+    }
+  }
+
+  .overlay-image {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-30%, -50%);
+    max-width: 35%;
+  }
+
+  // Media Query for Mobile Devices
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column;
+
+    .text-container {
+      text-align: center;
+      width: 100%;  // Adjust the width to 100% on mobile screens
+    }
+
+    .overlay-image {
+      position: static;  // Remove absolute positioning
+      transform: none;
+      max-width: 30%;
+    }
+  }
+}
