@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit{
   currentDate: string | null = null;
   currentDay: string | null = null;
   public username: string = '';
+  public initial: string = '';
 
   constructor(private authService : AuthService) { }
 
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit{
     
     console.log("User in AuthService: ", this.authService.user);
     this.username = this.authService.user? this.authService.user.username : '';
+    this.initial = this.authService.user? this.authService.user.username[0].toUpperCase() : '';
     
   }
 }
