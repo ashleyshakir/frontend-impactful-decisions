@@ -1,8 +1,18 @@
-<div *ngFor="let decision of decisions">
+<div *ngFor="let decision of recentDecisions" class="decision-card">
+  <div class="image-placeholder"></div>
+  <div class="decision-content">
     <h3>{{ decision.title }}</h3>
     <p>{{ decision.description }}</p>
-    <p>{{ decision.creationDate | date }}</p>
-    <p>{{ decision.isResolved ? 'Resolved' : 'Unresolved' }}</p>
-    <hr>
+    <p style="color: #aeabab; font-size: 14px">
+      {{ decision.creationDate | date }}
+    </p>
   </div>
-  
+  <div class="decision-status">
+    {{ decision.isResolved ? "Resolved" : "Unresolved" }}
+  </div>
+  <div class="action-icons">
+    <fa-icon [icon]="faPencil"></fa-icon>
+    <fa-icon [icon]="faTrashCan"></fa-icon>
+  </div>
+  <hr />
+</div>
