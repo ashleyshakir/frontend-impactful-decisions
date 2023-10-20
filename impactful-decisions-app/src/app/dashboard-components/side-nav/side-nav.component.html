@@ -1,13 +1,16 @@
-<div class="nav-items">
-    <mat-card class="add-decision">
-      <span> Create New Decision </span>
-      <fa-icon class="icon" [icon]="faCirclePlus"></fa-icon>
-    </mat-card>
-    <div class="nav-item">
-      <span>Dashboard</span>
+<mat-card>
+  <mat-card-content>
+    <div class="nav-items">
+      <div class="add-decision">
+        <span> Create New Decision </span>
+        <fa-icon class="icon" [icon]="faCirclePlus"></fa-icon>
+      </div>
+      <div class="nav-item">
+        <span (click)="navigateToDashboard()">Dashboard</span>
+      </div>
+      <div class="nav-item">
+        <span (click)="navigateToDecisions()">Decisions</span>
+      </div>
     </div>
-    <div class="nav-item">
-      <span>Decisions</span>
-    </div>
-  </div>
-  
+  </mat-card-content>
+</mat-card>

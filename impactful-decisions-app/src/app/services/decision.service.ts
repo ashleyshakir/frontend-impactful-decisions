@@ -35,4 +35,14 @@ export class DecisionService {
     );
   }
 
+  totalDecisions() : number{
+    return this.decisions.length;
+  }
+
+  resolvedPercentage(decisions :Decision[]): number{
+    const decisionCount = decisions.length;
+    const resolvedCount = decisions.filter(decision => decision.isResolved).length;
+    return resolvedCount / decisionCount * 100;
+  }
+
 }

@@ -29,6 +29,7 @@ import { DashboardContainerComponent } from './dashboard-components/dashboard-co
 import { HelloComponent } from './dashboard-components/main-components/hello/hello.component';
 import { DecisionStatsComponent } from './dashboard-components/main-components/decision-stats/decision-stats.component';
 import { RecentDecisionsComponent } from './dashboard-components/main-components/recent-decisions/recent-decisions.component';
+import { AllDecisionsComponent } from './dashboard-components/side-nav-components/all-decisions/all-decisions.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { RecentDecisionsComponent } from './dashboard-components/main-components
     DashboardContainerComponent,
     HelloComponent,
     DecisionStatsComponent,
-    RecentDecisionsComponent
+    RecentDecisionsComponent,
+    AllDecisionsComponent
   ],
   imports: [
     BrowserModule,

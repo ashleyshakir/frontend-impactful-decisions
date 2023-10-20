@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
@@ -8,4 +9,14 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 })
 export class SideNavComponent {
   faCirclePlus = faCirclePlus;
+
+  constructor(private router: Router) { }
+
+  navigateToDecisions() {
+    this.router.navigate(['/dashboard/decisions']);
+  }
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
 }

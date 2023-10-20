@@ -1,7 +1,47 @@
-.stat{
+.stats-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.stats-box {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.stats-container .stats-box:nth-of-type(1){
+    background-color: #FFDC71;
+}
+.stats-container .stats-box:nth-of-type(2){
     background-color: #88E9C2;
-    border-radius: 8px;
-    padding: 10px;
-    width: 130px;
-    height: 60px;
+}
+.stats-container .stats-box:nth-of-type(3){
+    background-color: #59D8E5;
+}
+
+h4 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.main-stat {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #e5e5e5;
+    height: 10px;
+    border-radius: 5px;
+}
+
+.progress-filled {
+    background-color: #4CAF50; /* green color */
+    height: 100%;
+    border-radius: 5px;
 }

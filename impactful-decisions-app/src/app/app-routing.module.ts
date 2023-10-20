@@ -4,6 +4,7 @@ import { UserRegistrationComponent } from './auth-components/user-registration/u
 import { UserLoginComponent } from './auth-components/user-login/user-login.component';
 import { DashboardContainerComponent } from './dashboard-components/dashboard-container/dashboard-container.component';
 import { AuthGuard } from './services/auth-guard';
+import { AllDecisionsComponent } from './dashboard-components/side-nav-components/all-decisions/all-decisions.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
   {
     path: 'dashboard', 
     component: DashboardContainerComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'dashboard/decisions',
+    component: AllDecisionsComponent,
     canActivate: [AuthGuard]
   }
 
