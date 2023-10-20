@@ -7,8 +7,9 @@
       {{ decision.creationDate | date }}
     </p>
   </div>
-  <div class="decision-status">
-    {{ decision.isResolved ? "Resolved" : "Unresolved" }}
+  <div class="decision-status"
+    [ngStyle]="{ 'background-color': decision.resolved ? '#88E9C2' : '#59D8E5' }">
+    {{ decision.resolved ? "Resolved" : "Unresolved" }}
   </div>
   <div class="action-icons">
     <fa-icon [icon]="faPencil"></fa-icon>

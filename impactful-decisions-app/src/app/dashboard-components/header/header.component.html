@@ -16,14 +16,14 @@
         >
       </div>
       <div class="name-details">
-        <fa-icon class="icon" [icon]="faHouse"></fa-icon>
+        <fa-icon (click)="home()" class="icon" [icon]="faHouse"></fa-icon>
         <fa-icon class="icon" [icon]="faBell"></fa-icon>
         <div class="user-image">{{ initial }}</div>
         <div class="name-section" (click)="toggleDropdown()">
           <div class="name">{{ username }}</div>
           <fa-icon [icon]="faAngleDown"></fa-icon>
           <div *ngIf="showDropdown" class="dropdown-content">
-            <button (click)="logout()">Logout</button>
+            <a (click)="logout()">Logout</a>
           </div>
         </div>
       </div>

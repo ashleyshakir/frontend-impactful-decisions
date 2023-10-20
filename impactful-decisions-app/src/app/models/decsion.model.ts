@@ -3,14 +3,14 @@ export class Decision {
     title: string;
     description: string;
     creationDate: Date;
-    isResolved: boolean;
+    resolved: boolean;
 
-    constructor(id: number, title: string, description: string, creationDate: Date, isResolved: boolean) {
+    constructor(id: number, title: string, description: string, creationDate: Date, resolved: boolean) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
-        this.isResolved = isResolved;
+        this.resolved = resolved;
     }
 
   }

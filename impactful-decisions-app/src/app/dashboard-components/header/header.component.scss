@@ -48,15 +48,24 @@ mat-card {
         .name{
           padding: 8px;
         }
-        .dropdown-content button{
+        .dropdown-content {
           display: block;
           position: absolute;
           top: 100%;
           right: 0;
           background-color: #f9f9f9;
-          border: 1px solid #ccc;
-          width: 100px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          border: 1px solid #e0e0e0;
           z-index: 1;
+          a{
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            &:hover {
+              background-color: #f1f1f1;
+            }
+          }
         }
 
       }

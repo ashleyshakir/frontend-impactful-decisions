@@ -18,11 +18,10 @@ mat-card{
         margin-bottom: 20px;
         .icon {
             font-size: 50px;
-            color: #064663;
+            color: #FF9920;
             transition: color 0.3s, transform 0.3s; 
             padding-left: 15px;
             &:hover {
-              color: #FF9920;
               transform: scale(1.1);
             }
             cursor: pointer;

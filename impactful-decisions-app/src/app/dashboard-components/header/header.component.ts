@@ -31,6 +31,10 @@ export class HeaderComponent implements OnInit{
     this.showDropdown = false;
   }
 
+  home(): void{
+    this.router.navigate(['/dashboard']);
+  }
+
   ngOnInit(): void {
     const date = new Date();
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
