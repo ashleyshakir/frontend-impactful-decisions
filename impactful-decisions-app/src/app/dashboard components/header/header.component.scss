@@ -37,13 +37,33 @@ mat-card {
       .name-details {
         display: flex;
         align-items: center;
+        position: relative;
+        align-items: center;
       }
-      .name{
-        padding: 8px;
+      .name-section{
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .name{
+          padding: 8px;
+        }
+        .dropdown-content button{
+          display: block;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: #f9f9f9;
+          border: 1px solid #ccc;
+          width: 100px;
+          z-index: 1;
+        }
+
       }
       .icon {
         padding: 10px;
         font-size: 20px;
+        cursor: pointer;
       }
       .dashboard {
         align-items: center;

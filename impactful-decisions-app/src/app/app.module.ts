@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserRegistrationComponent } from './auth/user-registration/user-registration.component';
-import { UserLoginComponent } from './auth/user-login/user-login.component';
-import { HeaderComponent } from './dashboard/header/header.component';
-import { MainComponent } from './dashboard/main/main.component';
-import { SideNavComponent } from './dashboard/side-nav/side-nav.component';
+import { UserRegistrationComponent } from './auth components/user-registration/user-registration.component';
+import { UserLoginComponent } from './auth components/user-login/user-login.component';
+import { HeaderComponent } from './dashboard components/header/header.component';
+import { MainComponent } from './dashboard components/main/main.component';
+import { SideNavComponent } from './dashboard components/side-nav/side-nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Angular Material Components
@@ -25,10 +25,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DashboardContainerComponent } from './dashboard/dashboard-container/dashboard-container.component';
-import { HelloComponent } from './dashboard/main-components/hello/hello.component';
-import { DecisionStatsComponent } from './dashboard/main-components/decision-stats/decision-stats.component';
-import { RecentDecisionsComponent } from './dashboard/main-components/recent-decisions/recent-decisions.component';
+import { DashboardContainerComponent } from './dashboard components/dashboard-container/dashboard-container.component';
+import { HelloComponent } from './dashboard components/main-components/hello/hello.component';
+import { DecisionStatsComponent } from './dashboard components/main-components/decision-stats/decision-stats.component';
+import { RecentDecisionsComponent } from './dashboard components/main-components/recent-decisions/recent-decisions.component';
 
 @NgModule({
   declarations: [

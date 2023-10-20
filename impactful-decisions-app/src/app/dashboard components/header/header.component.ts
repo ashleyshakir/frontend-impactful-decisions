@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faBell, faHouse, faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,18 @@ export class HeaderComponent implements OnInit{
   public username: string = '';
   public initial: string = '';
 
-  constructor(private authService : AuthService) { }
+  constructor(private authService : AuthService, private router : Router) { }
+  showDropdown = false;
+
+  toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.showDropdown = false;
+  }
 
   ngOnInit(): void {
     const date = new Date();

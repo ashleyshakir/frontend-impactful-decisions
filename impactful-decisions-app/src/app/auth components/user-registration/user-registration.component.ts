@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { User } from '../user.model';
-import { AuthService } from '../auth.service';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
