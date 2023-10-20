@@ -34,13 +34,14 @@ $mobile-breakpoint: 768px;
 
     .text-container {
       text-align: center;
-      width: 100%;  // Adjust the width to 100% on mobile screens
+      width: 100%;  
     }
 
     .overlay-image {
-      position: static;  // Remove absolute positioning
+      position: static;  
       transform: none;
       max-width: 30%;
+      align-self: center;
     }
   }
 }

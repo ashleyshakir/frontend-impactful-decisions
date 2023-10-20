@@ -1,4 +1,5 @@
-<div *ngFor="let decision of recentDecisions" class="decision-card">
+
+<mat-card *ngFor="let decision of recentDecisions" class="decision-card">
   <div class="image-placeholder"></div>
   <div class="decision-content">
     <h3>{{ decision.title }}</h3>
@@ -14,5 +15,4 @@
     <fa-icon [icon]="faPencil"></fa-icon>
     <fa-icon [icon]="faTrashCan"></fa-icon>
   </div>
-  <hr />
-</div>
+</mat-card>
