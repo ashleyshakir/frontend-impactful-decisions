@@ -1,0 +1,8 @@
+<div *ngFor="let decision of decisions">
+    <h3>{{ decision.title }}</h3>
+    <p>{{ decision.description }}</p>
+    <p>{{ decision.creationDate | date }}</p>
+    <p>{{ decision.isResolved ? 'Resolved' : 'Unresolved' }}</p>
+    <hr>
+  </div>
+  
