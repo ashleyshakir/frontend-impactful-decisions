@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="header">
+    <app-header></app-header>
+  </div>
+  <div class="main-container">
+    <div class="side-nav">
+      <app-side-nav></app-side-nav>
+    </div>
+    <div class="decision-container">
+      <mat-card *ngFor="let decision of allDecisions" class="decision-card">
+        <div class="image-placeholder"></div>
+        <div class="decision-content">
+          <h3>{{ decision.title }}</h3>
+          <p>{{ decision.description }}</p>
+          <p style="color: #aeabab; font-size: 14px">
+            {{ decision.creationDate | date }}
+          </p>
+        </div>
+        <div class="decision-status">
+          {{ decision.isResolved ? "Resolved" : "Unresolved" }}
+        </div>
+        <div class="action-icons">
+          <fa-icon [icon]="faPencil"></fa-icon>
+          <fa-icon [icon]="faTrashCan"></fa-icon>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
