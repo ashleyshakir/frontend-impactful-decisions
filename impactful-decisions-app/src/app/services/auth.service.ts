@@ -44,7 +44,6 @@ export class AuthService {
     const url = `${this.baseUrl}/auth/users/login/`;
     return this.http.post(url, credentials).pipe(
       tap((response: any) => {
-        console.log("Response: ", response);
         if (response && response.jwt) {
           // Store the JWT token in localStorage
           this.storeToken(response.jwt);
