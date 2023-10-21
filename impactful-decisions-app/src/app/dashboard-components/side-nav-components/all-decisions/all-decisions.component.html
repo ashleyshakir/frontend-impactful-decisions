@@ -7,6 +7,7 @@
       <app-side-nav></app-side-nav>
     </div>
     <div class="decision-container">
+      <p id="no-decisions" *ngIf="!hasDecisions">No recent decisions</p>
       <mat-card *ngFor="let decision of allDecisions" class="decision-card">
         <div class="image-placeholder"></div>
         <div class="decision-content">

@@ -31,7 +31,6 @@ export class DecisionService {
   getDecisions() : Observable<{ data: Decision[]}>{
     return this.http.get<{data : Decision[] }>(this.decsionsUrl,{headers: this.headers}).pipe(
       tap((response) => {
-        console.log("Response: ", response.data);
         this.decisions = response.data;
       })
     );

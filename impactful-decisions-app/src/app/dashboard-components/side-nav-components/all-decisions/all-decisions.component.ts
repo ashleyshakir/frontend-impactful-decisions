@@ -9,7 +9,7 @@ import { faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./all-decisions.component.scss']
 })
 export class AllDecisionsComponent implements OnInit {
-
+  hasDecisions: boolean = true;
   allDecisions: Decision[] = [];
   faPencil = faPencil;
   faTrashCan = faTrashCan;
@@ -22,9 +22,14 @@ export class AllDecisionsComponent implements OnInit {
         this.allDecisions = response.data.sort((a, b) => {
           return new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime();
         });
+        this.hasDecisions = this.allDecisions.length > 0;
       },
       (error) => {
         console.log("Error: ", error);
+        if (error && error.error && error.error.message === "You have no decisions!") {
+          this.hasDecisions = false;
+          console.log('User has no decisions');
+        }
       }
     );
   }

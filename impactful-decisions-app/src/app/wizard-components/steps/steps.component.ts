@@ -1,14 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { faBell, faHouse, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/services/auth.service';
+
 @Component({
   selector: 'app-steps',
   templateUrl: './steps.component.html',
   styleUrls: ['./steps.component.scss']
 })
 export class StepsComponent implements OnInit{  
+  public username: string = '';
+  public initial: string = '';
+  faHouse = faHouse;
+  faAngleDown = faAngleDown;
+  faBell = faBell;
+  showDropdown = false;
 
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private authService : AuthService) {
     this.router.events.subscribe((event) => {
       if(event instanceof NavigationEnd) {
         this.setActiveStep();
@@ -18,6 +27,9 @@ export class StepsComponent implements OnInit{
 
     ngOnInit(): void {
       this.setActiveStep();
+      console.log("User in AuthService: ", this.authService.user);
+      this.username = this.authService.user? this.authService.user.username : '';
+      this.initial = this.authService.user? this.authService.user.username[0].toUpperCase() : '';
     }
 
   activeStep: number = 1;
@@ -51,6 +63,18 @@ export class StepsComponent implements OnInit{
   }
   navigateTo(step: string): void {
     this.router.navigate([`decisions/create/${step}/`]);
+  }
+  toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.showDropdown = false;
+  }
+  home(): void{
+    this.router.navigate(['/dashboard']);
   }
   
   

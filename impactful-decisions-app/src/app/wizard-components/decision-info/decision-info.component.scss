@@ -6,7 +6,7 @@ mat-card{
   flex-direction: row;
   align-items: center;
   height: 37.5rem;
-  margin: 3rem;
+  margin: 2rem;
 }
 h3{
   color: #aeabab;
@@ -43,7 +43,7 @@ form {
   }
   
   button {
-    background-color: #007bff; /* A bright blue color */
+    background-color: #FF9920;
     color: #fff; /* White text color */
     padding: 10px 15px; /* Add some padding */
     border: none; /* Remove the default border */
@@ -52,6 +52,6 @@ form {
     cursor: pointer; /* Change the cursor on hover */
   
     &:hover {
-      background-color: #0056b3; /* A slightly darker blue on hover */
+      background-color: #f99316; 
     }
   }

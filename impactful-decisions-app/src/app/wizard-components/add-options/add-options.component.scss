@@ -6,7 +6,7 @@ mat-card{
     flex-direction: row;
     align-items: center;
     height: 37.5rem;
-    margin: 3rem;
+    margin: 2rem;
   }
   h3{
     color: #aeabab;
@@ -34,13 +34,13 @@ mat-card{
       input {
         flex: 1;
         padding: 10px;
+        width: 40%;
         border: 1px solid #ddd;
         border-radius: 4px;
         transition: border-color 0.3s;
         margin-bottom: 20px;
         
         &:focus {
-          border-color: #007bff;
           outline: none;
         }
       }
@@ -48,7 +48,7 @@ mat-card{
     button  {
       margin-right: 10px;
       padding: 8px 12px;
-      background-color: #007bff;
+      background-color: #FF9920;
       border: none;
       border-radius: 4px;
       color: white;
@@ -56,7 +56,7 @@ mat-card{
       transition: background-color 0.3s;
   
       &:hover {
-        background-color: #0056b3;
+        background-color: #f99316;
       }
     }
      #remove {
