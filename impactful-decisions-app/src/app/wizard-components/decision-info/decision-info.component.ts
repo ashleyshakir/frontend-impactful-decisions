@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Decision } from 'src/app/models/decsion.model';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { DecisionService } from 'src/app/services/decision.service';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { FormService } from'src/app/services/form.service';
 })
 export class DecisionInfoComponent implements OnInit{
   step1Form!: FormGroup;
+  titleError: string | null = null;
 
   constructor(private fb: FormBuilder, private decisionService: DecisionService, 
     private router: Router,
@@ -20,7 +21,7 @@ export class DecisionInfoComponent implements OnInit{
 
   ngOnInit(): void {
     this.step1Form = this.fb.group({
-      title: [''],
+      title: ['', Validators.required],
       description: ['']
   });
 
@@ -36,11 +37,14 @@ export class DecisionInfoComponent implements OnInit{
     if(this.step1Form.valid) {
       const decisionData : Decision = this.step1Form.value;
       this.decisionService.createDecision(decisionData).subscribe(response => {
-        this.formService.updateFormData(decisionData); // Store to local storage
-        this.router.navigate(['/decisions/create/step2']);
-        console.log('Decision saved successfully!', response);
+        if(response && response.message === "success, decision created") {
+          this.formService.updateFormData(decisionData); // Store to local storage
+          this.router.navigate(['/decisions/create/step2']);
+        } else  {
+          this.titleError = response.message;
+        }
       }, error => {
-        console.error('Error while saving decision:', error);
+        console.log(error)
       });
     } else {
       console.error('Form is not valid');

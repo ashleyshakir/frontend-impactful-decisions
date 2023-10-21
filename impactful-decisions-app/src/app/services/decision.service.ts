@@ -27,6 +27,18 @@ export class DecisionService {
     this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.jwtToken}`);
   }
 
+  private handleError(error: any){
+    let errorMessage= '';
+    if(error.error instanceof ErrorEvent){
+      // Get client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else  {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.error.message}`;
+    }
+    return throwError(errorMessage);
+  }
+
 
   getDecisions() : Observable<{ data: Decision[]}>{
     return this.http.get<{data : Decision[] }>(this.decsionsUrl,{headers: this.headers}).pipe(
@@ -54,7 +66,8 @@ export class DecisionService {
             this.storeDecision(response.data);
             this.decisionId = response.data.id;
         }
-      })
+      }),
+      catchError(this.handleError)
     )
   }
 
