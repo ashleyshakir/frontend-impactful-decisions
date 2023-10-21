@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { DecisionService } from 'src/app/services/decision.service';
-import { Decision } from 'src/app/models/decsion.model';
 import { FormService } from 'src/app/services/form.service';
 import { Subscription } from 'rxjs';
 
