@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Decision } from '../models/decsion.model';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
@@ -19,11 +19,13 @@ export class DecisionService {
   decisions: Decision[] = [];
   decision : Decision | null = null; // Initialize as null
   jwtToken = this.authService.getToken();
-  headers = {
-    Authorization: `Bearer ${this.jwtToken}`
-  }
+  headers : HttpHeaders;
+  decisionId : number | null = null;
 
-  constructor(private http : HttpClient, private authService :AuthService) { }
+  constructor(private http : HttpClient, private authService :AuthService) { 
+    this.jwtToken = this.authService.getToken();
+    this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.jwtToken}`);
+  }
 
 
   getDecisions() : Observable<{ data: Decision[]}>{
@@ -45,5 +47,34 @@ export class DecisionService {
     console.log("Resolved Decisions: " + resolvedCount)
     return Math.floor(resolvedCount / decisionCount * 100);
   }
+
+  createDecision(decision: Decision): Observable<any> {
+    return this.http.post(this.decsionsUrl, decision, {headers: this.headers}).pipe(
+      tap((response : any)=> {
+        if (response && response.data){
+            this.storeDecision(response.data);
+            this.decisionId = response.data.id;
+        }
+      })
+    )
+  }
+
+  storeDecision(decision: Decision): void {
+    localStorage.setItem('decision', JSON.stringify(decision));
+    this.decision = decision;
+  }
+
+  getDecisionById(): Observable<Decision> {
+    const url = `${this.decsionsUrl}/${this.decisionId}/`;
+    return this.http.get<Decision>(url, {headers: this.headers});
+  }
+
+
+  addOptionsToDecision(options: any[]): Observable<any> {
+    const url = `${this.decsionsUrl}${this.decisionId}/options/`;
+    return this.http.post(url, options, {headers: this.headers});
+  }
+
+
 
 }

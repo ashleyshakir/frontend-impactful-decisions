@@ -3,7 +3,7 @@
     <div class="nav-items">
       <div class="add-decision">
         <span> Create New Decision </span>
-        <fa-icon class="icon" [icon]="faCirclePlus"></fa-icon>
+        <fa-icon (click)="navigateToWizard()" class="icon" [icon]="faCirclePlus"></fa-icon>
       </div>
       <div class="nav-item">
         <span (click)="navigateToDashboard()">Dashboard</span>

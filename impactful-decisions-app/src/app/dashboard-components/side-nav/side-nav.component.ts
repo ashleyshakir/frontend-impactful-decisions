@@ -13,10 +13,13 @@ export class SideNavComponent {
   constructor(private router: Router) { }
 
   navigateToDecisions() {
-    this.router.navigate(['/dashboard/decisions']);
+    this.router.navigate(['/decisions']);
   }
   navigateToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+  navigateToWizard() {
+    this.router.navigate(['/decisions/create/step1']);
   }
 
 }
