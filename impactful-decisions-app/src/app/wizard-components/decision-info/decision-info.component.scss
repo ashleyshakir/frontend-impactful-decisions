@@ -1,26 +1,42 @@
+mat-card{
+  box-shadow:none;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 37.5rem;
+  margin: 3rem;
+}
+h3{
+  color: #aeabab;
+  font-weight: 400;
+}
+
 form {
-    max-width: 500px; /* Set a maximum width to avoid overstretching on wide screens */
-    margin: 50px auto; /* Center the form on the page */
+    width: 40rem; 
+    height: fit-content;
     padding: 20px;
     border: 1px solid #ccc; /* A light grey border */
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* A subtle shadow */
-    background-color: #fff; /* A white background color */
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin: 0 auto;
   }
   
   div {
-    margin-bottom: 20px; /* Space out each input and label pair */
+    margin-bottom: 20px;
   }
   
   label {
-    display: block; /* Make the label take up the full width */
-    margin-bottom: 8px; /* Space between label and input */
-    font-weight: bold; /* Bold font for labels */
+    display: block;
+    margin-bottom: 8px; 
+    font-weight: bold; 
   }
   
   input[type="text"] {
-    width: 100%; /* Take up the full width available */
-    padding: 10px; /* Add some padding inside the input */
+    width: 95%; 
+    padding: 10px; 
     border: 1px solid #ccc; /* A light grey border */
     border-radius: 4px; /* Slightly rounded corners */
     font-size: 16px; /* Increase the font size */

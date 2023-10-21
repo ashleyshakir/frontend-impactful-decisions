@@ -23,7 +23,7 @@ export class StepsComponent implements OnInit{
   activeStep: number = 1;
 
   setActiveStep(): void {
-    const currentRoute = this.route.root.firstChild?.snapshot.url[0]?.path;
+    const currentRoute = this.router.url.split('/')[3];
     if (currentRoute) {
       switch (currentRoute) {
         case 'step1':
@@ -38,13 +38,19 @@ export class StepsComponent implements OnInit{
         case 'step4':
           this.activeStep = 4;
           break;
+        case 'step5':
+          this.activeStep = 5;
+          break;
+        case'step6':
+          this.activeStep = 6;
+          break;
         default:
           this.activeStep = 1; // Default to step 1
       }
     }
   }
   navigateTo(step: string): void {
-    this.router.navigate([`decisions/create/${step}`]);
+    this.router.navigate([`decisions/create/${step}/`]);
   }
   
   

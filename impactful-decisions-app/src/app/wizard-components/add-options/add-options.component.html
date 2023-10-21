@@ -1,14 +1,23 @@
-<app-steps></app-steps>
-<form [formGroup]="optionsForm">
-    <div formArrayName="options">
-      <div *ngFor="let option of options.controls; let i = index">
-        <div [formGroupName]="i">
-          <input formControlName="name" placeholder="Enter option">
-          <button type="button" (click)="removeOption(i)">Remove</button>
+<mat-card class="container">
+  <app-steps></app-steps>
+  <div class="form-container">
+    <h1>Decision Choices</h1>
+    <h3>Enter the options you're considering.</h3>
+      <form [formGroup]="optionsForm">
+        <div formArrayName="options">
+          <div *ngFor="let option of options.controls; let i = index">
+            <div [formGroupName]="i">
+              <input formControlName="name" placeholder="Enter option">
+              <button type="button" (click)="removeOption(i)">Remove</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <button type="button" (click)="addOption()">Add another option</button>
-    <button type="button" (click)="onSave()">Save & Next</button>
-  </form>
+        <button type="button" (click)="addOption()">Add another option</button>
+        <button type="button" (click)="onSave()">Save & Next</button>
+      </form>
+  </div>
+</mat-card>
+
+
+
   
