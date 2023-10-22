@@ -17,6 +17,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 // Font Awesome Module
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -75,7 +77,8 @@ import { SummaryComponent } from './wizard-components/summary/summary.component'
     FormsModule,
     HttpClientModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

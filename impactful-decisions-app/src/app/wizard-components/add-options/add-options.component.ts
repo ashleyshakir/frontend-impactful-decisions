@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { DecisionService } from 'src/app/services/decision.service';
 import { FormService } from 'src/app/services/form.service';
 import { Subscription } from 'rxjs';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-options',
   templateUrl: './add-options.component.html',
@@ -11,10 +11,10 @@ import { Subscription } from 'rxjs';
 })
 export class AddOptionsComponent implements OnInit, OnDestroy {
   optionsForm!: FormGroup;
-  decisionId = this.decisionService.decisionId
+  decisionId = this.decisionService.decisionId;
   private subscription!: Subscription;
 
-  constructor(private fb: FormBuilder, private decisionService: DecisionService, private formService : FormService) { }
+  constructor(private fb: FormBuilder, private decisionService: DecisionService, private formService : FormService, private router: Router) { }
 
   ngOnInit(): void {
     // Initialize form
@@ -67,8 +67,9 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
         this.decisionService.addOptionsToDecision(options)
           .subscribe(response => {
           console.log(response);
-          this.formService.updateFormData({ options: response }); // Update the form data after a successful save
-          }, error => {
+          this.formService.updateFormData({ options: response }); 
+          this.router.navigate(['/decisions/create/step3']);
+        }, error => {
             console.log(error);
           });
       } else {

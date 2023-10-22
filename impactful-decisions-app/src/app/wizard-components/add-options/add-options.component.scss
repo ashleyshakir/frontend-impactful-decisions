@@ -1,6 +1,7 @@
-mat-card{
+mat-card {
     box-shadow:none;
   }
+
   .container {
     display: flex;
     flex-direction: row;
@@ -8,73 +9,119 @@ mat-card{
     height: 37.5rem;
     margin: 2rem;
   }
+
+  h1, h3 {
+    text-align: left;
+  }
+
   h3{
     color: #aeabab;
     font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .form-container {
+    width: 50%;
+    margin: 0 auto;
   }
 
   form {
-      width: 40rem; 
-      height: fit-content;
+      width: 100%;
       padding: 20px;
-      border: 1px solid #ccc; /* A light grey border */
+      border: 1px solid #ccc; 
       border-radius: 5px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       background-color: #fff;
-      margin: 0 auto;
   }
-  
-    div[formGroupName] {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-  
-      input {
-        flex: 1;
-        padding: 10px;
-        width: 40%;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        transition: border-color 0.3s;
-        margin-bottom: 20px;
-        
-        &:focus {
-          outline: none;
-        }
-      }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 
-    button  {
-      margin-right: 10px;
-      padding: 8px 12px;
-      background-color: #FF9920;
-      border: none;
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s;
+  label {
+    margin-bottom: 10px;
+    display: block;
+    margin-bottom: 8px; 
+  }
+
+  input {
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+    margin-bottom: 20px;
+
+    &:focus {
+        outline: none;
+        border-color: #FF9920;
+    }
+  }
+  #title, #description{
+    width: 90%; 
+  }
+
+  button  {
+    margin-right: 10px;
+    padding: 10px 15px;
+    background-color: #FF9920;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
   
-      &:hover {
-        background-color: #f99316;
-      }
+    &:hover {
+      background-color: #f99316;
     }
-     #remove {
-      margin-left: 10px;
-      padding: 5px 10px;
-      background-color: #dc3545 !important;
-      border: none;
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s;
+  }
+ #remove, .btn-danger {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #dc3545 !important;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
       
-      &:hover {
-        background-color: #c82333 !important;
-      }
+    &:hover {
+      background-color: #c82333 !important;
     }
-    .form-buttons{
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
+  }
+  .btn-primary {
+    background-color: #007bff !important;
+
+    &:hover {
+      background-color: #0056b3!important;
     }
+  }
+  .btn-success {
+    background-color: #28a745 !important;
+
+    &:hover {
+      background-color: #1e7e34!important;
+    }
+  }
+
+  .form-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  .text-danger {
+    color: #dc3545;
+    margin: 10px 0;
+    }
+    
+  app-steps {
+    margin-bottom: 20px;
+  }
+  .error {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+  }

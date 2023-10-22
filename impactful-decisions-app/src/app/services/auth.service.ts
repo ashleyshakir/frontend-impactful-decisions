@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { EventEmitter } from '@angular/core';
 
 
 @Injectable({
@@ -12,7 +13,9 @@ import { throwError } from 'rxjs';
 })
 export class AuthService {
   private baseUrl = 'http://localhost:9093';
-  user: User | null = null; // Initialize as null
+  user: User | null = null; 
+  public userLoggedOut: EventEmitter<void> = new EventEmitter<void>();
+
 
   constructor(private http : HttpClient) {
     this.initializeUserFromLocalStorage();
@@ -24,7 +27,9 @@ export class AuthService {
     if (token && user) {
       this.user = user;
     }
+    console.log("Initialized user:", this.user);
   }
+  
 
     // Store the JWT token in localStorage
     storeToken(token: string): void {
@@ -49,6 +54,7 @@ export class AuthService {
           this.storeToken(response.jwt);
           this.storeUser(response.user);
         }
+        console.log("User after login:", this.user);
       })
     );
   }
@@ -62,7 +68,8 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');  
     this.user = null; 
-    console.log('Logged out!');
+    console.log("User after logout:", this.user);
+    this.userLoggedOut.emit();
   }
 
   register(user : User): Observable<any> {

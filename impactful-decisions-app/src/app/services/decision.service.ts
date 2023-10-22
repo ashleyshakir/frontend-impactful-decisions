@@ -19,13 +19,17 @@ export class DecisionService {
   decisions: Decision[] = [];
   decision : Decision | null = null; // Initialize as null
   jwtToken = this.authService.getToken();
-  headers : HttpHeaders;
   decisionId : number | null = null;
 
   constructor(private http : HttpClient, private authService :AuthService) { 
-    this.jwtToken = this.authService.getToken();
-    this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.jwtToken}`);
+    this.authService.userLoggedOut.subscribe(() => {
+      this.resetDecisionData();  // This method clears out the decision data
+    });
   }
+  get headers() {
+    return new HttpHeaders().set('Authorization', `Bearer ${this.authService.getToken()}`);
+  }
+  
 
   private handleError(error: any){
     let errorMessage= '';
@@ -39,10 +43,18 @@ export class DecisionService {
     return throwError(errorMessage);
   }
 
-
+  resetDecisionData() {
+    this.decisions = [];
+    this.decision = null;
+    this.decisionId = null;
+    localStorage.removeItem('decision');
+  }
+  
   getDecisions() : Observable<{ data: Decision[]}>{
+    console.log("Headers before fetch:", JSON.stringify(this.headers));
     return this.http.get<{data : Decision[] }>(this.decsionsUrl,{headers: this.headers}).pipe(
       tap((response) => {
+        console.log("Fetched decisions:", response.data);
         this.decisions = response.data;
       })
     );
@@ -85,6 +97,11 @@ export class DecisionService {
   addOptionsToDecision(options: any[]): Observable<any> {
     const url = `${this.decsionsUrl}${this.decisionId}/options/`;
     return this.http.post(url, options, {headers: this.headers});
+  }
+  
+  addCriteriaToDecision(criteria: any[]): Observable<any> {
+    const url = `${this.decsionsUrl}${this.decisionId}/criteria/`;
+    return this.http.post(url, criteria, {headers: this.headers});
   }
 
 

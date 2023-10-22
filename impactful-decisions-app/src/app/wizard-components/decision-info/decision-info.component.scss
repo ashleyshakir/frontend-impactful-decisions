@@ -1,62 +1,11 @@
-mat-card{
-  box-shadow:none;
+@import 'src/app/wizard-components/add-options/add-options.component.scss';
+
+
+input {
+  font-size: 16px; /* Increase the font size */
 }
-.container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 37.5rem;
-  margin: 2rem;
-}
-h3{
-  color: #aeabab;
-  font-weight: 400;
+label {
+  font-weight: bold; 
 }
 
-form {
-    width: 40rem; 
-    height: fit-content;
-    padding: 20px;
-    border: 1px solid #ccc; /* A light grey border */
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    margin: 0 auto;
-  }
-  
-  div {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 8px; 
-    font-weight: bold; 
-  }
-  
-  input[type="text"] {
-    width: 95%; 
-    padding: 10px; 
-    border: 1px solid #ccc; /* A light grey border */
-    border-radius: 4px; /* Slightly rounded corners */
-    font-size: 16px; /* Increase the font size */
-  }
-  
-  button {
-    background-color: #FF9920;
-    color: #fff; /* White text color */
-    padding: 10px 15px; /* Add some padding */
-    border: none; /* Remove the default border */
-    border-radius: 4px; /* Slightly rounded corners */
-    font-size: 16px; /* Increase the font size */
-    cursor: pointer; /* Change the cursor on hover */
-  
-    &:hover {
-      background-color: #f99316; 
-    }
-  }
-  .error {
-    color: red;
-    font-weight: bold;
-    margin: 10px 0;
-  }
+ 

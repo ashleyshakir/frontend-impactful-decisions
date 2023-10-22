@@ -1,1 +1,71 @@
-<app-steps></app-steps>
+<mat-card class="container">
+  <app-steps></app-steps>
+  <div class="form-container">
+    <h1>Decision Criteria</h1>
+    <h3>Enter the criteria you will be setting to help you make your decision.</h3>
+    <form [formGroup]="criteriaForm">
+      <!-- Form Array - Criteria -->
+      <div formArrayName="criteria">
+        <div *ngFor="let criterion of criteria.controls; let i = index">
+          <!-- Criterion Name -->
+          <div class="form-group">
+            <label for="name-{{ i }}">Criterion Name:</label>
+            <input
+              id="name-{{ i }}"
+              type="text"
+              class="form-control"
+              [formControlName]="name"
+            />
+            <small *ngIf="criterion.get('name')?.invalid && criterion.get('name')?.touched" class="text-danger">
+              Criterion name is required.
+            </small>
+          </div>
+
+          <!-- Criterion Weight -->
+          <div class="form-group">
+            <label for="weight-{{ i }}">Weight (%):</label>
+            <mat-slider
+              id="weight-{{ i }}"
+              class="form-control"
+              [formControlName]="weight"
+              min="1"
+              max="100"
+              [thumbLabel]="true"
+              step="1"
+            ></mat-slider>
+            <small *ngIf="criterion.get('weight')?.invalid && criterion.get('weight')?.touched" class="text-danger">
+              Weight should be between 1% and 100%.
+            </small>
+          </div>
+
+          <!-- Remove Criterion Button -->
+          <button (click)="removeCriteria(i)" class="btn btn-danger">
+            Remove
+          </button>
+        </div>
+      </div>
+
+      <!-- Add Criterion Button -->
+      <button (click)="addCriteria()" class="btn btn-primary">
+        Add Criterion
+      </button>
+
+      <!-- Total Weight Validation Message -->
+      <p
+        *ngIf="criteriaForm.errors?.['totalWeightInvalid']"
+        class="text-danger"
+      >
+        The total weight of all criteria must be 100%.
+      </p>
+
+      <!-- Save Button -->
+      <button
+        (click)="onSave()"
+        class="btn btn-success"
+        [disabled]="!criteriaForm.valid"
+      >
+        Save Criteria
+      </button>
+    </form>
+  </div>
+</mat-card>
