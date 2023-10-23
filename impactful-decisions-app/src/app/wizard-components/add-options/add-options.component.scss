@@ -1,3 +1,7 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 mat-card {
     box-shadow:none;
   }
@@ -6,7 +10,6 @@ mat-card {
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 37.5rem;
     margin: 2rem;
   }
 
@@ -19,10 +22,10 @@ mat-card {
     font-weight: 400;
     margin-bottom: 20px;
   }
-
   .form-container {
     width: 50%;
     margin: 0 auto;
+    max-height: 600px;
   }
 
   form {
@@ -32,6 +35,8 @@ mat-card {
       border-radius: 5px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       background-color: #fff;
+      max-height: 450px;
+      overflow-y: auto;
   }
   .form-group {
     display: flex;

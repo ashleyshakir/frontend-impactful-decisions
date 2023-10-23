@@ -1,8 +1,9 @@
 <mat-card class="container">
   <app-steps></app-steps>
   <div class="form-container">
-    <h1>Pros & Cons for Option: {{ currentOption?.name }}</h1>
-    <h3>Enter the pros and cons for the current decision option.</h3>
+    <h1>Pros & Cons for Option {{currentIndex + 1}} </h1>
+    <h3>Enter the pros and cons for 
+    <span id="option-name"> {{ currentOption?.name }} </span></h3>
     <form [formGroup]="proConForm">
       <!-- Form Array - Pros -->
       <div formArrayName="pros">

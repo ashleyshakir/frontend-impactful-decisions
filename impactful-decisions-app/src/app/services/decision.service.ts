@@ -68,7 +68,6 @@ export class DecisionService {
   resolvedPercentage(decisions :Decision[]): number{
     const decisionCount = decisions.length;
     const resolvedCount = decisions.filter(decision => decision.resolved).length;
-    console.log("Resolved Decisions: " + resolvedCount)
     return Math.floor(resolvedCount / decisionCount * 100);
   }
 

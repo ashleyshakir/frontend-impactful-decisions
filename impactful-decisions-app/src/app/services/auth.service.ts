@@ -27,7 +27,6 @@ export class AuthService {
     if (token && user) {
       this.user = user;
     }
-    console.log("Initialized user:", this.user);
   }
   
 
@@ -54,7 +53,6 @@ export class AuthService {
           this.storeToken(response.jwt);
           this.storeUser(response.user);
         }
-        console.log("User after login:", this.user);
       })
     );
   }
@@ -67,8 +65,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');  
-    this.user = null; 
-    console.log("User after logout:", this.user);
+    this.user = null;
     this.userLoggedOut.emit();
   }
 
