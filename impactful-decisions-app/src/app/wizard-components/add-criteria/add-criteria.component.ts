@@ -122,8 +122,8 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
       this.decisionService.addCriteriaToDecision(criteria)
         .subscribe(response => {
           console.log(response);
-          this.formService.updateFormData({ criteria: response }); // may change to just repsonse
-          //this.router.navigate(['/decisions/create/step4']);
+          this.formService.updateFormData({ criteria: response }); 
+          this.router.navigate(['/decisions/create/step4']);
         }, error => {
           console.log(error);
         });

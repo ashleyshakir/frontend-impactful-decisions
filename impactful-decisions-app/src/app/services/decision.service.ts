@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { ProCon } from '../models/procon.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class DecisionService {
   private decsionsUrl = `${this.baseUrl}/api/decisions/`;
   
   decisions: Decision[] = [];
+  options: any[] = [];
+  criteria: any[] = [];
   decision : Decision | null = null; // Initialize as null
   jwtToken = this.authService.getToken();
   decisionId : number | null = null;
@@ -51,10 +54,8 @@ export class DecisionService {
   }
   
   getDecisions() : Observable<{ data: Decision[]}>{
-    console.log("Headers before fetch:", JSON.stringify(this.headers));
     return this.http.get<{data : Decision[] }>(this.decsionsUrl,{headers: this.headers}).pipe(
       tap((response) => {
-        console.log("Fetched decisions:", response.data);
         this.decisions = response.data;
       })
     );
@@ -102,6 +103,31 @@ export class DecisionService {
   addCriteriaToDecision(criteria: any[]): Observable<any> {
     const url = `${this.decsionsUrl}${this.decisionId}/criteria/`;
     return this.http.post(url, criteria, {headers: this.headers});
+  }
+
+  getDecisionOptions(): Observable<{data: any[]}> {
+    const url = `${this.decsionsUrl}${this.decisionId}/options/`;
+    return this.http.get<{data : any[]}>(url, {headers: this.headers}).pipe(
+      tap((response) => {
+        console.log(response);
+        this.options = response.data;
+      })
+    )
+  }
+
+  getDecisionCriteria(): Observable<{data: any[]}> {
+    const url = `${this.decsionsUrl}${this.decisionId}/criteria/`;
+    return this.http.get<{data : any[]}>(url, {headers: this.headers}).pipe(
+      tap((response) => {
+        console.log(response);
+        this.criteria = response.data;
+      })
+    )
+  }
+
+  addProConToOption(decisionId: number, optionId: number, proConData: ProCon, criteriaId: number): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/?criteriaId=${criteriaId}`;
+    return this.http.post(url, proConData, {headers: this.headers});
   }
 
 

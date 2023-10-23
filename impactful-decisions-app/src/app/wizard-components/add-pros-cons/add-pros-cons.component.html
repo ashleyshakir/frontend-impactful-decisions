@@ -1,1 +1,113 @@
-<app-steps></app-steps>
+<mat-card class="container">
+  <app-steps></app-steps>
+  <div class="form-container">
+    <h1>Pros & Cons for {{ currentOption?.name }}</h1>
+    <h3>Enter the pros and cons for the current decision option.</h3>
+    <form [formGroup]="proConForm">
+      <!-- Form Array - Pros -->
+      <div formArrayName="pros">
+        <h4>Pros:</h4>
+        <div *ngFor="let pro of pros.controls; let i = index">
+          <div class="pro-group">
+            <div class="form-group" [formGroupName]="i">
+              <label for="pro-description-{{ i }}">Description:</label>
+              <input
+                id="pro-description-{{ i }}"
+                type="text"
+                class="form-control"
+                formControlName="description"
+              />
+              <!-- Add validation messages as needed -->
+            </div>
+            <!-- Pro Rating -->
+            <div class="form-group" [formGroupName]="i">
+              <label for="pro-rating-{{ i }}">Rating:</label>
+              <select
+                id="pro-rating-{{ i }}"
+                class="form-control"
+                formControlName="rating"
+              >
+                <option *ngFor="let rating of ratings" [value]="rating">
+                  {{ rating }}
+                </option>
+              </select>
+            </div>
+            <!-- Pro Criteria -->
+            <div class="form-group" [formGroupName]="i">
+              <label for="pro-criteria-{{ i }}">Criteria:</label>
+              <select
+                id="pro-criteria-{{ i }}"
+                class="form-control"
+                formControlName="criteria"
+              >
+                <option *ngFor="let criterion of criteria">
+                  {{ criterion.name }}
+                </option>
+              </select>
+            </div>
+            <button id="remove" (click)="removePro(i)">Remove Pro</button>
+          </div>
+        </div>
+      </div>
+      <button id="add" (click)="addPro()">Add Pro</button>
+      <!-- Form Array - Cons -->
+      <div formArrayName="cons">
+        <h4>Cons:</h4>
+        <div *ngFor="let con of cons.controls; let i = index">
+          <div class="con-group">
+            <div class="form-group" [formGroupName]="i">
+              <label for="con-description-{{ i }}">Description:</label>
+              <input
+                id="con-description-{{ i }}"
+                type="text"
+                class="form-control"
+                formControlName="description"
+              />
+              <!-- Add validation messages as needed -->
+            </div>
+            <!-- Con Rating -->
+            <div class="form-group" [formGroupName]="i">
+              <label for="con-rating-{{ i }}">Rating:</label>
+              <select
+                id="con-rating-{{ i }}"
+                class="form-control"
+                formControlName="rating"
+              >
+                <option *ngFor="let rating of ratings" [value]="rating">
+                  {{ rating }}
+                </option>
+              </select>
+            </div>
+            <!-- Con Criteria -->
+            <div class="form-group" [formGroupName]="i">
+              <label for="con-criteria-{{ i }}">Criteria:</label>
+              <select
+                id="con-criteria-{{ i }}"
+                class="form-control"
+                formControlName="criteria"
+              >
+                <option *ngFor="let criterion of criteria">
+                  {{ criterion.name }}
+                </option>
+              </select>
+            </div>
+
+            <button id="remove" (click)="removeCon(i)">Remove Con</button>
+          </div>
+        </div>
+      </div>
+      <!-- Add Con Button -->
+      <button id="add" (click)="addCon()">Add Con</button>
+      <!-- Save & Next Button -->
+      <button
+        id="save"
+        [ngClass]="{ 'button-disabled-look': !proConForm.valid }"
+        (click)="saveProsCons()"
+        [disabled]="!proConForm.valid"
+      >
+        Save & Next
+      </button>
+      <!-- Any other validation or informational messages can be placed here -->
+    </form>
+  </div>
+</mat-card>
