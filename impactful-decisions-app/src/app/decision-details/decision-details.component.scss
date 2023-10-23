@@ -1,0 +1,15 @@
+@import '/src/app/wizard-components/summary/summary.component.scss';
+.container {
+    height: auto !important;
+}
+.resolve-button {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 1rem 2rem;
+    background-color: #59D8E5; 
+    color: #064663;
+    font-size: medium;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }

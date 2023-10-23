@@ -19,7 +19,7 @@ h3{
 }
 
 .summary-container {
-    padding: 2rem;
+    padding: 1.5rem;
     max-width: 1200px;
     margin: 0 auto;
     width: 50%;
@@ -49,6 +49,7 @@ h3{
   .option-title {
     font-size: 1.5rem;
     font-weight: bold;
+    text-align: center;
   }
   
   .criteria-title {
@@ -72,7 +73,7 @@ h3{
   
   .description {
     font-size: 1.1rem;
-    width: 100px;
+    width: 150px;
     margin-right: 10px;
   }
   
@@ -89,7 +90,7 @@ h3{
     }
   }
   
-  .analyze-button {
+  .decision-status {
     display: block;
     margin: 2rem auto 0;
     padding: 1rem 2rem;
@@ -98,5 +99,6 @@ h3{
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-align: center;
   }
   

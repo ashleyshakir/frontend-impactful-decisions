@@ -12,7 +12,7 @@
     {{ decision.resolved ? "Resolved" : "Unresolved" }}
   </div>
   <div class="action-icons">
-    <fa-icon [icon]="faPencil"></fa-icon>
+    <fa-icon (click)="viewDecisionDetails(decision.id)"  [icon]="faPencil"></fa-icon>
     <fa-icon [icon]="faTrashCan"></fa-icon>
   </div>
 </mat-card>

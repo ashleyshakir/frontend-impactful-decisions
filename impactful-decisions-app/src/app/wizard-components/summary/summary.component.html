@@ -66,49 +66,4 @@
       </button>
     </div>
   </div>
-
-  <!-- <div class="summary-container">
-    <h1>Decision Summary</h1>
-    <h2><strong>Title: </strong> {{ decision.title }}</h2>
-    <h3><strong>Description: </strong> {{ decision.description }}</h3>
-    <div class="options-container">
-      <div *ngFor="let option of optionList">
-        <h2>{{ option.name }}</h2>
-        <div *ngFor="let criteria of criteriaList">
-            <h3>Criteria: {{ criteria.name }}</h3>
-            <div class="pro-con-container">
-                <div>
-                  <h3>Pros:</h3>
-                  <div class="pro-container">
-                    <ul> -->
-  <!-- Loop over the items first -->
-  <!-- <ng-container *ngFor="let item of option.proConList"> -->
-  <!-- Then, conditionally display them based on type -->
-  <!-- <li *ngIf="item.type === 'pro' && item.criteriaId === criteria.id">
-                          <strong>Description:</strong> {{ item.description }}<br />
-                          <strong>Rating:</strong> {{ item.rating }}<br />
-                        </li>
-                      </ng-container>
-                    </ul>
-                  </div>
-                </div>
-                <div>
-                  <h3>Cons:</h3>
-                  <div class="con-container"> -->
-  <!-- <ul>
-                      <ng-container *ngFor="let item of option.proConList">
-                        <li *ngIf="item.type === 'con' && item.criteriaId === criteria.id">
-                          <strong>Description:</strong> {{ item.description }}<br />
-                          <strong>Rating:</strong> {{ item.rating }}<br />
-                        </li>
-                      </ng-container>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-        </div>
-      </div>
-    </div>
-    <button (click)="analyzeDecision()">Analyze Decision</button>
-  </div> -->
 </mat-card>

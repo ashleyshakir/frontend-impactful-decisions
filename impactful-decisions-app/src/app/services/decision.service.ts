@@ -82,6 +82,16 @@ export class DecisionService {
       catchError(this.handleError)
     )
   }
+  updateDecision(decision: Decision): Observable<any> {
+    return this.http.put(this.decsionsUrl + decision.id + "/", decision, {headers: this.headers}).pipe(
+      tap((response : any)=> {
+        if (response && response.data){
+            this.storeDecision(response.data);
+        }
+      }),
+      catchError(this.handleError)
+    )
+  }
 
   storeDecision(decision: Decision): void {
     localStorage.setItem('decision', JSON.stringify(decision));
@@ -91,6 +101,16 @@ export class DecisionService {
   getDecisionById(): Observable<{data: Decision}>{
     const url = `${this.decsionsUrl}${this.decisionId}/`;
     return this.http.get<{data : Decision}>(url, {headers: this.headers}).pipe(
+      tap(response => {
+        console.log(response.data);
+        this.decision = response.data;
+      })
+    )
+  }
+
+  getDecisionDetails(decisionId: number): Observable<{data: Decision}>{
+    const url = `${this.decsionsUrl}${decisionId}/`;
+    return this.http.get<{data: Decision}>(url, {headers: this.headers}).pipe(
       tap(response => {
         console.log(response.data);
         this.decision = response.data;

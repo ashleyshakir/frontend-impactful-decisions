@@ -15,7 +15,7 @@ import { User } from 'src/app/models/user.model';
 export class RecentDecisionsComponent implements OnInit, OnDestroy {
   faPencil = faPencil;
   faTrashCan = faTrashCan;
-
+  decision! : Decision;
   allDecisions: Decision[] = [];
   recentDecisions: Decision[] = [];
   hasDecisions: boolean = true; 
@@ -40,10 +40,22 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
         // this.fetchDecisions();
       })
     );
+    const decisionIdStr = this.route.snapshot.paramMap.get('id');
+    if (decisionIdStr) {
+      const decisionId = +decisionIdStr;
+      this.decisionService.getDecisionDetails(decisionId).subscribe(decision => {
+        this.decision = decision.data;
+      });
+    } else {
+      console.log('no decision id');
+    }
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+  viewDecisionDetails(decisionId: number): void {
+    this.router.navigate(['/decisions/' + decisionId]);
   }
 
   fetchDecisions(user : User) : void {

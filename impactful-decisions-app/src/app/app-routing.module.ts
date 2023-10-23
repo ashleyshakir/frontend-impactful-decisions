@@ -12,6 +12,7 @@ import { AddCriteriaComponent } from './wizard-components/add-criteria/add-crite
 import { AddProsConsComponent } from './wizard-components/add-pros-cons/add-pros-cons.component';
 import { SummaryComponent } from './wizard-components/summary/summary.component';
 import { AnalysisResultsComponent } from './wizard-components/analysis-results/analysis-results.component';
+import { DecisionDetailsComponent } from './decision-details/decision-details.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path: 'decisions',
     component: AllDecisionsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'decisions/:id',
+    component: DecisionDetailsComponent,
     canActivate: [AuthGuard]
   },
   {

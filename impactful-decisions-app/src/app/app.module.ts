@@ -46,6 +46,7 @@ import { AddOptionsComponent } from './wizard-components/add-options/add-options
 import { AddCriteriaComponent } from './wizard-components/add-criteria/add-criteria.component';
 import { AddProsConsComponent } from './wizard-components/add-pros-cons/add-pros-cons.component';
 import { SummaryComponent } from './wizard-components/summary/summary.component';
+import { DecisionDetailsComponent } from './decision-details/decision-details.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { SummaryComponent } from './wizard-components/summary/summary.component'
     AddOptionsComponent,
     AddCriteriaComponent,
     AddProsConsComponent,
-    SummaryComponent
+    SummaryComponent,
+    DecisionDetailsComponent
   ],
   imports: [
     BrowserModule,
