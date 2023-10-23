@@ -24,8 +24,6 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
     ], this.validateTotalWeight.bind(this))
     
   });
-  console.log('Initial Form Value:', this.criteriaForm.value);
-  console.log('Initial Form Errors:', this.criteriaForm.errors);
 
   // Load existing form data from the service
   this.formService.loadFormDataFromLocalStorage();
@@ -38,21 +36,8 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
         this.criteria.push(this.createCriteria(criterion.name, criterion.weight));
         })
       }
-    // Logging individual form controls after loading the data
-    this.criteria.controls.forEach((control, index) => {
-    console.log(`Control at index ${index}:`, control.value);
-    console.log(`Errors at index ${index}:`, control.errors);
-  });
     });
 
-    // Place this within ngOnInit
-  this.criteriaForm.valueChanges.subscribe(value => {
-    console.log('Updated Form Value:', value);
-  });
-
-  this.criteriaForm.statusChanges.subscribe(status => {
-    console.log('Updated Form Status:', status);
-  });
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

@@ -34,7 +34,6 @@ export class AddProsConsComponent implements OnInit{
     this.decisionService.getDecisionOptions().subscribe(options => {
       this.options = options.data;
       this.currentOption = this.options[this.currentIndex];
-      console.log(this.currentOption)
     }, error => {
       console.log(error.message);
     });
@@ -55,10 +54,6 @@ export class AddProsConsComponent implements OnInit{
     });
     // this.addPro();
     // this.addCon();
-    this.proConForm.valueChanges.subscribe(val => {
-      console.log('Form Value:', val);
-      console.log('Form Validity:', this.proConForm.valid);
-  });
   
   }
 
@@ -77,7 +72,6 @@ export class AddProsConsComponent implements OnInit{
       criteria: ['', Validators.required],
       type: ['pro']
     });
-    console.log('Added Pro Validity:', proGroup.valid);
     this.pros.push(proGroup);
   }
 
@@ -88,7 +82,6 @@ export class AddProsConsComponent implements OnInit{
       criteria: ['', Validators.required],
       type: ['con']
     });
-    console.log('Added Con Validity:', conGroup.valid);
     this.cons.push(conGroup);
   }
 
@@ -101,8 +94,6 @@ export class AddProsConsComponent implements OnInit{
   }
 
   saveProsCons() {
-    console.log(this.proConForm.value);  // Logs the form's current values
-    console.log('Form Valid:', this.proConForm.valid); 
     const proConFormData = this.proConForm.value;
     if (this.proConForm.valid) {
 
@@ -122,22 +113,12 @@ export class AddProsConsComponent implements OnInit{
   }
 
   saveProCon(proCon: any) {
-    console.log("Decision ID: " + this.decisionService.decisionId);
-    console.log("Option ID: " +  this.currentOption.id);
     let criteriaName = proCon.criteria;
     delete proCon.criteria;
     delete proCon.option;
-    console.log("Current Pro Data:", this.proConData.pros);
-    console.log("Current Con Data:", this.proConData.cons);
     
     this.decisionService.addProConToOption(this.decisionService.decisionId!, this.currentOption.id, proCon, criteriaName)
       .subscribe(response => {
-        console.log("ProCon saved: ", response.data);
-        console.log('proCon.type:', proCon.type);
-        console.log('proCon:', proCon);
-        console.log("Last Pro:", this.proConData.pros[this.proConData.pros.length - 1]);
-
-        console.log('Last con in array:', this.proConData.cons[this.proConData.cons.length - 1]);
         if (proCon.type === 'pro' && proCon === this.proConData.pros[this.proConData.pros.length - 1]) {
           this.lastProSaved = true;
         }
