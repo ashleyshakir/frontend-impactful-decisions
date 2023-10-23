@@ -18,7 +18,7 @@
         <button id="add" type="button" (click)="addOption()">
           Add another option
         </button>
-        <button id="save" type="button" (click)="onSave()">Save & Next</button>
+        <button [ngClass]="{'button-disabled-look': !optionsForm.valid}" id="save" type="button" (click)="onSave()">Save & Next</button>
       </div>
     </form>
   </div>

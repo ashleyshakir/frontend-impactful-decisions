@@ -2,70 +2,72 @@
   <app-steps></app-steps>
   <div class="form-container">
     <h1>Decision Criteria</h1>
-    <h3>Enter the criteria you will be setting to help you make your decision.</h3>
+    <h3>
+      Enter the criteria you will be setting to help you make your decision.
+    </h3>
     <form [formGroup]="criteriaForm">
       <!-- Form Array - Criteria -->
       <div formArrayName="criteria">
-        <div *ngFor="let criterion of criteria.controls; let i = index">
-          <!-- Criterion Name -->
-          <div class="form-group">
-            <label for="name-{{ i }}">Criterion Name:</label>
-            <input
-              id="name-{{ i }}"
-              type="text"
-              class="form-control"
-              [formControlName]="name"
-            />
-            <small *ngIf="criterion.get('name')?.invalid && criterion.get('name')?.touched" class="text-danger">
-              Criterion name is required.
-            </small>
-          </div>
+        <div
+          *ngFor="
+            let criterion of criteria.controls;
+            trackBy: trackByIndex;
+            let i = index
+          "
+        >
+          <div class="name-weight">
+            <!-- Criterion Name -->
+            <div class="form-group" [formGroupName]="i">
+              <label for="name-{{ i }}">Criterion Name:</label>
+              <input
+                id="name-{{ i }}"
+                type="text"
+                class="form-control"
+                formControlName="name"
+              />
+              <small
+                *ngIf="
+                  criterion.get('name')?.invalid &&
+                  criterion.get('name')?.touched
+                "
+                class="text-danger"
+              >
+                Criterion name is required.
+              </small>
+            </div>
 
-          <!-- Criterion Weight -->
-          <div class="form-group">
-            <label for="weight-{{ i }}">Weight (%):</label>
-            <mat-slider
-              id="weight-{{ i }}"
-              class="form-control"
-              [formControlName]="weight"
-              min="1"
-              max="100"
-              [thumbLabel]="true"
-              step="1"
-            ></mat-slider>
-            <small *ngIf="criterion.get('weight')?.invalid && criterion.get('weight')?.touched" class="text-danger">
-              Weight should be between 1% and 100%.
-            </small>
+            <!-- Criterion Weight -->
+            <div class="form-group" [formGroupName]="i">
+              <label for="weight-{{ i }}">Weight (%):</label>
+              <select
+                id="weight-{{ i }}"
+                class="form-control"
+                formControlName="weight"
+              >
+                <option
+                  *ngFor="let num of [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+                  [value]="num"
+                >
+                  {{ num }}
+                </option>
+              </select>
+            </div>
+            <!-- Remove Criterion Button -->
+            <button (click)="removeCriteria(i)" id="remove">Remove</button>
           </div>
-
-          <!-- Remove Criterion Button -->
-          <button (click)="removeCriteria(i)" class="btn btn-danger">
-            Remove
-          </button>
         </div>
       </div>
 
       <!-- Add Criterion Button -->
-      <button (click)="addCriteria()" class="btn btn-primary">
-        Add Criterion
+      <button (click)="addCriteria()" id="add">Add Criteria</button>
+      <!-- Save Button -->
+      <button [ngClass]="{'button-disabled-look': !criteriaForm.valid}" (click)="onSave()" id="save" [disabled]="!criteriaForm.valid">
+        Save & Next
       </button>
-
       <!-- Total Weight Validation Message -->
-      <p
-        *ngIf="criteriaForm.errors?.['totalWeightInvalid']"
-        class="text-danger"
-      >
+      <p *ngIf="totalWeightInvalid" class="text-danger">
         The total weight of all criteria must be 100%.
       </p>
-
-      <!-- Save Button -->
-      <button
-        (click)="onSave()"
-        class="btn btn-success"
-        [disabled]="!criteriaForm.valid"
-      >
-        Save Criteria
-      </button>
     </form>
   </div>
 </mat-card>

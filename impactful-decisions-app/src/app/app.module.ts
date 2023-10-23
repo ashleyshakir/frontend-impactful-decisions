@@ -18,6 +18,11 @@ import { MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSliderModule } from '@angular/material/slider';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 // Font Awesome Module
@@ -68,17 +73,23 @@ import { SummaryComponent } from './wizard-components/summary/summary.component'
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FontAwesomeModule,
+
+    // Angular Material Modules
     MatCardModule, 
     MatFormFieldModule, 
     MatInputModule,
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
-    FormsModule,
-    HttpClientModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    MatSliderModule
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatSliderModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

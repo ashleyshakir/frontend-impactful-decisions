@@ -20,8 +20,12 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.criteriaForm = this.fb.group({
-    criteria : this.fb.array([], this.validateTotalWeight.bind(this))
+    criteria : this.fb.array([this.createCriteria()
+    ], this.validateTotalWeight.bind(this))
+    
   });
+  console.log('Initial Form Value:', this.criteriaForm.value);
+  console.log('Initial Form Errors:', this.criteriaForm.errors);
 
   // Load existing form data from the service
   this.formService.loadFormDataFromLocalStorage();
@@ -34,36 +38,60 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
         this.criteria.push(this.createCriteria(criterion.name, criterion.weight));
         })
       }
+    // Logging individual form controls after loading the data
+    this.criteria.controls.forEach((control, index) => {
+    console.log(`Control at index ${index}:`, control.value);
+    console.log(`Errors at index ${index}:`, control.errors);
+  });
     });
+
+    // Place this within ngOnInit
+  this.criteriaForm.valueChanges.subscribe(value => {
+    console.log('Updated Form Value:', value);
+  });
+
+  this.criteriaForm.statusChanges.subscribe(status => {
+    console.log('Updated Form Status:', status);
+  });
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  createCriteria(name: string = '', weight: number = 1): FormGroup {
+  createCriteria(name: string = '', weight: number = 50): FormGroup {
     return this.fb.group({
       name: [name, Validators.required],
-      weight: [weight, [Validators.required, Validators.min(1), Validators.max(100)]]
+      weight: [weight, [Validators.required, Validators.min(10), Validators.max(100)]]
     });
   }
+  
   // Custom validator for the FormArray
   validateTotalWeight(control: AbstractControl): ValidationErrors | null {
     const formArray = control as FormArray;
     const totalWeight = formArray.controls
-      .map(ctrl => ctrl.get('weight')?.value)
+      .map(ctrl => +ctrl.get('weight')?.value)
       .reduce((acc, value) => acc + value, 0);
   
     return totalWeight === 100 ? null : { totalWeightInvalid: true };
   }
 
+
   get totalWeight(): number {
     return this.criteria.controls
-      .map(control => control.get('weight')?.value || 0)
+      .map(control => +control.get('weight')?.value || 0)
       .reduce((acc, value) => acc + value, 0);
   }
-  
-  get criteria() {
+
+  get totalWeightInvalid() {
+    return this.criteria.hasError('totalWeightInvalid');
+  }
+
+  get criteria(): FormArray {
     return this.criteriaForm.get('criteria') as FormArray;
+  }
+
+  get criteriaControls(): FormGroup[] {
+    return (this.criteriaForm.get('criteria') as FormArray).controls as FormGroup[];
   }
 
   addCriteria(): void {
@@ -88,12 +116,13 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
       return;
     }
     const criteria = this.criteriaForm.value.criteria;
+    
     this.formService.updateFormData({ criteria: criteria });
     if (this.decisionId) {
       this.decisionService.addCriteriaToDecision(criteria)
         .subscribe(response => {
           console.log(response);
-          this.formService.updateFormData({ criteria: response.data }); // may change to just repsonse
+          this.formService.updateFormData({ criteria: response }); // may change to just repsonse
           //this.router.navigate(['/decisions/create/step4']);
         }, error => {
           console.log(error);
@@ -101,6 +130,11 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
     } else {
       console.error('Decision ID not found!');
     }
+  }
+
+
+  trackByIndex(index: number): number {
+    return index;
   }
 
 

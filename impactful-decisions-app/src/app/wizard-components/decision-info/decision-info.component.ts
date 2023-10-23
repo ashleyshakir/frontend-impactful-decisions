@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Decision } from 'src/app/models/decsion.model';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { DecisionService } from 'src/app/services/decision.service';
 import { Router } from '@angular/router';
 import { FormService } from'src/app/services/form.service';
+import { FormControl } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-decision-info',
@@ -13,7 +16,6 @@ import { FormService } from'src/app/services/form.service';
 })
 export class DecisionInfoComponent implements OnInit{
   step1Form!: FormGroup;
-  titleError: string | null = null;
 
   constructor(private fb: FormBuilder, private decisionService: DecisionService, 
     private router: Router,
@@ -34,6 +36,7 @@ export class DecisionInfoComponent implements OnInit{
 }
 
   onSave(): void {
+    const titleControl = this.step1Form.get('title') as FormControl;
     if(this.step1Form.valid) {
       const decisionData : Decision = this.step1Form.value;
       this.decisionService.createDecision(decisionData).subscribe(response => {
@@ -41,7 +44,7 @@ export class DecisionInfoComponent implements OnInit{
           this.formService.updateFormData(decisionData); // Store to local storage
           this.router.navigate(['/decisions/create/step2']);
         } else  {
-          this.titleError = response.message;
+          titleControl.setErrors({ 'serverError': response.message });
         }
       }, error => {
         console.log(error)

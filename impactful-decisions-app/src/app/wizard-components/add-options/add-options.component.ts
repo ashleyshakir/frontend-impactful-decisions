@@ -4,6 +4,7 @@ import { DecisionService } from 'src/app/services/decision.service';
 import { FormService } from 'src/app/services/form.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { Validators, ValidationErrors } from '@angular/forms';
 @Component({
   selector: 'app-add-options',
   templateUrl: './add-options.component.html',
@@ -45,7 +46,7 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
   
   createOption(value: string = ''): FormGroup {
     return this.fb.group({
-      name: [value]
+      name: [value, Validators.required]
     });
   }
   
