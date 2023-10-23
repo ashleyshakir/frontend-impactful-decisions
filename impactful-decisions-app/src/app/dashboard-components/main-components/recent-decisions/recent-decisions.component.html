@@ -13,7 +13,7 @@
   </div>
   <div class="action-icons">
     <fa-icon (click)="viewDecisionDetails(decision.id)"  [icon]="faPencil"></fa-icon>
-    <fa-icon [icon]="faTrashCan"></fa-icon>
+    <fa-icon (click)="deleteDecision(decision.id)" [icon]="faTrashCan"></fa-icon>
   </div>
 </mat-card>
 <p *ngIf="!hasDecisions">No recent decisions</p>

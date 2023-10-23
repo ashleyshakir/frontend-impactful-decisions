@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { DecisionService } from'src/app/services/decision.service';
 import { Decision } from 'src/app/models/decsion.model';
 import { faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-all-decisions',
@@ -14,9 +19,36 @@ export class AllDecisionsComponent implements OnInit {
   faPencil = faPencil;
   faTrashCan = faTrashCan;
 
-  constructor(private decisionService : DecisionService) { }
+  constructor(private decisionService : DecisionService, private router: Router, private authService: AuthService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.fetchAllDecisions(this.authService.user!)
+  }
+  deleteDecision(decisionId: number): void {
+    console.log("Attempting to delete decision with ID:", decisionId);
+    // Show confirmation dialog
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.decisionService.deleteDecision(decisionId).subscribe(
+          (response) => {
+            console.log("Successfully deleted decision:", response);
+            this.fetchAllDecisions(this.authService.user!);
+          },
+          (error) => {
+            console.log("Failed to delete decision:", error);
+          }
+        );
+      } else {
+        console.log('User canceled the deletion.');
+      }
+    });
+  }
+  viewDecisionDetails(decisionId: number): void {
+    this.router.navigate(['/decisions/' + decisionId]);
+  }
+
+  fetchAllDecisions(user : User){
     this.decisionService.getDecisions().subscribe(
       (response) => {
         this.allDecisions = response.data.sort((a, b) => {

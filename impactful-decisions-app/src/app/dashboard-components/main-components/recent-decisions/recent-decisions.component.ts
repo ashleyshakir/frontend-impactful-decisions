@@ -6,6 +6,8 @@ import { faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-recent-decisions',
@@ -23,9 +25,10 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
 
 
   constructor(private route: ActivatedRoute,
-     private router: Router,
+      private router: Router,
       private decisionService : DecisionService,
-      private authService: AuthService) { }
+      private authService: AuthService, 
+      private dialog: MatDialog) { }
 
   ngOnInit(): void {
     if (this.authService.user) {
@@ -56,6 +59,26 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
   }
   viewDecisionDetails(decisionId: number): void {
     this.router.navigate(['/decisions/' + decisionId]);
+  }
+  deleteDecision(decisionId: number): void {
+    console.log("Attempting to delete decision with ID:", decisionId);
+    // Show confirmation dialog
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.decisionService.deleteDecision(decisionId).subscribe(
+          (response) => {
+            console.log("Successfully deleted decision:", response);
+            this.fetchDecisions(this.authService.user!);
+          },
+          (error) => {
+            console.log("Failed to delete decision:", error);
+          }
+        );
+      } else {
+        console.log('User canceled the deletion.');
+      }
+    });
   }
 
   fetchDecisions(user : User) : void {

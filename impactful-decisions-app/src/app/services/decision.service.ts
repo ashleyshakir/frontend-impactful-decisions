@@ -92,6 +92,16 @@ export class DecisionService {
       catchError(this.handleError)
     )
   }
+  deleteDecision(decisionId: number): Observable<any> {
+    return this.http.delete(this.decsionsUrl + decisionId + "/", {headers: this.headers}).pipe(
+      tap((response : any)=> {
+        if (response && response.data){
+            this.storeDecision(response.data);
+        }
+      }),
+      catchError(this.handleError)
+    )
+  }
 
   storeDecision(decision: Decision): void {
     localStorage.setItem('decision', JSON.stringify(decision));
