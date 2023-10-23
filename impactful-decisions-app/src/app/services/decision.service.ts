@@ -125,8 +125,8 @@ export class DecisionService {
     )
   }
 
-  addProConToOption(decisionId: number, optionId: number, proConData: ProCon, criteriaId: number): Observable<any> {
-    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/?criteriaId=${criteriaId}`;
+  addProConToOption(decisionId: number, optionId: number, proConData: ProCon, criteriaName: string): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/?criteriaName=${criteriaName}`;
     return this.http.post(url, proConData, {headers: this.headers});
   }
 

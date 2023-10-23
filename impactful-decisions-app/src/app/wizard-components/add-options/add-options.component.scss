@@ -58,7 +58,7 @@ mat-card {
         border-color: #FF9920;
     }
   }
-  .name-weight{
+  .smaller-input{
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -89,6 +89,7 @@ mat-card {
   }
  #remove{
     margin-left: 10px;
+    margin-bottom: 20px;
     padding: 5px 10px;
     height: 27px;
     background-color: #dc3545 !important;

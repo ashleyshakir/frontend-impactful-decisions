@@ -1,7 +1,7 @@
 <mat-card class="container">
   <app-steps></app-steps>
   <div class="form-container">
-    <h1>Pros & Cons for {{ currentOption?.name }}</h1>
+    <h1>Pros & Cons for Option: {{ currentOption?.name }}</h1>
     <h3>Enter the pros and cons for the current decision option.</h3>
     <form [formGroup]="proConForm">
       <!-- Form Array - Pros -->
@@ -19,33 +19,35 @@
               />
               <!-- Add validation messages as needed -->
             </div>
-            <!-- Pro Rating -->
-            <div class="form-group" [formGroupName]="i">
-              <label for="pro-rating-{{ i }}">Rating:</label>
-              <select
-                id="pro-rating-{{ i }}"
-                class="form-control"
-                formControlName="rating"
-              >
-                <option *ngFor="let rating of ratings" [value]="rating">
-                  {{ rating }}
-                </option>
-              </select>
+            <div class="smaller-input">
+              <!-- Pro Rating -->
+              <div class="form-group" [formGroupName]="i">
+                <label for="pro-rating-{{ i }}">Rating:</label>
+                <select
+                  id="pro-rating-{{ i }}"
+                  class="form-control"
+                  formControlName="rating"
+                >
+                  <option *ngFor="let rating of ratings" [value]="rating">
+                    {{ rating }}
+                  </option>
+                </select>
+              </div>
+              <!-- Pro Criteria -->
+              <div class="form-group" [formGroupName]="i">
+                <label for="pro-criteria-{{ i }}">Criteria:</label>
+                <select
+                  id="pro-criteria-{{ i }}"
+                  class="form-control"
+                  formControlName="criteria"
+                >
+                  <option *ngFor="let criterion of criteria" [value]="criterion.name">
+                    {{ criterion.name }}
+                  </option>
+                </select>
+              </div>
+              <button id="remove" (click)="removePro(i)">Remove Pro</button>
             </div>
-            <!-- Pro Criteria -->
-            <div class="form-group" [formGroupName]="i">
-              <label for="pro-criteria-{{ i }}">Criteria:</label>
-              <select
-                id="pro-criteria-{{ i }}"
-                class="form-control"
-                formControlName="criteria"
-              >
-                <option *ngFor="let criterion of criteria">
-                  {{ criterion.name }}
-                </option>
-              </select>
-            </div>
-            <button id="remove" (click)="removePro(i)">Remove Pro</button>
           </div>
         </div>
       </div>
@@ -65,34 +67,36 @@
               />
               <!-- Add validation messages as needed -->
             </div>
-            <!-- Con Rating -->
-            <div class="form-group" [formGroupName]="i">
-              <label for="con-rating-{{ i }}">Rating:</label>
-              <select
-                id="con-rating-{{ i }}"
-                class="form-control"
-                formControlName="rating"
-              >
-                <option *ngFor="let rating of ratings" [value]="rating">
-                  {{ rating }}
-                </option>
-              </select>
-            </div>
-            <!-- Con Criteria -->
-            <div class="form-group" [formGroupName]="i">
-              <label for="con-criteria-{{ i }}">Criteria:</label>
-              <select
-                id="con-criteria-{{ i }}"
-                class="form-control"
-                formControlName="criteria"
-              >
-                <option *ngFor="let criterion of criteria">
-                  {{ criterion.name }}
-                </option>
-              </select>
-            </div>
+            <div class="smaller-input">
+              <!-- Con Rating -->
+              <div class="form-group" [formGroupName]="i">
+                <label for="con-rating-{{ i }}">Rating:</label>
+                <select
+                  id="con-rating-{{ i }}"
+                  class="form-control"
+                  formControlName="rating"
+                >
+                  <option *ngFor="let rating of ratings" [value]="rating">
+                    {{ rating }}
+                  </option>
+                </select>
+              </div>
+              <!-- Con Criteria -->
+              <div class="form-group" [formGroupName]="i">
+                <label for="con-criteria-{{ i }}">Criteria:</label>
+                <select
+                  id="con-criteria-{{ i }}"
+                  class="form-control"
+                  formControlName="criteria"
+                >
+                  <option *ngFor="let criterion of criteria" [value]="criterion.name">
+                    {{ criterion.name }}
+                  </option>
+                </select>
+              </div>
 
-            <button id="remove" (click)="removeCon(i)">Remove Con</button>
+              <button id="remove" (click)="removeCon(i)">Remove Con</button>
+            </div>
           </div>
         </div>
       </div>

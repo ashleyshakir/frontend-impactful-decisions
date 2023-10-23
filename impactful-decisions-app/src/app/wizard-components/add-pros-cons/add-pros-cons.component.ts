@@ -25,6 +25,8 @@ export class AddProsConsComponent implements OnInit{
     this.initializeForm();
   }
 
+
+
   fetchOptions(): void {
     this.decisionService.getDecisionOptions().subscribe(options => {
       this.options = options.data;
@@ -48,46 +50,58 @@ export class AddProsConsComponent implements OnInit{
       pros: this.fb.array([]),
       cons: this.fb.array([])
     });
+    // this.addPro();
+    // this.addCon();
+    this.proConForm.valueChanges.subscribe(val => {
+      console.log('Form Value:', val);
+      console.log('Form Validity:', this.proConForm.valid);
+  });
+  
   }
 
-get pros(): FormArray {
-  return this.proConForm.get('pros') as FormArray;
-}
+  get pros(): FormArray {
+    return this.proConForm.get('pros') as FormArray;
+  }
 
-get cons(): FormArray {
-  return this.proConForm.get('cons') as FormArray;
-}
+  get cons(): FormArray {
+    return this.proConForm.get('cons') as FormArray;
+  }
 
-addPro() {
-  const proGroup = this.fb.group({
-    description: ['', Validators.required],
-    rating: ['', Validators.required],
-    criteria: ['', Validators.required],
-    type: ['pro']
-  });
-  this.pros.push(proGroup);
-}
+  addPro() {
+    const proGroup = this.fb.group({
+      description: ['', Validators.required],
+      rating: ['', Validators.required],
+      criteria: ['', Validators.required],
+      type: ['pro']
+    });
+    console.log('Added Pro Validity:', proGroup.valid);
+    this.pros.push(proGroup);
+  }
 
-addCon() {
-  const conGroup = this.fb.group({
-    description: ['', Validators.required],
-    rating: ['', Validators.required],
-    criteria: ['', Validators.required],
-    type: ['con']
-  });
-  this.cons.push(conGroup);
-}
+  addCon() {
+    const conGroup = this.fb.group({
+      description: ['', Validators.required],
+      rating: ['', Validators.required],
+      criteria: ['', Validators.required],
+      type: ['con']
+    });
+    console.log('Added Con Validity:', conGroup.valid);
+    this.cons.push(conGroup);
+  }
 
-removePro(index: number) {
-  this.pros.removeAt(index);
-}
+  removePro(index: number) {
+    this.pros.removeAt(index);
+  }
 
-removeCon(index: number) {
-  this.cons.removeAt(index);
-}
+  removeCon(index: number) {
+    this.cons.removeAt(index);
+  }
 
   saveProsCons() {
+    console.log(this.proConForm.value);  // Logs the form's current values
+    console.log('Form Valid:', this.proConForm.valid); 
     const proConData = this.proConForm.value;
+    if (this.proConForm.valid) {
 
     proConData.pros.forEach((pro : any) => {
       pro.option = this.currentOption;
@@ -99,9 +113,17 @@ removeCon(index: number) {
       this.saveProCon(con);
     });
   }
+  }
 
   saveProCon(proCon: any) {
-    this.decisionService.addProConToOption(this.decisionService.decisionId!, this.currentOption.id, proCon, proCon.criteria)
+    console.log("Decision ID: " + this.decisionService.decisionId);
+    console.log("Option ID: " +  this.currentOption.id);
+    let criteriaName = proCon.criteria;
+    delete proCon.criteria;
+    delete proCon.option;
+    console.log("Modified proCon object: ", proCon);
+    console.log("Criteria Name:", criteriaName);
+    this.decisionService.addProConToOption(this.decisionService.decisionId!, this.currentOption.id, proCon, criteriaName)
       .subscribe(response => {
         console.log("ProCon saved: ", response.data);
         if (proCon.type === 'con' && proCon === this.proConData.cons[this.proConData.cons.length - 1]) {
@@ -110,11 +132,11 @@ removeCon(index: number) {
       }, error => {
         console.error('Error saving ProCon:', error.message);
       })
-
   }
 
 
   moveToNextOption() {
+    console.log("switching to next option")
     if (this.currentIndex < this.options.length - 1) {
       this.currentIndex++;
       this.currentOption = this.options[this.currentIndex];
@@ -129,7 +151,4 @@ removeCon(index: number) {
     }
   }
   
-
-
-
 }
