@@ -11,6 +11,7 @@ mat-card {
     flex-direction: row;
     align-items: center;
     margin: 2rem;
+    height: 100vh;
   }
 
   h1, h3 {
@@ -22,7 +23,7 @@ mat-card {
     font-weight: 400;
     margin-bottom: 20px;
   }
-  .form-container {
+  .form-container, .summary-container {
     width: 50%;
     margin: 0 auto;
     max-height: 600px;

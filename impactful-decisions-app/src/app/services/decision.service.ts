@@ -20,7 +20,7 @@ export class DecisionService {
   decisions: Decision[] = [];
   options: any[] = [];
   criteria: any[] = [];
-  decision : Decision | null = null; // Initialize as null
+  decision : Decision | null = null; 
   jwtToken = this.authService.getToken();
   decisionId : number | null = null;
 
@@ -88,9 +88,14 @@ export class DecisionService {
     this.decision = decision;
   }
 
-  getDecisionById(): Observable<Decision> {
-    const url = `${this.decsionsUrl}/${this.decisionId}/`;
-    return this.http.get<Decision>(url, {headers: this.headers});
+  getDecisionById(): Observable<{data: Decision}>{
+    const url = `${this.decsionsUrl}${this.decisionId}/`;
+    return this.http.get<{data : Decision}>(url, {headers: this.headers}).pipe(
+      tap(response => {
+        console.log(response.data);
+        this.decision = response.data;
+      })
+    )
   }
 
 
