@@ -11,16 +11,16 @@ export class ProConItem {
     type?: 'pro' | 'con'; 
     rating?: number;
     description?: string;
-    option?: Option; 
-    criteria?: Criteria; 
+    optionId?: number; 
+    criteriaId?: number; 
 
-    constructor(id?: number, type?: 'pro' | 'con', rating?: number, description?: string, option?: Option, criteria?: Criteria){
+    constructor(id?: number, type?: 'pro' | 'con', rating?: number, description?: string, optionId?: number, criteriaId?: number){
       this.id = id;
       this.type = type;
       this.rating = rating;
       this.description = description;
-      this.option = new Option();
-      this.criteria = new Criteria();
+      this.optionId = optionId;
+      this.criteriaId = criteriaId;
     }
   }
   

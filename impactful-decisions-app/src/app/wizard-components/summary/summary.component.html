@@ -1,48 +1,114 @@
 <mat-card class="container">
   <app-steps></app-steps>
   <div class="summary-container">
+    <h1>{{ decisionTitle }}</h1>
+    <h3>{{ decisionDescription }}</h3>
+    <div class="options">
+      <div class="option" *ngFor="let option of optionList">
+        <h2 class="option-title">{{ option.name }}</h2>
+        <hr />
+        <div *ngFor="let criteria of criteriaList">
+          <div *ngIf="option.proConList && option.proConList.length > 0">
+            <h3 class="criteria-title">{{ criteria.name }}</h3>
+
+            <!-- Pros -->
+            <ng-container *ngFor="let proCon of option.proConList">
+              <div
+                class="procon"
+                id="pro"
+                *ngIf="
+                  proCon.type === 'pro' && proCon.criteriaId === criteria.id
+                "
+              >
+                <span class="description">{{ proCon.description }}</span>
+                <span class="rating" id="pro">
+                  <i
+                    class="fas fa-star"
+                    *ngFor="let _ of [].constructor(proCon?.rating || 0)"
+                  ></i>
+
+                  <i
+                    class="far fa-star"
+                    *ngFor="let _ of [].constructor(5 - (proCon?.rating || 0))"
+                  ></i>
+                </span>
+              </div>
+            </ng-container>
+
+            <!-- Cons -->
+            <ng-container *ngFor="let proCon of option.proConList">
+              <div
+                class="procon"
+                id="con"
+                *ngIf="
+                  proCon.type === 'con' && proCon.criteriaId === criteria.id
+                "
+              >
+                <span class="description">{{ proCon.description }}</span>
+                <span class="rating" id="con">
+                  <i
+                    class="fas fa-star"
+                    *ngFor="let _ of [].constructor(proCon?.rating || 0)"
+                  ></i>
+
+                  <i
+                    class="far fa-star"
+                    *ngFor="let _ of [].constructor(5 - (proCon?.rating || 0))"
+                  ></i>
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <button class="analyze-button" (click)="analyzeDecision()">
+        Analyze Decision
+      </button>
+    </div>
+  </div>
+
+  <!-- <div class="summary-container">
     <h1>Decision Summary</h1>
     <h2><strong>Title: </strong> {{ decision.title }}</h2>
     <h3><strong>Description: </strong> {{ decision.description }}</h3>
     <div class="options-container">
       <div *ngFor="let option of optionList">
         <h2>{{ option.name }}</h2>
-        <div class="pro-con-container">
-          <div>
-            <h3>Pros:</h3>
-            <div class="pro-container">
-              <ul>
-                <!-- Loop over the items first -->
-                <ng-container *ngFor="let item of option.proConList">
-                  <!-- Then, conditionally display them based on type -->
-                  <li *ngIf="item.type === 'pro'">
-                    <strong>Description:</strong> {{ item.description }}<br />
-                    <strong>Rating:</strong> {{ item.rating }}<br />
-                  </li>
-                </ng-container>
-              </ul>
-            </div>
-          </div>
-          <div>
-            <h3>Cons:</h3>
-            <div class="con-container">
-              <ul>
-                <ng-container *ngFor="let item of option.proConList">
-                  <li *ngIf="item.type === 'con'">
-                    <strong>Description:</strong> {{ item.description }}<br />
-                    <strong>Rating:</strong> {{ item.rating }}<br />
-                  </li>
-                </ng-container>
-              </ul>
-            </div>
-          </div>
+        <div *ngFor="let criteria of criteriaList">
+            <h3>Criteria: {{ criteria.name }}</h3>
+            <div class="pro-con-container">
+                <div>
+                  <h3>Pros:</h3>
+                  <div class="pro-container">
+                    <ul> -->
+  <!-- Loop over the items first -->
+  <!-- <ng-container *ngFor="let item of option.proConList"> -->
+  <!-- Then, conditionally display them based on type -->
+  <!-- <li *ngIf="item.type === 'pro' && item.criteriaId === criteria.id">
+                          <strong>Description:</strong> {{ item.description }}<br />
+                          <strong>Rating:</strong> {{ item.rating }}<br />
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </div>
+                <div>
+                  <h3>Cons:</h3>
+                  <div class="con-container"> -->
+  <!-- <ul>
+                      <ng-container *ngFor="let item of option.proConList">
+                        <li *ngIf="item.type === 'con' && item.criteriaId === criteria.id">
+                          <strong>Description:</strong> {{ item.description }}<br />
+                          <strong>Rating:</strong> {{ item.rating }}<br />
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </div>
+              </div>
         </div>
       </div>
     </div>
-
-    <h2>Criteria</h2>
-    <ul>
-      <li *ngFor="let criterion of criteriaList">{{ criterion }}</li>
-    </ul>
-  </div>
+    <button (click)="analyzeDecision()">Analyze Decision</button>
+  </div> -->
 </mat-card>

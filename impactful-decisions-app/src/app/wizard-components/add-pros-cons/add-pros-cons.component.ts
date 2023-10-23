@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class AddProsConsComponent implements OnInit{
   options: any[] = [];
   criteria: any[] = [];
-  ratings: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  ratings: number[] = [1, 2, 3, 4, 5];
   currentOption: any = null;
   currentIndex: number = 0;
   proConData: ProCon = new ProCon();
