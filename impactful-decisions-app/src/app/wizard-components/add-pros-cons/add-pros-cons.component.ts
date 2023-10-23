@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DecisionService } from 'src/app/services/decision.service';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ProCon } from 'src/app/models/procon.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-pros-cons',
@@ -16,8 +17,10 @@ export class AddProsConsComponent implements OnInit{
   currentIndex: number = 0;
   proConData: ProCon = new ProCon();
   proConForm!: FormGroup;
+  lastProSaved: boolean = false;
+  lastConSaved: boolean = false;
 
-  constructor(private decisionService: DecisionService, private fb: FormBuilder) { }
+  constructor(private decisionService: DecisionService, private fb: FormBuilder, private router : Router) { }
 
   ngOnInit(): void {
     this.fetchOptions();
@@ -100,19 +103,22 @@ export class AddProsConsComponent implements OnInit{
   saveProsCons() {
     console.log(this.proConForm.value);  // Logs the form's current values
     console.log('Form Valid:', this.proConForm.valid); 
-    const proConData = this.proConForm.value;
+    const proConFormData = this.proConForm.value;
     if (this.proConForm.valid) {
 
-    proConData.pros.forEach((pro : any) => {
-      pro.option = this.currentOption;
-      this.saveProCon(pro);
-    });
+      this.proConData.pros = proConFormData.pros;
+      this.proConData.cons = proConFormData.cons;
 
-    proConData.cons.forEach((con : any) => {
-      con.option = this.currentOption;
-      this.saveProCon(con);
-    });
-  }
+      proConFormData.pros.forEach((pro : any) => {
+        pro.option = this.currentOption;
+        this.saveProCon(pro);
+      });
+
+      proConFormData.cons.forEach((con : any) => {
+        con.option = this.currentOption;
+        this.saveProCon(con);
+      });
+    }
   }
 
   saveProCon(proCon: any) {
@@ -121,12 +127,24 @@ export class AddProsConsComponent implements OnInit{
     let criteriaName = proCon.criteria;
     delete proCon.criteria;
     delete proCon.option;
-    console.log("Modified proCon object: ", proCon);
-    console.log("Criteria Name:", criteriaName);
+    console.log("Current Pro Data:", this.proConData.pros);
+    console.log("Current Con Data:", this.proConData.cons);
+    
     this.decisionService.addProConToOption(this.decisionService.decisionId!, this.currentOption.id, proCon, criteriaName)
       .subscribe(response => {
         console.log("ProCon saved: ", response.data);
-        if (proCon.type === 'con' && proCon === this.proConData.cons[this.proConData.cons.length - 1]) {
+        console.log('proCon.type:', proCon.type);
+        console.log('proCon:', proCon);
+        console.log("Last Pro:", this.proConData.pros[this.proConData.pros.length - 1]);
+
+        console.log('Last con in array:', this.proConData.cons[this.proConData.cons.length - 1]);
+        if (proCon.type === 'pro' && proCon === this.proConData.pros[this.proConData.pros.length - 1]) {
+          this.lastProSaved = true;
+        }
+        if (proCon.type === 'con' && (this.proConData.cons.length === 0 || proCon === this.proConData.cons[this.proConData.cons.length - 1])) {
+          this.lastConSaved = true;
+        }
+        if (this.lastProSaved && this.lastConSaved) {
           this.moveToNextOption();
         }
       }, error => {
@@ -137,17 +155,24 @@ export class AddProsConsComponent implements OnInit{
 
   moveToNextOption() {
     console.log("switching to next option")
+    this.lastProSaved = false;
+    this.lastConSaved = false;
     if (this.currentIndex < this.options.length - 1) {
       this.currentIndex++;
       this.currentOption = this.options[this.currentIndex];
       this.proConForm.reset();
-      // If you wish to start with default pro/con fields for every option:
-      this.addPro();
-      this.addCon();
+      // Clear out the FormArrays for pros and cons
+      while (this.pros.length) {
+        this.pros.removeAt(0);
+      }
+      while (this.cons.length) {
+        this.cons.removeAt(0);
+      }
     } else {
       // If there are no more options left.
       console.log("All options covered!");
-      // Here, you can navigate the user to another page or display a completion message.
+      // Navigate to summary page
+      this.router.navigate(['/decisions/create/step5']);
     }
   }
   
