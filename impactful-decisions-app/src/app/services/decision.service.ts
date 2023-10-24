@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ProCon } from '../models/procon.model';
+import { Option } from '../models/option.model';
 
 @Injectable({
   providedIn: 'root'
@@ -125,9 +126,13 @@ export class DecisionService {
     const url = `${this.decsionsUrl}${this.decisionId}/options/`;
     return this.http.post(url, options, {headers: this.headers});
   }
-  updateOptions(decisionId: number, options: any[]): Observable<any> {
-    const url = `${this.decsionsUrl}${decisionId}/options/{optionId}/`;
-    return this.http.put(url, options, {headers: this.headers});
+  updateOptions(decisionId: number, optionId: number, option: Option): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/`;
+    return this.http.put(url, option, {headers: this.headers});
+  }
+  deleteOption(decisionId: number, optionId: number): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/`;
+    return this.http.delete(url, {headers: this.headers});
   }
   
   addCriteriaToDecision(criteria: any[]): Observable<any> {

@@ -14,7 +14,6 @@ export class FormService {
   }
   private formDataSubject = new BehaviorSubject<any>(this.formData);
   formData$ = this.formDataSubject.asObservable();
-  private formDataStore: any = {};
 
   constructor() { 
     // this.loadFormDataFromLocalStorage();
@@ -29,21 +28,16 @@ export class FormService {
 
 updateFormData(newData: any, newDecisionId?: number): void {
   this.formData = { ...this.formData, ...newData };
-  this.formDataStore = newData;
   if(newDecisionId) {
     this.formData.decisionId = newDecisionId;
   }
-  console.log("Storing/Retrieving form data via FormService: ", this.formData);
   localStorage.setItem('form-data', JSON.stringify(this.formData));
   this.formDataSubject.next(this.formData);
 }
 
 getFormData(): any {
-  console.log("Storing/Retrieving form data via FormService: ", this.formData);
-  return this.formDataStore;
-
+  return this.formData;
 }
-
 
 clearFormData(): void {
   this.formData = {

@@ -5,6 +5,8 @@ import { FormService } from 'src/app/services/form.service';
 import { Subscription } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { Validators, ValidationErrors } from '@angular/forms';
+import { Option } from 'src/app/models/option.model';
+
 @Component({
   selector: 'app-add-options',
   templateUrl: './add-options.component.html',
@@ -15,6 +17,8 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   optionsForm!: FormGroup;
   decisionId!: number | null;
+  originalOptions: Option[] = [];
+  isNewDecision: boolean = true;
 
   constructor(private fb: FormBuilder, 
               private decisionService: DecisionService, 
@@ -43,45 +47,85 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
     });
 
     // Load existing form data from the service
-    // this.formService.loadFormDataFromLocalStorage();
-    this.subscription = this.formService.formData$.subscribe(data => {
-      if (data && data.options && Array.isArray(data.options)) {
-        // Clear the existing form array controls
-        while (this.options.length) {
-          this.options.removeAt(0);
-        }
-        // Push new form groups into the form array for each option in the data
-        data.options.forEach((option: any) => {
-          this.options.push(this.createOption(option.name));
-        });
-      } 
-    });
-    if (this.decisionId){
-      this.decisionService.getDecisionOptions(this.decisionId).subscribe(response => {
-        if (response.data && Array.isArray(response.data)){
-          // Clear existing form array controls
-          while (this.options.length) {
-            this.options.removeAt(0);
-          }
-          // Push new form groups into the form array for each option in the API data
-          response.data.forEach((option: any) => {
-          this.options.push(this.createOption(option.name));
-        });
-        }
-      });
-    }
-  }
+    this.formService.loadFormDataFromLocalStorage();
 
+    this.subscription = this.formService.formData$.subscribe(formData => {
+      if (this.decisionId) {
+        this.handleExistingDecision(this.decisionId);
+      } else {
+        this.handleNewDecision(formData);
+      }
+    });
+
+    // this.subscription = this.formService.formData$.subscribe(formData => {
+    //   if (formData && formData.options && Array.isArray(formData.options)) {
+    //     // Clear the existing form array controls
+    //     while (this.options.length) {
+    //       this.options.removeAt(0);
+    //     }
+    //     // Push new form groups into the form array for each option in the data
+    //     formData.options.forEach((option: Option) => {
+    //       this.options.push(this.createOption(option.name));
+    //     });
+    //   } 
+
+    //   if (this.decisionId) { //&& (formData.options === null)
+    //     this.decisionService.getDecisionOptions(this.decisionId).subscribe(response => {
+    //       if (response.data && Array.isArray(response.data)){
+    //         this.isNewDecision = false;
+    //         // Clear existing form array controls
+    //         while (this.options.length) {
+    //           this.options.removeAt(0);
+    //         }
+
+    //         this.originalOptions = [...response.data];
+    //         console.log("OG Form Options: ",this.originalOptions);
+    //         // Push new form groups into the form array for each option in the API data
+    //         response.data.forEach((option: Option) => {
+    //         this.options.push(this.createOption(option.name));
+    //       });
+    //       }
+    //     });
+    //   }
+    // });
+  }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+  private clearExistingOptions(): void {
+    while (this.options.length) {
+      this.options.removeAt(0);
+    }
+  }
   
+  private addOptionsToForm(options: Option[]): void {
+    options.forEach((option: Option) => {
+      this.options.push(this.createOption(option.name));
+    });
+  }
+  
+  private handleNewDecision(formData: any): void {
+    if (formData && formData.options && Array.isArray(formData.options)) {
+      this.clearExistingOptions();
+      this.addOptionsToForm(formData.options);
+    }
+  }
+  private handleExistingDecision(decisionId: number): void {
+    this.decisionService.getDecisionOptions(decisionId).subscribe(response => {
+      if (response.data && Array.isArray(response.data)) {
+        this.isNewDecision = false;
+        this.clearExistingOptions();
+        this.originalOptions = [...response.data];
+        this.addOptionsToForm(response.data);
+      }
+    });
+  }
+
   createOption(value: string = ''): FormGroup {
     return this.fb.group({
       name: [value, Validators.required]
     });
   }
-  
   get options() {
     return this.optionsForm.get('options') as FormArray;
   }
@@ -90,23 +134,106 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
   }
   removeOption(index: number): void {
     this.options.removeAt(index);
+    console.log("Original Option Id: ", this.originalOptions[index].id);
+    this.decisionService.deleteOption(this.decisionId!, this.originalOptions[index].id!).subscribe(response => {
+      console.log(response);
+    }, error => {
+      console.log(error);
+    })
   }
 
-  onSave(): void {
-    const options = this.optionsForm.value.options;
-    this.formService.updateFormData({ options: options });
-      if (this.decisionId) {
-        console.log(options)
-        this.decisionService.addOptionsToDecision(options)
-          .subscribe(response => {
-          console.log(response);
-          this.formService.updateFormData({ options: response }); 
-          this.router.navigate(['/decisions/create/step3']);
-        }, error => {
-            console.log(error);
-          });
-      } else {
-        console.error('Decision ID not found!');
-      }
-    }
+  /**
+ * Handles saving form changes to options.
+ * If this is a new decision, it creates all options.
+ * Otherwise, it updates existing options and creates new ones if needed.
+ */
+onSave(): void {
+  const options = this.optionsForm.value.options;
+
+  // If it's a new decision, add all options
+  if (this.isNewDecision) {
+    this.saveOptionsForNewDecision(options);
+    this.router.navigate(['/decisions/create/step3']);
+  } else {
+    // If it's an existing decision, update existing and add new options
+    this.updateAndAddOptionsForExistingDecision(options);
+    this.router.navigate(['/decisions/create/step3']);
   }
+}
+
+/**
+ * Handles saving options for a new decision.
+ */
+private saveOptionsForNewDecision(options: Option[]): void {
+  if (this.decisionId) {
+    this.decisionService.addOptionsToDecision(options)
+      .subscribe(response => {
+        console.log(response);
+        // this.router.navigate(['/decisions/create/step3']);
+      }, error => {
+        console.log(error);
+      });
+  } else {
+    console.error('Decision ID not found!');
+  }
+}
+
+/**
+ * Handles updating existing options and adding new options for an existing decision.
+ * @param options - The options array from the form.
+ */
+private updateAndAddOptionsForExistingDecision(options: Option[]): void {
+  const newOptionsToAdd: Option[] = []; // To collect new options to add
+
+  // Loop through each option and check against the original options
+  options.forEach((newOption: Option, index: number) => {
+    const originalOption = this.originalOptions[index];
+    const optionId = originalOption ? originalOption.id : null;
+
+    if (optionId) {
+      // Update existing options
+      this.updateExistingOption(optionId, newOption);
+    } else {
+      // Collect new options to add
+      newOptionsToAdd.push(newOption);
+    }
+  });
+
+  if (newOptionsToAdd.length > 0) {
+    // Create new options
+    this.createNewOptions(newOptionsToAdd);
+  }
+}
+
+/**
+ * Updates an existing option.
+ * @param optionId - The ID of the option to update.
+ * @param newOption - The new option data.
+ */
+private updateExistingOption(optionId: number, newOption: Option): void {
+  this.decisionService.updateOptions(this.decisionId!, optionId, newOption).subscribe(
+    response => {
+      console.log("Successfully updated option", response);
+    },
+    error => {
+      console.log("Failed to update option", error);
+    }
+  );
+}
+
+/**
+ * Creates new options.
+ * @param newOptions - An array of new options to add.
+ */
+private createNewOptions(newOptions: Option[]): void {
+  this.decisionService.addOptionsToDecision(newOptions).subscribe(
+    response => {
+      console.log("Successfully added new options", response);
+    },
+    error => {
+      console.log("Failed to add new options", error);
+    }
+  );
+}
+
+}

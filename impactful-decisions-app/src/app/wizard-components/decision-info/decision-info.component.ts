@@ -51,6 +51,7 @@ export class DecisionInfoComponent implements OnInit{
      // Load existing form data from the service
      this.formService.loadFormDataFromLocalStorage();
      const storedData = this.formService.getFormData();
+     console.log("stored data: ", storedData)
      if (storedData && storedData.title && storedData.description) {
         this.step1Form.patchValue(storedData);
      } 
@@ -59,8 +60,9 @@ export class DecisionInfoComponent implements OnInit{
     // Fetch existing data from API and populate form if needed
     this.decisionService.getDecisionDetails(this.decisionId).subscribe(data => {
       if (data){
+        console.log(data);
         this.step1Form.patchValue(data);
-      }
+      } 
     });
 
     // Listen for form changes and update the API
