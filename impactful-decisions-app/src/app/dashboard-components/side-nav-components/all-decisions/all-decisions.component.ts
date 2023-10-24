@@ -25,7 +25,6 @@ export class AllDecisionsComponent implements OnInit {
     this.fetchAllDecisions(this.authService.user!)
   }
   deleteDecision(decisionId: number): void {
-    console.log("Attempting to delete decision with ID:", decisionId);
     // Show confirmation dialog
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe(result => {

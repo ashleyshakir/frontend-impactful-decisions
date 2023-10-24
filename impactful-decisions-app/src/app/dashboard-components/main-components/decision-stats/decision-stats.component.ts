@@ -32,7 +32,7 @@ export class DecisionStatsComponent implements OnInit {
   }
 
   getTotalDecisions(): number {
-    return this.totalDecisions = this.decisionService.totalDecisions();
+    return this.totalDecisions = this.decisionService.totalDecisions(this.allDecisions);
   }
   getResolvedPercentage(): number {
     return this.resolvedPercentage = this.decisionService.resolvedPercentage(this.allDecisions);

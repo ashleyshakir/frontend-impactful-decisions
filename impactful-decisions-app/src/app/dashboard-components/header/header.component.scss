@@ -91,3 +91,12 @@ mat-card {
         display: inline;
       }
     }
+
+    @media screen and (max-width: 600px) {
+      .dashboard{
+        display: none;
+      }
+      .user {
+        justify-content: center !important;
+      }
+    }

@@ -17,7 +17,7 @@ export class FormService {
   private formDataStore: any = {};
 
   constructor() { 
-    this.loadFormDataFromLocalStorage();
+    // this.loadFormDataFromLocalStorage();
   }
   loadFormDataFromLocalStorage(): void {
     const storedData = JSON.parse(localStorage.getItem('form-data')|| '{}');
@@ -27,14 +27,21 @@ export class FormService {
   }
 }
 
-updateFormData(newData: any): void {
+updateFormData(newData: any, newDecisionId?: number): void {
   this.formData = { ...this.formData, ...newData };
   this.formDataStore = newData;
+  if(newDecisionId) {
+    this.formData.decisionId = newDecisionId;
+  }
+  console.log("Storing/Retrieving form data via FormService: ", this.formData);
   localStorage.setItem('form-data', JSON.stringify(this.formData));
   this.formDataSubject.next(this.formData);
 }
+
 getFormData(): any {
+  console.log("Storing/Retrieving form data via FormService: ", this.formData);
   return this.formDataStore;
+
 }
 
 
@@ -43,7 +50,8 @@ clearFormData(): void {
     decision: null,
     options: [],
     criteria: [],
-    procons: []
+    procons: [],
+    decisionId: null
   };
   localStorage.removeItem('form-data');
   this.formDataSubject.next(this.formData);

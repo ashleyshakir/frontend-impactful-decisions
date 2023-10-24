@@ -33,12 +33,12 @@ export class AddProsConsComponent implements OnInit{
   }
 
   fetchOptions(): void {
-    this.decisionService.getDecisionOptions().subscribe(options => {
-      this.options = options.data;
-      this.currentOption = this.options[this.currentIndex];
-    }, error => {
-      console.log(error.message);
-    });
+    // this.decisionService.getDecisionOptions().subscribe(options => {
+    //   this.options = options.data;
+    //   this.currentOption = this.options[this.currentIndex];
+    // }, error => {
+    //   console.log(error.message);
+    // });
   }
 
   fetchCriteria(): void {

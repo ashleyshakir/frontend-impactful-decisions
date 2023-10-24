@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class SideNavComponent {
   faCirclePlus = faCirclePlus;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private formService: FormService) { }
 
   navigateToDecisions() {
     this.router.navigate(['/decisions']);
@@ -20,6 +21,7 @@ export class SideNavComponent {
   }
   navigateToWizard() {
     this.router.navigate(['/decisions/create/step1']);
+    this.formService.clearFormData();
   }
 
 }

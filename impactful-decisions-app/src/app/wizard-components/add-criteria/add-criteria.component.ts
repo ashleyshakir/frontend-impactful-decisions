@@ -26,7 +26,7 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
   });
 
   // Load existing form data from the service
-  this.formService.loadFormDataFromLocalStorage();
+  // this.formService.loadFormDataFromLocalStorage();
   this.subscription = this.formService.formData$.subscribe(data => {
     if (data && data.criteria && Array.isArray(data.criteria)) {
       while(this.criteria.length) {
