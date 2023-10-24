@@ -82,3 +82,12 @@ mat-card {
         margin-bottom: 4px;
       }
     }
+
+    @media screen and (max-width: 768px) {
+      .logo img{
+       display: none;
+      }
+      .header {
+        display: inline;
+      }
+    }

@@ -7,7 +7,7 @@
       >
         <span>1</span>
       </li>
-      <div class="step-info">
+      <div class="step-info" [ngClass]="{ active: activeStep === 1 }">
         <p>Step 1</p>
         <h3>YOUR DECISION</h3>
       </div>
@@ -19,7 +19,7 @@
       >
         <span>2</span>
       </li>
-      <div class="step-info">
+      <div class="step-info" [ngClass]="{ active: activeStep === 2 }">
         <p>Step 2</p>
         <h3>ADD OPTIONS</h3>
       </div>
@@ -31,7 +31,7 @@
       >
         <span>3</span>
       </li>
-      <div class="step-info">
+      <div class="step-info"  [ngClass]="{ active: activeStep === 3 }">
         <p>Step 3</p>
         <h3>ADD CRITERIA</h3>
       </div>
@@ -43,7 +43,7 @@
       >
         <span>4</span>
       </li>
-      <div class="step-info">
+      <div class="step-info"  [ngClass]="{ active: activeStep === 4 }">
         <p>Step 4</p>
         <h3>ADD PROS AND CONS</h3>
       </div>
@@ -55,7 +55,7 @@
       >
         <span>5</span>
       </li>
-      <div class="step-info">
+      <div class="step-info"  [ngClass]="{ active: activeStep === 5 }">
         <p>Step 5</p>
         <h3>SUMMARY</h3>
       </div>
@@ -67,7 +67,7 @@
       >
         <span>6</span>
       </li>
-      <div class="step-info">
+      <div class="step-info"  [ngClass]="{ active: activeStep === 6 }">
         <p>Step 6</p>
         <h3>RESULTS</h3>
       </div>

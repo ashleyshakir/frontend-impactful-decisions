@@ -19,8 +19,18 @@ mat-card {
 h2{
     font-weight: 400;
     margin-bottom: 20px;
+    padding-bottom: 30px;
 }
 span {
     color: #FF9920;
     font-weight: 600;
 }
+@media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+    .results-container{
+        margin: 0 !important;
+    }
+}
+

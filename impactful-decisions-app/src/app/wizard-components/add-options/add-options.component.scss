@@ -109,20 +109,6 @@ mat-card {
       background-color: #c82333 !important;
     }
   }
-  .btn-primary {
-    background-color: #007bff !important;
-
-    &:hover {
-      background-color: #0056b3!important;
-    }
-  }
-  .btn-success {
-    background-color: #28a745 !important;
-
-    &:hover {
-      background-color: #1e7e34!important;
-    }
-  }
   .button-disabled-look {
     background-color: #e0e0e0;
     color: #a0a0a0;
@@ -131,6 +117,11 @@ mat-card {
         background-color: #e0e0e0; 
         color: #a0a0a0;          
     }
+}
+#option-name {
+  color: #88E9C2;
+  font-weight: 700;
+  font-size: 22px;
 }
 
   .form-buttons{
@@ -149,4 +140,27 @@ mat-card {
   app-steps {
     margin-bottom: 20px;
   }
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+    .form-container {
+      width: 100%;
+    }
+    .smaller-input{
+      flex-wrap: wrap;
+    }
 
+  }
+
+  @media screen and (max-width: 600px) {
+    #remove .text{
+      display: none !important;
+    }
+    #remove{
+      height: 10px;
+      border-radius: 2px;
+      margin-bottom: 15px;
+      padding-right: 15px;
+    }
+  }
