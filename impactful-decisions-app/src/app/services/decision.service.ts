@@ -21,7 +21,7 @@ export class DecisionService {
   options: any[] = [];
   criteria: any[] = [];
   decision : Decision | null = null; 
-  jwtToken = this.authService.getToken();
+  // jwtToken = this.authService.getToken();
   decisionId : number | null = null;
 
   constructor(private http : HttpClient, private authService :AuthService) { 
@@ -103,11 +103,6 @@ export class DecisionService {
     )
   }
 
-  storeDecision(decision: Decision): void {
-    localStorage.setItem('decision', JSON.stringify(decision));
-    this.decision = decision;
-  }
-
   getDecisionById(): Observable<{data: Decision}>{
     const url = `${this.decsionsUrl}${this.decisionId}/`;
     return this.http.get<{data : Decision}>(url, {headers: this.headers}).pipe(
@@ -128,6 +123,10 @@ export class DecisionService {
     )
   }
 
+  storeDecision(decision: Decision): void {
+    localStorage.setItem('decision', JSON.stringify(decision));
+    this.decision = decision;
+  }
 
   addOptionsToDecision(options: any[]): Observable<any> {
     const url = `${this.decsionsUrl}${this.decisionId}/options/`;
@@ -162,6 +161,15 @@ export class DecisionService {
   addProConToOption(decisionId: number, optionId: number, proConData: ProCon, criteriaName: string): Observable<any> {
     const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/?criteriaName=${criteriaName}`;
     return this.http.post(url, proConData, {headers: this.headers});
+  }
+
+  analyzeDecision(): Observable<any> {
+    const url = `${this.decsionsUrl}${this.decisionId}/recommendation/`;
+    return this.http.get<any>(url, {headers: this.headers}).pipe(
+      tap((response) => {
+        console.log(response);
+      })
+    )
   }
 
 

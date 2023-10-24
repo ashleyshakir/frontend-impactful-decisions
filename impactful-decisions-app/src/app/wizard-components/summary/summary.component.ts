@@ -20,8 +20,6 @@ export class SummaryComponent implements OnInit {
   criteriaList: Criteria[] = [];
   proConList: ProConItem[] = [];
 
-
-
   constructor(private decisionService: DecisionService, private router : Router) { }
 
   ngOnInit(): void {

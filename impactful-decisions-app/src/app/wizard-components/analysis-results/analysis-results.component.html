@@ -1,1 +1,19 @@
-<app-steps></app-steps>
+<mat-card class="container">
+  <app-steps></app-steps>
+  <div class="results-container">
+    <h1>Your Results are in!</h1>
+    <h2>
+      Your Recommended Option is <span>{{ recommendedOption }}</span>
+    </h2>
+    <canvas
+      baseChart
+      [type]="'pie'"
+      [datasets]="pieChartDatasets"
+      [labels]="pieChartLabels"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+      [legend]="pieChartLegend"
+    >
+    </canvas>
+  </div>
+</mat-card>

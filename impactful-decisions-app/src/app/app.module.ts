@@ -29,7 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
-
+import { NgChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -81,6 +81,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    NgChartsModule,
 
     // Angular Material Modules
     MatCardModule, 
