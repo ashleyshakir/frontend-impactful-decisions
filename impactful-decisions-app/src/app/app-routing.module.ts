@@ -5,7 +5,6 @@ import { UserLoginComponent } from './auth-components/user-login/user-login.comp
 import { DashboardContainerComponent } from './dashboard-components/dashboard-container/dashboard-container.component';
 import { AuthGuard } from './services/auth-guard';
 import { AllDecisionsComponent } from './dashboard-components/side-nav-components/all-decisions/all-decisions.component';
-import { WizardContainerComponent } from './wizard-components/wizard-container/wizard-container.component';
 import { DecisionInfoComponent } from './wizard-components/decision-info/decision-info.component';
 import { AddOptionsComponent } from './wizard-components/add-options/add-options.component';
 import { AddCriteriaComponent } from './wizard-components/add-criteria/add-criteria.component';

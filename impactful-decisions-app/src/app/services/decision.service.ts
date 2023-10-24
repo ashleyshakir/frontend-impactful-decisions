@@ -32,7 +32,6 @@ export class DecisionService {
   get headers() {
     return new HttpHeaders().set('Authorization', `Bearer ${this.authService.getToken()}`);
   }
-  
 
   private handleError(error: any){
     let errorMessage= '';

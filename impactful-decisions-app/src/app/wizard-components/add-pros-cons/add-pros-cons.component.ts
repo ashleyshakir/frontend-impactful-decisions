@@ -3,6 +3,7 @@ import { DecisionService } from 'src/app/services/decision.service';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ProCon } from 'src/app/models/procon.model';
 import { Router } from '@angular/router';
+import { customProConValidator } from 'src/app/services/custom-validators';
 
 @Component({
   selector: 'app-add-pros-cons',
@@ -26,9 +27,10 @@ export class AddProsConsComponent implements OnInit{
     this.fetchOptions();
     this.fetchCriteria();
     this.initializeForm();
+    this.proConForm.statusChanges.subscribe(status => {
+      this.debugValidity();
+    });
   }
-
-
 
   fetchOptions(): void {
     this.decisionService.getDecisionOptions().subscribe(options => {
@@ -56,6 +58,11 @@ export class AddProsConsComponent implements OnInit{
     // this.addCon();
   
   }
+  debugValidity() {
+    console.log('Form validity:', this.proConForm.valid);
+    console.log('Pros validity:', this.pros.valid);
+    console.log('Cons validity:', this.cons.valid);
+  }
 
   get pros(): FormArray {
     return this.proConForm.get('pros') as FormArray;
@@ -67,21 +74,21 @@ export class AddProsConsComponent implements OnInit{
 
   addPro() {
     const proGroup = this.fb.group({
-      description: ['', Validators.required],
-      rating: ['', Validators.required],
-      criteria: ['', Validators.required],
+      description: [''],
+      rating: [''],
+      criteria: [''],
       type: ['pro']
-    });
+    },{validator: customProConValidator});
     this.pros.push(proGroup);
   }
 
   addCon() {
     const conGroup = this.fb.group({
-      description: ['', Validators.required],
-      rating: ['', Validators.required],
-      criteria: ['', Validators.required],
+      description: [''],
+      rating: [''],
+      criteria: [''],
       type: ['con']
-    });
+    },{validator: customProConValidator});
     this.cons.push(conGroup);
   }
 
@@ -94,9 +101,10 @@ export class AddProsConsComponent implements OnInit{
   }
 
   saveProsCons() {
+    console.log("clicked");
+    console.log(this.proConForm.valid);
     const proConFormData = this.proConForm.value;
     if (this.proConForm.valid) {
-
       this.proConData.pros = proConFormData.pros;
       this.proConData.cons = proConFormData.cons;
 
@@ -109,6 +117,8 @@ export class AddProsConsComponent implements OnInit{
         con.option = this.currentOption;
         this.saveProCon(con);
       });
+    } else {
+      console.log("invalid form")
     }
   }
 
@@ -122,10 +132,12 @@ export class AddProsConsComponent implements OnInit{
         if (proCon.type === 'pro' && proCon === this.proConData.pros[this.proConData.pros.length - 1]) {
           this.lastProSaved = true;
         }
-        if (proCon.type === 'con' && (this.proConData.cons.length === 0 || proCon === this.proConData.cons[this.proConData.cons.length - 1])) {
+        if (proCon.type === 'con' && proCon === this.proConData.cons[this.proConData.cons.length - 1]) {
           this.lastConSaved = true;
         }
         if (this.lastProSaved && this.lastConSaved) {
+          this.moveToNextOption();
+        } else if (this.proConData.pros.length === 0 || this.lastProSaved && this.proConData.cons.length === 0 || this.lastConSaved) {
           this.moveToNextOption();
         }
       }, error => {

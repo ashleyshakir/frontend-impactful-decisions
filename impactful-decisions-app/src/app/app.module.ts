@@ -38,7 +38,6 @@ import { HelloComponent } from './dashboard-components/main-components/hello/hel
 import { DecisionStatsComponent } from './dashboard-components/main-components/decision-stats/decision-stats.component';
 import { RecentDecisionsComponent } from './dashboard-components/main-components/recent-decisions/recent-decisions.component';
 import { AllDecisionsComponent } from './dashboard-components/side-nav-components/all-decisions/all-decisions.component';
-import { WizardContainerComponent } from './wizard-components/wizard-container/wizard-container.component';
 import { StepsComponent } from './wizard-components/steps/steps.component';
 import { DecisionInfoComponent } from './wizard-components/decision-info/decision-info.component';
 import { AnalysisResultsComponent } from './wizard-components/analysis-results/analysis-results.component';
@@ -62,7 +61,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     DecisionStatsComponent,
     RecentDecisionsComponent,
     AllDecisionsComponent,
-    WizardContainerComponent,
     StepsComponent,
     DecisionInfoComponent,
     AnalysisResultsComponent,

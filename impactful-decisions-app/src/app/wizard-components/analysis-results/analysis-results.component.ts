@@ -72,11 +72,4 @@ export class AnalysisResultsComponent implements OnInit {
     })
 
   }
-
-
-
-
-
-
-
 }
