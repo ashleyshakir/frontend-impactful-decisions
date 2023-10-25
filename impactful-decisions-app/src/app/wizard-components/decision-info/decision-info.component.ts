@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Decision } from 'src/app/models/decsion.model';
-import { FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { DecisionService } from 'src/app/services/decision.service';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormService } from'src/app/services/form.service';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -24,22 +23,17 @@ export class DecisionInfoComponent implements OnInit{
               private decisionService: DecisionService, 
               private router: Router,
               private formService: FormService) { 
-    
-    // this.router.events.subscribe((event) => {
-    //   if(event instanceof NavigationEnd && event.url === '/dashboard') {
-    //     this.unsubscribeFromFormChanges();
-    //     this.decisionId = null;
-    //     this.step1Form.reset();
-    //     this.formService.clearFormData();
-    //   }
-    // })
   }
 
   ngOnInit(): void {
-    // Subscribe to form data to get the decisionId
+
+    // Subscribe to form data to get the decisionId for new decisions
     this.formService.formData$.subscribe(data => {
-      this.decisionId = data.decisionId;
-      console.log("Decision ID on init: ", this.decisionId);
+      // Only update the decisionId from the formService if it's not already set
+      if (!this.decisionId){
+        this.decisionId = data.decisionId;
+        console.log("Decision ID on init: ", this.decisionId);
+      }
     });
 
     // Initialize the form

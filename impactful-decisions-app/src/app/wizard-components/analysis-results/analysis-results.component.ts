@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { DecisionService } from 'src/app/services/decision.service';
 import { FormService } from 'src/app/services/form.service';
+import { Decision } from 'src/app/models/decsion.model';
 
 @Component({
   selector: 'app-analysis-results',
@@ -11,6 +12,7 @@ import { FormService } from 'src/app/services/form.service';
 export class AnalysisResultsComponent implements OnInit {
   recommendedOption : string = '';
   decisionId!: number | null;
+  decision!: Decision;
 
   constructor(private decisionService: DecisionService, 
               private formService: FormService) { }
@@ -58,6 +60,12 @@ export class AnalysisResultsComponent implements OnInit {
       this.decisionId = data.decisionId;
     });
 
+    if(this.decisionId){
+      this.decisionService.getDecisionDetails(this.decisionId!).subscribe(response =>{
+        this.decision = response.data;
+      });
+    }
+
     this.updateChartData()
   }
 
@@ -80,6 +88,16 @@ export class AnalysisResultsComponent implements OnInit {
   
       })
     }
+  }
 
+  resolveDecision(){
+    if(this.decision.resolved){
+      this.decision.resolved = false;
+    } else {
+      this.decision.resolved = true;
+    }
+    this.decisionService.updateDecision(this.decision).subscribe(decision => {
+      this.decision = decision.data;
+    });
   }
 }

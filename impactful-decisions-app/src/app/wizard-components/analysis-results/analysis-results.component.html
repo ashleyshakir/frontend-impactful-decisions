@@ -16,4 +16,13 @@
     >
     </canvas>
   </div>
+  <div
+    class="decision-status"
+    (click)="resolveDecision()"
+    [ngStyle]="{
+      'background-color': decision.resolved ? '#88E9C2' : '#59D8E5'
+    }"
+  >
+    {{ decision.resolved ? "Resolved" : "Unresolved" }}
+  </div>
 </mat-card>
