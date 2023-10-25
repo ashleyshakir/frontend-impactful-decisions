@@ -15,9 +15,8 @@ export class FormService {
   private formDataSubject = new BehaviorSubject<any>(this.formData);
   formData$ = this.formDataSubject.asObservable();
 
-  constructor() { 
-    // this.loadFormDataFromLocalStorage();
-  }
+  constructor() { }
+  
   loadFormDataFromLocalStorage(): void {
     const storedData = JSON.parse(localStorage.getItem('form-data')|| '{}');
     if (storedData) {

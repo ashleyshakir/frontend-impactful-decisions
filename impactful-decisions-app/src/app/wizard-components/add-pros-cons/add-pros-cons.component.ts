@@ -258,7 +258,7 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
       const originalPro = this.originalProData[index];
       const proId = originalPro ? originalPro.id : null;
 
-      if (proId){
+      if (proId && Array.isArray(this.currentOption.proConList) && this.currentOption.proConList.length > 0){
         console.log('Updating existing pro with ID', proId);
         this.updateExistingPro(proId, newPro);
       } else {
@@ -271,7 +271,7 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
       const originalCon = this.originalConData[index];
       const conId = originalCon ? originalCon.id : null;
       
-      if(conId){
+      if(conId && Array.isArray(this.currentOption.proConList) && this.currentOption.proConList.length > 0){
         console.log('Updating existing con with ID', conId);
         this.updateExistingCon(conId, newCon);
       } else {
@@ -349,7 +349,7 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
       // If there are no more options left.
       console.log("All options covered!");
       // Navigate to summary page
-      this.router.navigate(['/decisions/create/step5']);
+      this.router.navigate(['/decisions/create/step5', { 'random': new Date().getTime() }]);
     }
   }
   

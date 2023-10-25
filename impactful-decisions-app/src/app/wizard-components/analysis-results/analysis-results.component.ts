@@ -3,6 +3,7 @@ import { ChartOptions } from 'chart.js';
 import { DecisionService } from 'src/app/services/decision.service';
 import { FormService } from 'src/app/services/form.service';
 import { Decision } from 'src/app/models/decsion.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-analysis-results',
@@ -15,7 +16,8 @@ export class AnalysisResultsComponent implements OnInit {
   decision!: Decision;
 
   constructor(private decisionService: DecisionService, 
-              private formService: FormService) { }
+              private formService: FormService,
+              private router: Router) { }
 
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: true,
@@ -99,5 +101,8 @@ export class AnalysisResultsComponent implements OnInit {
     this.decisionService.updateDecision(this.decision).subscribe(decision => {
       this.decision = decision.data;
     });
+  }
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
   }
 }
