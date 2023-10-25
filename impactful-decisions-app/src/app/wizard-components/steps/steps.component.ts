@@ -62,7 +62,7 @@ export class StepsComponent implements OnInit{
     }
   }
   navigateTo(step: string): void {
-    this.router.navigate([`decisions/create/${step}/`]);
+    this.router.navigate([`decisions/create/${step}`]);
   }
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;

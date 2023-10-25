@@ -349,7 +349,7 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
       // If there are no more options left.
       console.log("All options covered!");
       // Navigate to summary page
-      this.router.navigate(['/decisions/create/step5', { 'random': new Date().getTime() }]);
+      this.router.navigate(['/decisions/create/step5']);
     }
   }
   
