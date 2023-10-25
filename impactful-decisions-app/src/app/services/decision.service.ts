@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ProCon } from '../models/procon.model';
 import { Option } from '../models/option.model';
+import { Criteria } from '../models/criteria.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,20 +53,18 @@ export class DecisionService {
     localStorage.removeItem('decision');
   }
   
-  getDecisions() : Observable<{ data: Decision[]}>{
-    return this.http.get<{data : Decision[] }>(this.decsionsUrl,{headers: this.headers});
-  }
-
   totalDecisions(decisions: Decision[]) : number{
     return decisions.length;
   }
 
+  // Logic for getting the percentages of the decisions that have been resolved
   resolvedPercentage(decisions :Decision[]): number{
     const decisionCount = decisions.length;
     const resolvedCount = decisions.filter(decision => decision.resolved).length;
     return Math.floor(resolvedCount / decisionCount * 100);
   }
 
+  // Request to CREATE, GET, UPDATE, DELETE a decision
   createDecision(decision: Decision): Observable<any> {
     return this.http.post(this.decsionsUrl, decision, {headers: this.headers}).pipe(
       tap((response : any)=> {
@@ -77,11 +76,21 @@ export class DecisionService {
       catchError(this.handleError)
     )
   }
+  getDecisions() : Observable<{ data: Decision[]}>{
+    return this.http.get<{data : Decision[] }>(this.decsionsUrl,{headers: this.headers});
+  }
+  getDecisionDetails(decisionId: number): Observable<{data: Decision}>{
+    const url = `${this.decsionsUrl}${decisionId}/`;
+      return this.http.get<{data: Decision}>(url, {headers: this.headers}).pipe(
+        tap(response => {
+          console.log(response.data);
+        })
+      )
+  }
   updateDecision(decision: Decision): Observable<any> {
     return this.http.put(this.decsionsUrl + decision.id + "/", decision, {headers: this.headers}).pipe(
       tap((response : any)=> {
         if (response && response.data){
-            // this.storeDecision(response.data);
         }
       }),
       catchError(this.handleError)
@@ -98,33 +107,20 @@ export class DecisionService {
     )
   }
 
-  // getDecisionById(): Observable<{data: Decision}>{
-  //   const url = `${this.decsionsUrl}${this.decisionId}/`;
-  //   return this.http.get<{data : Decision}>(url, {headers: this.headers}).pipe(
-  //     tap(response => {
-  //       console.log(response.data);
-  //     })
-  //   )
-  // }
 
-  getDecisionDetails(decisionId: number): Observable<{data: Decision}>{
-    const url = `${this.decsionsUrl}${decisionId}/`;
-      return this.http.get<{data: Decision}>(url, {headers: this.headers}).pipe(
-        tap(response => {
-          console.log(response.data);
-        })
-      )
-  }
 
-  // storeDecision(decision: Decision): void {
-  //   console.log("Storing decision via storeDecision: ", decision);
-  //   localStorage.setItem('decision', JSON.stringify(decision));
-  //   this.decision = decision;
-  // }
-
+  // Request to CREATE, GET, UPDATE, and DELETE Options
   addOptionsToDecision(options: any[]): Observable<any> {
     const url = `${this.decsionsUrl}${this.decisionId}/options/`;
     return this.http.post(url, options, {headers: this.headers});
+  }
+  getDecisionOptions(decisionId: number): Observable<{data: any[]}> {
+    const url = `${this.decsionsUrl}${decisionId}/options/`;
+    return this.http.get<{data : any[]}>(url, {headers: this.headers}).pipe(
+      tap((response) => {
+        console.log(response);
+      })
+    )
   }
   updateOptions(decisionId: number, optionId: number, option: Option): Observable<any> {
     const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/`;
@@ -135,29 +131,26 @@ export class DecisionService {
     return this.http.delete(url, {headers: this.headers});
   }
   
+  // Request to CREATE, GET, UPDATE, and DELETE Criteria
   addCriteriaToDecision(criteria: any[]): Observable<any> {
     const url = `${this.decsionsUrl}${this.decisionId}/criteria/`;
     return this.http.post(url, criteria, {headers: this.headers});
   }
-
-  getDecisionOptions(decisionId: number): Observable<{data: any[]}> {
-    const url = `${this.decsionsUrl}${decisionId}/options/`;
+  getDecisionCriteria(decisionId: number): Observable<{data: any[]}> {
+    const url = `${this.decsionsUrl}${decisionId}/criteria/`;
     return this.http.get<{data : any[]}>(url, {headers: this.headers}).pipe(
       tap((response) => {
         console.log(response);
-        // this.options = response.data;
       })
     )
   }
-
-  getDecisionCriteria(): Observable<{data: any[]}> {
-    const url = `${this.decsionsUrl}${this.decisionId}/criteria/`;
-    return this.http.get<{data : any[]}>(url, {headers: this.headers}).pipe(
-      tap((response) => {
-        console.log(response);
-        // this.criteria = response.data;
-      })
-    )
+  updateCriteria(decisionId: number, criteriaId: number, criteria: Criteria): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/criteria/${criteriaId}/`;
+    return this.http.put(url, criteria, {headers: this.headers});
+  }
+  deleteCriteria(decisionId: number, criteriaId: number): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/criteria/${criteriaId}/`;
+    return this.http.delete(url, {headers: this.headers});
   }
 
   addProConToOption(decisionId: number, optionId: number, proConData: ProCon, criteriaName: string): Observable<any> {
@@ -165,6 +158,7 @@ export class DecisionService {
     return this.http.post(url, proConData, {headers: this.headers});
   }
 
+  // Request to Analyze a Decision and recieve a Recommended Option
   analyzeDecision(): Observable<any> {
     const url = `${this.decsionsUrl}${this.decisionId}/recommendation/`;
     return this.http.get<any>(url, {headers: this.headers}).pipe(
@@ -173,7 +167,4 @@ export class DecisionService {
       })
     )
   }
-
-
-
 }

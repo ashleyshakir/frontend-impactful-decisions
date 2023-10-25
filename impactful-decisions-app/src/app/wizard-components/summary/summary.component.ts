@@ -21,11 +21,13 @@ export class SummaryComponent implements OnInit {
   criteriaList: Criteria[] = [];
   proConList: ProConItem[] = [];
   decisionId!: number | null;
+
   constructor(private decisionService: DecisionService,
               private router : Router, 
               private formService: FormService) { }
 
   ngOnInit(): void {
+    
     // Subscribe to form data to get the decisionId
     this.formService.formData$.subscribe(data => {
       this.decisionId = data.decisionId;

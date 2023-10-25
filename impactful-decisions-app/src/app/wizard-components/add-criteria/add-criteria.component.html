@@ -11,7 +11,6 @@
         <div
           *ngFor="
             let criterion of criteria.controls;
-            trackBy: trackByIndex;
             let i = index
           "
         >
@@ -61,7 +60,7 @@
       <!-- Add Criterion Button -->
       <button (click)="addCriteria()" id="add">Add Criteria</button>
       <!-- Save Button -->
-      <button [ngClass]="{'button-disabled-look': !criteriaForm.valid}" (click)="onSave()" id="save" [disabled]="!criteriaForm.valid">
+      <button type="button" [ngClass]="{'button-disabled-look': !criteriaForm.valid}" (click)="onSave()" id="save" [disabled]="!criteriaForm.valid">
         Save & Next
       </button>
       <!-- Total Weight Validation Message -->

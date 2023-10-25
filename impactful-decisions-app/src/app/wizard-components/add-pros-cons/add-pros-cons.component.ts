@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DecisionService } from 'src/app/services/decision.service';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ProCon } from 'src/app/models/procon.model';
 import { Router } from '@angular/router';
 import { customProConValidator } from 'src/app/services/custom-validators';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-add-pros-cons',
@@ -18,46 +19,52 @@ export class AddProsConsComponent implements OnInit{
   currentIndex: number = 0;
   proConData: ProCon = new ProCon();
   proConForm!: FormGroup;
+  decisionId!: number | null;
   lastProSaved: boolean = false;
   lastConSaved: boolean = false;
 
-  constructor(private decisionService: DecisionService, private fb: FormBuilder, private router : Router) { }
+  constructor(private decisionService: DecisionService,
+              private formService : FormService, 
+              private fb: FormBuilder, 
+              private router : Router) { }
 
   ngOnInit(): void {
+    // Subscribe to form data to get the decisionId
+    this.formService.formData$.subscribe(data => {
+      this.decisionId = data.decisionId;
+    });
+
+    // Initialize the form
+    this.proConForm = this.fb.group({
+      pros: this.fb.array([]),
+      cons: this.fb.array([])
+    });  
+
     this.fetchOptions();
     this.fetchCriteria();
-    this.initializeForm();
+
     this.proConForm.statusChanges.subscribe(status => {
       this.debugValidity();
     });
   }
 
   fetchOptions(): void {
-    // this.decisionService.getDecisionOptions().subscribe(options => {
-    //   this.options = options.data;
-    //   this.currentOption = this.options[this.currentIndex];
-    // }, error => {
-    //   console.log(error.message);
-    // });
+    this.decisionService.getDecisionOptions(this.decisionId!).subscribe(options => {
+      this.options = options.data;
+      this.currentOption = this.options[this.currentIndex];
+    }, error => {
+      console.log(error.message);
+    });
   }
 
   fetchCriteria(): void {
-    this.decisionService.getDecisionCriteria().subscribe(criteria => {
+    this.decisionService.getDecisionCriteria(this.decisionId!).subscribe(criteria => {
       this.criteria = criteria.data;
     }, error => {
       console.log(error.message);
     });
   }
 
-  initializeForm() {
-    this.proConForm = this.fb.group({
-      pros: this.fb.array([]),
-      cons: this.fb.array([])
-    });
-    // this.addPro();
-    // this.addCon();
-  
-  }
   debugValidity() {
     console.log('Form validity:', this.proConForm.valid);
     console.log('Pros validity:', this.pros.valid);
@@ -101,7 +108,6 @@ export class AddProsConsComponent implements OnInit{
   }
 
   saveProsCons() {
-    console.log("clicked");
     console.log(this.proConForm.valid);
     const proConFormData = this.proConForm.value;
     if (this.proConForm.valid) {

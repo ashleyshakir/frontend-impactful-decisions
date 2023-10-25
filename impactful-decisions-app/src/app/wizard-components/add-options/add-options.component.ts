@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { DecisionService } from 'src/app/services/decision.service';
 import { FormService } from 'src/app/services/form.service';
 import { Subscription } from 'rxjs';
-import { Router, NavigationEnd } from '@angular/router';
-import { Validators, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Validators } from '@angular/forms';
 import { Option } from 'src/app/models/option.model';
 
 @Component({
@@ -23,22 +23,13 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, 
               private decisionService: DecisionService, 
               private formService : FormService, 
-              private router: Router) {
-    // this.router.events.subscribe((event) => {
-    // if(event instanceof NavigationEnd && event.url === '/dashboard') {
-    //   this.unsubscribeFromFormChanges();
-    //   // this.decisionId = null;
-    //   this.optionsForm.reset();
-    //   this.formService.clearFormData();
-    //   }
-    // })         
+              private router: Router) {       
   }
 
   ngOnInit(): void {
     // Subscribe to form data to get the decisionId
     this.formService.formData$.subscribe(data => {
       this.decisionId = data.decisionId;
-      console.log("Decision ID on init: ", this.decisionId);
     });
 
     // Initialize the form
@@ -56,38 +47,6 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
         this.handleNewDecision(formData);
       }
     });
-
-    // this.subscription = this.formService.formData$.subscribe(formData => {
-    //   if (formData && formData.options && Array.isArray(formData.options)) {
-    //     // Clear the existing form array controls
-    //     while (this.options.length) {
-    //       this.options.removeAt(0);
-    //     }
-    //     // Push new form groups into the form array for each option in the data
-    //     formData.options.forEach((option: Option) => {
-    //       this.options.push(this.createOption(option.name));
-    //     });
-    //   } 
-
-    //   if (this.decisionId) { //&& (formData.options === null)
-    //     this.decisionService.getDecisionOptions(this.decisionId).subscribe(response => {
-    //       if (response.data && Array.isArray(response.data)){
-    //         this.isNewDecision = false;
-    //         // Clear existing form array controls
-    //         while (this.options.length) {
-    //           this.options.removeAt(0);
-    //         }
-
-    //         this.originalOptions = [...response.data];
-    //         console.log("OG Form Options: ",this.originalOptions);
-    //         // Push new form groups into the form array for each option in the API data
-    //         response.data.forEach((option: Option) => {
-    //         this.options.push(this.createOption(option.name));
-    //       });
-    //       }
-    //     });
-    //   }
-    // });
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -134,7 +93,6 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
   }
   removeOption(index: number): void {
     this.options.removeAt(index);
-    console.log("Original Option Id: ", this.originalOptions[index].id);
     this.decisionService.deleteOption(this.decisionId!, this.originalOptions[index].id!).subscribe(response => {
       console.log(response);
     }, error => {
@@ -169,7 +127,6 @@ private saveOptionsForNewDecision(options: Option[]): void {
     this.decisionService.addOptionsToDecision(options)
       .subscribe(response => {
         console.log(response);
-        // this.router.navigate(['/decisions/create/step3']);
       }, error => {
         console.log(error);
       });
