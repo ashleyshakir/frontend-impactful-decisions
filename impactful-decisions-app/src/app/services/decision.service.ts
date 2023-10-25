@@ -164,8 +164,8 @@ export class DecisionService {
     return this.http.get<{data : any[]}>(url, {headers: this.headers});
   }
 
-  updateProCon(decisionId: number, optionId: number, proConId: number, proCon: ProConItem) : Observable<any> {
-    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/${proConId}`
+  updateProCon(decisionId: number, optionId: number, proConId: number, proCon: ProConItem, criteriaName: string) : Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/${proConId}/?criteriaName=${criteriaName}`
     return this.http.put(url, proCon, {headers: this.headers});
   }
 

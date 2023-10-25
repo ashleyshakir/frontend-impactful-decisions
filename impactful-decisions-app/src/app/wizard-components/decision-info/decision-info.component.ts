@@ -60,8 +60,7 @@ export class DecisionInfoComponent implements OnInit{
     // Fetch existing data from API and populate form if needed
     this.decisionService.getDecisionDetails(this.decisionId).subscribe(data => {
       if (data){
-        console.log(data);
-        this.step1Form.patchValue(data);
+        this.step1Form.patchValue(data.data);
       } 
     });
 

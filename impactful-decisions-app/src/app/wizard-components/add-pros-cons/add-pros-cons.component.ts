@@ -100,6 +100,7 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   private handleExistingDecision(decisionId: number): void {
     console.log("handleExistingDecision method called");
     this.fetchOptions();
+    console.log("Criteria array: ",this.criteria)
   }
 
   fetchOptions(): void {
@@ -122,6 +123,7 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   fetchCriteria(): void {
     this.decisionService.getDecisionCriteria(this.decisionId!).subscribe(response => {
       this.criteria = response.data;
+      console.log("Criteria array: ",this.criteria)
     }, error => {
       console.log(error.message);
     });
@@ -132,7 +134,6 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
     this.decisionService.getProsAndConsForOption(this.decisionId!, optionId).subscribe(response => {
       if (response.data && Array.isArray(response.data)) {
         this.isNewDecision = false;
-        // this.fetchCriteria();
         this.clearExistingProCons();
         const fetchedProCons = response.data;
         console.log("fetched data: ",response.data)
@@ -289,7 +290,9 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   }
 
   private updateExistingPro(proId: number, newPro: ProConItem) : void {
-    this.decisionService.updateProCon(this.decisionId!, this.currentOption.id, proId, newPro).subscribe(response => {
+    console.log("criteriaName: ", newPro.criteriaName);
+    console.log("criteria", newPro.criteria)
+    this.decisionService.updateProCon(this.decisionId!, this.currentOption.id, proId, newPro, newPro.criteria!).subscribe(response => {
       console.log("Successfully updated pro", response);
     },
     error => {
@@ -298,7 +301,7 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
     );
   }
   private updateExistingCon(conId: number, newCon: ProConItem) : void {
-    this.decisionService.updateProCon(this.decisionId!, this.currentOption.id, conId, newCon).subscribe(response => {
+    this.decisionService.updateProCon(this.decisionId!, this.currentOption.id, conId, newCon, newCon.criteria!).subscribe(response => {
       console.log("Successfully updated con", response);
     },
     error => {
