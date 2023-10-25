@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import { DecisionService } from 'src/app/services/decision.service';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-analysis-results',
@@ -9,8 +10,10 @@ import { DecisionService } from 'src/app/services/decision.service';
 })
 export class AnalysisResultsComponent implements OnInit {
   recommendedOption : string = '';
+  decisionId!: number | null;
 
-  constructor(private decisionService: DecisionService) { }
+  constructor(private decisionService: DecisionService, 
+              private formService: FormService) { }
 
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: true,
@@ -50,26 +53,33 @@ export class AnalysisResultsComponent implements OnInit {
   public pieChartPlugins = [];
 
   ngOnInit(): void {
+    // Subscribe to form data to get the decisionId
+    this.formService.formData$.subscribe(data => {
+      this.decisionId = data.decisionId;
+    });
+
     this.updateChartData()
   }
 
   updateChartData() {
-    this.decisionService.analyzeDecision().subscribe(results => {
-      console.log(results);
-      const optionIds = Object.keys(results.optionScores);
-      const scores = Object.values(results.optionScores) as number[];
-
-      // Calculate the total
-      const total = scores.reduce((acc, value) => acc + value, 0);
-
-      // Convert scores to percentages
-      const percentages = scores.map(score => Math.round(((score / total) * 100) * 100) / 100);
-
-      this.pieChartLabels = optionIds;
-      this.pieChartDatasets = [{ data: percentages, backgroundColor: ['rgb(255, 153, 32)', 'rgb(89, 216, 229)', 'rgb(136, 233, 194)', 'rgb(255, 220, 113)' ], hoverOffset: 4 }];
-      this.recommendedOption = results.recommendedOption.name;
-
-    })
+    if (this.decisionId){
+      this.decisionService.analyzeDecision(this.decisionId).subscribe(results => {
+        console.log(results);
+        const optionIds = Object.keys(results.optionScores);
+        const scores = Object.values(results.optionScores) as number[];
+  
+        // Calculate the total
+        const total = scores.reduce((acc, value) => acc + value, 0);
+  
+        // Convert scores to percentages
+        const percentages = scores.map(score => Math.round(((score / total) * 100) * 100) / 100);
+  
+        this.pieChartLabels = optionIds;
+        this.pieChartDatasets = [{ data: percentages, backgroundColor: ['rgb(255, 153, 32)', 'rgb(89, 216, 229)', 'rgb(136, 233, 194)', 'rgb(255, 220, 113)' ], hoverOffset: 4 }];
+        this.recommendedOption = results.recommendedOption.name;
+  
+      })
+    }
 
   }
 }

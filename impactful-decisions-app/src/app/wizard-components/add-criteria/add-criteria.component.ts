@@ -39,6 +39,7 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
 
     // Load existing form data from the service
     this.formService.loadFormDataFromLocalStorage();
+    console.log("Data loaded from local storage: ", this.formService.loadFormDataFromLocalStorage())
 
 
     this.subscription = this.formService.formData$.subscribe(formData => {
@@ -115,6 +116,7 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
     return (this.criteriaForm.get('criteria') as FormArray).controls as FormGroup[];
   }
 
+
   addCriteria(): void {
     const criteriaGroup = this.fb.group({
     name: ['', Validators.required],
@@ -160,7 +162,7 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
  */
 private saveCriteriaForNewDecision(criteria: Criteria[]): void {
   if (this.decisionId) {
-    this.decisionService.addCriteriaToDecision(criteria)
+    this.decisionService.addCriteriaToDecision(this.decisionId, criteria)
       .subscribe(response => {
         console.log(response);
       }, error => {
@@ -176,8 +178,6 @@ private saveCriteriaForNewDecision(criteria: Criteria[]): void {
  * @param criteria - The criteria array from the form.
  */
 private updateAndAddCriteriaForExistingDecision(criteria: Criteria[]): void {
-  console.log('Updating and adding criteria. Input criteria:', criteria);
-  console.log('Original criteria:', this.originalCriteria);
   const newCriterionToAdd: Criteria[] = []; // To collect new criteria to add
 
   // Loop through each criterion and check against the original criteria
@@ -224,7 +224,7 @@ private updateExistingCriteria(criteriaId: number, newCriterion: Criteria): void
  * @param newCriteria - An array of new criteria to add.
  */
 private createNewCriteria(newCriteria: Criteria[]): void {
-  this.decisionService.addCriteriaToDecision(newCriteria).subscribe(
+  this.decisionService.addCriteriaToDecision(this.decisionId!, newCriteria).subscribe(
     response => {
       console.log("Successfully added new criteria", response);
     },

@@ -39,6 +39,7 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
 
     // Load existing form data from the service
     this.formService.loadFormDataFromLocalStorage();
+    console.log("Data loaded from local storage: ", this.formService.loadFormDataFromLocalStorage())
 
     this.subscription = this.formService.formData$.subscribe(formData => {
       if (this.decisionId) {
@@ -124,7 +125,7 @@ onSave(): void {
  */
 private saveOptionsForNewDecision(options: Option[]): void {
   if (this.decisionId) {
-    this.decisionService.addOptionsToDecision(options)
+    this.decisionService.addOptionsToDecision(this.decisionId, options)
       .subscribe(response => {
         console.log(response);
       }, error => {
@@ -183,7 +184,7 @@ private updateExistingOption(optionId: number, newOption: Option): void {
  * @param newOptions - An array of new options to add.
  */
 private createNewOptions(newOptions: Option[]): void {
-  this.decisionService.addOptionsToDecision(newOptions).subscribe(
+  this.decisionService.addOptionsToDecision(this.decisionId!, newOptions).subscribe(
     response => {
       console.log("Successfully added new options", response);
     },

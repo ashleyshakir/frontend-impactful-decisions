@@ -105,9 +105,10 @@
       <button id="add" (click)="addCon()">Add Con</button>
       <!-- Save & Next Button -->
       <button
+        type="button"
         id="save"
         [ngClass]="{ 'button-disabled-look': !proConForm.valid }"
-        (click)="saveProsCons()"
+        (click)="onSave()"
       >
         Save & Next
       </button>

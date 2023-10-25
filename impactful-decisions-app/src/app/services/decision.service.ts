@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { ProCon } from '../models/procon.model';
+import { ProCon, ProConItem } from '../models/procon.model';
 import { Option } from '../models/option.model';
 import { Criteria } from '../models/criteria.model';
 
@@ -23,7 +23,7 @@ export class DecisionService {
   options: any[] = [];
   criteria: any[] = [];
   decision : Decision | null = null; 
-  decisionId : number | null = null;
+  // decisionId : number | null = null;
 
   constructor(private http : HttpClient, private authService :AuthService) { 
     this.authService.userLoggedOut.subscribe(() => {
@@ -49,7 +49,7 @@ export class DecisionService {
   resetDecisionData() {
     this.decisions = [];
     this.decision = null;
-    this.decisionId = null;
+    // this.decisionId = null;
     localStorage.removeItem('decision');
   }
   
@@ -70,7 +70,7 @@ export class DecisionService {
       tap((response : any)=> {
         if (response && response.data){
             // this.storeDecision(response.data);
-            this.decisionId = response.data.id;
+            // this.decisionId = response.data.id;
         }
       }),
       catchError(this.handleError)
@@ -110,8 +110,8 @@ export class DecisionService {
 
 
   // Request to CREATE, GET, UPDATE, and DELETE Options
-  addOptionsToDecision(options: any[]): Observable<any> {
-    const url = `${this.decsionsUrl}${this.decisionId}/options/`;
+  addOptionsToDecision(decisionId: number, options: any[]): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/options/`;
     return this.http.post(url, options, {headers: this.headers});
   }
   getDecisionOptions(decisionId: number): Observable<{data: any[]}> {
@@ -132,8 +132,8 @@ export class DecisionService {
   }
   
   // Request to CREATE, GET, UPDATE, and DELETE Criteria
-  addCriteriaToDecision(criteria: any[]): Observable<any> {
-    const url = `${this.decsionsUrl}${this.decisionId}/criteria/`;
+  addCriteriaToDecision(decisionId: number, criteria: any[]): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/criteria/`;
     return this.http.post(url, criteria, {headers: this.headers});
   }
   getDecisionCriteria(decisionId: number): Observable<{data: any[]}> {
@@ -152,15 +152,35 @@ export class DecisionService {
     const url = `${this.decsionsUrl}${decisionId}/criteria/${criteriaId}/`;
     return this.http.delete(url, {headers: this.headers});
   }
-
-  addProConToOption(decisionId: number, optionId: number, proConData: ProCon, criteriaName: string): Observable<any> {
+  
+  // Request to CREATE, GET, UPDATE, and DELETE Pros and Cons
+  addProConToOption(decisionId: number, optionId: number, proConData: ProConItem, criteriaName: string): Observable<any> {
     const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/?criteriaName=${criteriaName}`;
     return this.http.post(url, proConData, {headers: this.headers});
   }
 
+  getProsAndConsForOption(decisionId: number, optionId: number) : Observable<{data: any[]}> {
+    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/`;
+    return this.http.get<{data : any[]}>(url, {headers: this.headers});
+  }
+
+  updateProCon(decisionId: number, optionId: number, proConId: number, proCon: ProConItem) : Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/${proConId}`
+    return this.http.put(url, proCon, {headers: this.headers});
+  }
+
+  deleteProCon(decisionId: number, optionId: number, proConId: number): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/options/${optionId}/procons/${proConId}`
+    return this.http.delete(url, {headers: this.headers});
+  }
+
+
+
+
+
   // Request to Analyze a Decision and recieve a Recommended Option
-  analyzeDecision(): Observable<any> {
-    const url = `${this.decsionsUrl}${this.decisionId}/recommendation/`;
+  analyzeDecision(decisionId: number): Observable<any> {
+    const url = `${this.decsionsUrl}${decisionId}/recommendation/`;
     return this.http.get<any>(url, {headers: this.headers}).pipe(
       tap((response) => {
         console.log(response);
