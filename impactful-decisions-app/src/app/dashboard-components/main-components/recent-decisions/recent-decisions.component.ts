@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Decision } from 'src/app/models/decsion.model';
 import { DecisionService } from'src/app/services/decision.service';
 import { faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -40,7 +40,6 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
         this.allDecisions = [];
         this.recentDecisions = [];
         this.hasDecisions = false;
-        // this.fetchDecisions();
       })
     );
     const decisionIdStr = this.route.snapshot.paramMap.get('id');
@@ -70,6 +69,7 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
           (response) => {
             console.log("Successfully deleted decision:", response);
             this.fetchDecisions(this.authService.user!);
+            this.decisionService.decisionsChanged.next();  
           },
           (error) => {
             console.log("Failed to delete decision:", error);

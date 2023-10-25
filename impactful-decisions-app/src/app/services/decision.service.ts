@@ -9,6 +9,7 @@ import { throwError } from 'rxjs';
 import { ProCon, ProConItem } from '../models/procon.model';
 import { Option } from '../models/option.model';
 import { Criteria } from '../models/criteria.model';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class DecisionService {
 
   private baseUrl = 'http://localhost:9093';
   private decsionsUrl = `${this.baseUrl}/api/decisions/`;
+  
+  // for updating decision stats once a user deletes a decision
+  public decisionsChanged = new Subject<void>();
   
   decisions: Decision[] = [];
   options: any[] = [];
