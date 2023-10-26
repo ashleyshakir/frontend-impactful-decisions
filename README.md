@@ -58,8 +58,8 @@ I have utilized GitHub Projects as a resource for project planning and managemen
 <details>
 <summary><b>Registration and Login</b></summary>
 
-- As a logged-out user, I can see a registration form to create a new account so that I can sign up for the application.**
-- As a logged-out user, I can access a login page to sign in to my account so that I can access my personalized dashboard.**
+- As a logged-out user, I can see a registration form to create a new account so that I can sign up for the application.
+- As a logged-out user, I can access a login page to sign in to my account so that I can access my personalized dashboard.
 </details>
 
 <details>
