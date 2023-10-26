@@ -1,11 +1,11 @@
 .step-sidebar {
-    height: fit-content;
-    width: 300px; 
+    height: 100%;
+    max-height: 700px;
+    width: 100%; 
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     background-color: #59D8E5; 
-    padding: 20px 0; 
     margin-left: 60px;
 
     ul {

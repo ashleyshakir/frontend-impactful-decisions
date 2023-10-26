@@ -1,14 +1,16 @@
-mat-card .container{
-  max-width: 100%;
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+.container{
+  width: 100%;
 }
 .main-container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   .main {
     padding: 30px;
     margin: 0 auto;
-
   }
 }
 

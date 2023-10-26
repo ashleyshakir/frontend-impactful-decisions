@@ -15,20 +15,19 @@
       [legend]="pieChartLegend"
     >
     </canvas>
-    <!-- Moved button-container inside results-container -->
-    <div class="button-container">
-      <div
-        class="decision-status"
-        (click)="resolveDecision()"
-        [ngStyle]="{
-          'background-color': decision.resolved ? '#88E9C2' : '#59D8E5'
-        }"
-      >
-        {{ decision.resolved ? "Resolved" : "Unresolved" }}
-      </div>
-      <div class="to-dashboard" (click)="navigateToDashboard()">
-        Back to Dashboard
-      </div>
+  </div>
+  <div class="button-container">
+    <div
+      class="decision-status"
+      (click)="resolveDecision()"
+      [ngStyle]="{
+        'background-color': decision.resolved ? '#88E9C2' : '#59D8E5'
+      }"
+    >
+      {{ decision.resolved ? "Resolved" : "Unresolved" }}
+    </div>
+    <div class="to-dashboard" (click)="navigateToDashboard()">
+      Back to Dashboard
     </div>
   </div>
 </mat-card>

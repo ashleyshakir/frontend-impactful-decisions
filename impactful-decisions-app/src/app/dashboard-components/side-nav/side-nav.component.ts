@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faListCheck, faHouse } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { FormService } from 'src/app/services/form.service';
 
@@ -10,6 +10,8 @@ import { FormService } from 'src/app/services/form.service';
 })
 export class SideNavComponent {
   faCirclePlus = faCirclePlus;
+  faListCheck = faListCheck;
+  faHouse = faHouse;
 
   constructor(private router: Router, private formService: FormService) { }
 

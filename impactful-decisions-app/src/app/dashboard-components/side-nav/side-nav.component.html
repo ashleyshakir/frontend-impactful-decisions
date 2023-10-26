@@ -5,11 +5,13 @@
         <p> Create New Decision </p>
         <fa-icon (click)="navigateToWizard()" class="icon" [icon]="faCirclePlus"></fa-icon>
       </div>
-      <div class="nav-item" id="dash">
-        <p (click)="navigateToDashboard()">Dashboard</p>
+      <div (click)="navigateToDashboard()" class="nav-item" id="dash">
+        <p>Dashboard</p>
+        <fa-icon class="icon" [icon]="faHouse"></fa-icon>
       </div>
-      <div class="nav-item">
-        <p (click)="navigateToDecisions()">View All Decisions</p>
+      <div (click)="navigateToDecisions()" class="nav-item">
+        <p>View All Decisions</p>
+        <fa-icon class="icon" [icon]="faListCheck"></fa-icon>
       </div>
     </div>
   </mat-card-content>

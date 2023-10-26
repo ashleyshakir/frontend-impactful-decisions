@@ -4,6 +4,7 @@ mat-card{
 }
 .mat-mdc-card-content:last-child {
   padding-top: 30px;
+  padding-left: 50px;
 }
 .nav-items {
   display: flex;
@@ -18,9 +19,6 @@ mat-card{
   color:#064663;
   font-weight: 400;
 }
-.nav-item p{
-  padding: 20px 30px;
-}
 .icon {
   cursor: pointer;
   font-size: 50px;
@@ -32,13 +30,18 @@ mat-card{
 }
 .add-decision{
   background-color: rgba(255, 186, 128, 0.7);
-  padding: 35px 20px;
+  padding: 25px 20px;
 }
 .nav-item{
   cursor: pointer;
+  background-color: rgba(255, 153, 32, 0.1);
+  padding: 35px 20px;
 }
 .nav-item:hover{
-  background-color: rgba(255, 153, 32, 0.1);
+  background-color: rgba(255, 186, 128, 0.7);
+}
+.nav-item .icon{
+  font-size: 30px;
 }
 
 @media (max-width: 768px) {
@@ -52,6 +55,9 @@ mat-card{
   }
   .nav-item{
     background-color: rgba(255, 186, 128, 0.7);
+  }
+  .nav-item .icon{
+    font-size: 50px;
   }
   .nav-item, .add-decision {
     margin-bottom: 0;
