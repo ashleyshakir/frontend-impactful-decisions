@@ -157,7 +157,6 @@ While building my full-stack application, I encountered a data serialization bug
 
 <br>To fix this, I had to align the data format on both sides. This involved debugging and adjusting the code on the backend to ensure the data matched. In the end, this resolved the communication problem between the frontend and backend.
 
-<br>
 </details>
 <details>
 <summary><strong>Challenge:</strong> JWT Token Refresh for Real-Time Updates</summary>

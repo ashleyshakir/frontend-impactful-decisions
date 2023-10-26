@@ -30,12 +30,12 @@ export class UserRegistrationComponent {
           (response)=> {
             console.log("Registration successful:",response);
             this.snackBar.open('Registration Successful', '', {
-              duration: 3000,
+              duration: 1500,
             });
               // Navigate back to login page after a delay
             setTimeout(() => {
               this.router.navigate(['/login']);
-            }, 3100);
+            }, 2000);
           },
           (error) => {
             console.log("Registration failed:",error);
