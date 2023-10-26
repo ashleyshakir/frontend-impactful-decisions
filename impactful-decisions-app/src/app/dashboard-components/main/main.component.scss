@@ -3,6 +3,7 @@
 }
 mat-card{
   box-shadow: none;
+  width: 100%;
 }
 mat-card .main-items {
     display: flex;
@@ -30,14 +31,15 @@ mat-card .main-items {
   
     .bottom-section {
       flex: 1;
-
       .decision-container {
         flex: 1;
         padding: 10px;
       }
     }
   }
+  @media (max-width: 768px) {
 
+  }
 
   
   

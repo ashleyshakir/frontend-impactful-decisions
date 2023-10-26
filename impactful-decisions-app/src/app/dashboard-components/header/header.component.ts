@@ -42,7 +42,6 @@ export class HeaderComponent implements OnInit{
     this.currentDate = date.toLocaleDateString('en-US', options);
     this.currentDay = date.toLocaleDateString('en-US', { weekday: 'long' });
     
-    console.log("User in AuthService: ", this.authService.user);
     this.username = this.authService.user? this.authService.user.username : '';
     this.initial = this.authService.user? this.authService.user.username[0].toUpperCase() : '';
     

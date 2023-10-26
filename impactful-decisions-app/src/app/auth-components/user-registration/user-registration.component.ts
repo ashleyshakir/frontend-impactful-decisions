@@ -28,7 +28,6 @@ export class UserRegistrationComponent {
         if(this.form && this.form.valid){
         this.authService.register(user).subscribe(
           (response)=> {
-            console.log("Registration successful:",response);
             this.snackBar.open('Registration Successful', '', {
               duration: 1500,
             });
@@ -38,7 +37,6 @@ export class UserRegistrationComponent {
             }, 2000);
           },
           (error) => {
-            console.log("Registration failed:",error);
             const errorMsg = error.error.message || 'Failed to register. Please try again later.';
             this.snackBar.open(errorMsg, '', {
               duration: 3200,
@@ -47,9 +45,6 @@ export class UserRegistrationComponent {
 
           }
         );
-        } else {
-          console.log('Form is not valid');
-        }
+        } 
     }
-
 }
