@@ -2,14 +2,14 @@
   <mat-card-content>
     <div class="nav-items">
       <div class="add-decision">
-        <span> Create New Decision </span>
+        <p> Create New Decision </p>
         <fa-icon (click)="navigateToWizard()" class="icon" [icon]="faCirclePlus"></fa-icon>
       </div>
-      <div class="nav-item">
-        <span (click)="navigateToDashboard()">Dashboard</span>
+      <div class="nav-item" id="dash">
+        <p (click)="navigateToDashboard()">Dashboard</p>
       </div>
       <div class="nav-item">
-        <span (click)="navigateToDecisions()">Decisions</span>
+        <p (click)="navigateToDecisions()">View All Decisions</p>
       </div>
     </div>
   </mat-card-content>

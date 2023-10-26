@@ -1,10 +1,20 @@
 @import '/src/app/dashboard-components/decision-shared.scss';
 .main-container {
     display: flex;
-    flex-direction: row;
-    .decision-container{
-        flex: 1;
-        padding-top: 40px;
-        margin-right: 40px;
+    flex-wrap: wrap;
+}
+.decision-container{
+    flex: 1;
+    padding-top: 30px;
+    margin-right: 40px;
+    margin-left: 40px;
+}
+@media (max-width: 700px) {
+    .main-container{
+        flex-direction: column;
     }
-  }
+    .side-nav{
+        display: none;
+    }
+}
+  

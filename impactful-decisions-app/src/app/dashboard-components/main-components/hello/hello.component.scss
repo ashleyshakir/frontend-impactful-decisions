@@ -1,12 +1,10 @@
-// SCSS variables for easier management
-$mobile-breakpoint: 768px;
-
 .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  width: 900px; //make responsive later
+  width: 100%;
+  // max-width: 900px;
   height: auto;
   margin: 0 auto;
 
@@ -29,18 +27,17 @@ $mobile-breakpoint: 768px;
   }
 
   // Media Query for Mobile Devices
-  @media (max-width: $mobile-breakpoint) {
+  @media (max-width: 768px) {
     flex-direction: column;
 
     .text-container {
       text-align: center;
-      width: 100%;  
     }
 
     .overlay-image {
       position: static;  
       transform: none;
-      max-width: 30%;
+      max-width: 60%;
       align-self: center;
     }
   }

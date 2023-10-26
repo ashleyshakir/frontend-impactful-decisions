@@ -51,12 +51,19 @@
 @media (max-width: 600px) {
     .decision-card {
         flex-direction: column;
+        padding-top: 60px;
     }
-
     .image-placeholder {
         margin-right: 0;
         margin-bottom: 20px;
         align-self: center; 
+    }
+    .image-container{
+        margin-right: 0;
+        margin-left: 20px;
+    }
+    .decision-content{
+        text-align: center;
     }
 }
 

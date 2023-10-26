@@ -1,7 +1,10 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 mat-card{
   box-shadow: none;
 }
-.main-items {
+mat-card .main-items {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -18,7 +21,6 @@ mat-card{
   
     .middle-section {
       flex: 2;
-      // background-color: #eaeaea;
   
       .stat-container {
         flex: 1;
@@ -28,12 +30,14 @@ mat-card{
   
     .bottom-section {
       flex: 1;
-  
+
       .decision-container {
         flex: 1;
         padding: 10px;
       }
     }
   }
+
+
   
   
