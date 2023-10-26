@@ -1,5 +1,5 @@
 # Impactful Decisions 
-![Impactful Decisions Logo](images/impactful-decisions-logo.png)
+![Impactful Decisions Logo](Images/impactful-decisions-logo.png)
 
 ## Project Description
 
@@ -52,7 +52,7 @@ Impactful Decisions is a web-based application designed to empower users to make
 
 I have utilized GitHub Projects as a resource for project planning and management. You can view the project board [here](https://github.com/users/ashleyshakir/projects/5). Below is a screenshot of the GitHub project board as of October 26, 2023:
 
-![GitHub Project Board Screenshot](images/project-board.png)
+![GitHub Project Board Screenshot](Images/project-board.png)
 
 #### User-Centric Design
 <details>
