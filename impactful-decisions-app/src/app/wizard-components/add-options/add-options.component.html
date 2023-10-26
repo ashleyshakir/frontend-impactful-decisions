@@ -1,8 +1,8 @@
 <mat-card class="container">
   <app-steps></app-steps>
   <div class="form-container">
-    <h1>Decision Choices</h1>
-    <h3>Enter the options you're considering.</h3>
+    <h1>Add Decision Choices</h1>
+    <h3>Enter the Different Options You're Considering</h3>
     <form [formGroup]="optionsForm">
       <div formArrayName="options">
         <div *ngFor="let option of options.controls; let i = index">

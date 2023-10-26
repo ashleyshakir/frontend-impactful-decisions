@@ -6,6 +6,8 @@ import { Criteria } from'src/app/models/criteria.model';
 import { ProConItem } from 'src/app/models/procon.model';
 import { Router } from '@angular/router';
 import { FormService } from 'src/app/services/form.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SummaryDialogComponent } from 'src/app/dialog-components/summary-dialog/summary-dialog.component';
 
 @Component({
   selector: 'app-summary',
@@ -24,7 +26,8 @@ export class SummaryComponent implements OnInit {
 
   constructor(private decisionService: DecisionService,
               private router : Router, 
-              private formService: FormService) { }
+              private formService: FormService,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     
@@ -48,10 +51,26 @@ export class SummaryComponent implements OnInit {
       } else {
         console.log("No decision id provided");
       }
-    })
+    });
+
+    if (!localStorage.getItem('summaryDialog')) {
+      this.openDialog();
+    }
   }
+
   analyzeDecision() {
     this.router.navigate(['decisions/create/step6'])
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(SummaryDialogComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      localStorage.setItem('summaryDialog', 'true');
+    });
+  }
+  
 
 }

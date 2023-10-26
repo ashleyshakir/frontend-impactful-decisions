@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { FormService } from'src/app/services/form.service';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { WelcomeDialogComponent } from 'src/app/dialog-components/welcome-dialog/welcome-dialog.component';
 
 @Component({
   selector: 'app-decision-info',
@@ -22,7 +24,8 @@ export class DecisionInfoComponent implements OnInit{
   constructor(private fb: FormBuilder, 
               private decisionService: DecisionService, 
               private router: Router,
-              private formService: FormService) { 
+              private formService: FormService,
+              public dialog: MatDialog) { 
   }
 
   ngOnInit(): void {
@@ -57,24 +60,23 @@ export class DecisionInfoComponent implements OnInit{
         this.step1Form.patchValue(data.data);
       } 
     });
-
-    // Listen for form changes and update the API
-    // Capture the subscription object when subscribing
-  //   this.formValueChangesSubscription = this.step1Form.valueChanges.pipe(
-  //     debounceTime(400),  // Wait for 400ms pause in events
-  //     distinctUntilChanged()  // Only send if value changed
-  //   ).subscribe(decision => {
-  //     decision.id = this.decisionId;
-  //     this.decisionService.updateDecision(decision).subscribe(response => {
-  //       console.log(response);
-  //     });
-  //   });
     } 
+    if (!localStorage.getItem('welcomeDialog')) {
+      this.openDialog();
+    }
   }
   private unsubscribeFromFormChanges() {
     if (this.formValueChangesSubscription) {
       this.formValueChangesSubscription.unsubscribe();
     }
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(WelcomeDialogComponent, {
+      width: '600px'
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      localStorage.setItem('welcomeDialog', 'true');
+    });
   }
 
   onSave(): void {

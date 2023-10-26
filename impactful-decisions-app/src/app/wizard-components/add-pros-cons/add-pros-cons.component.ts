@@ -8,6 +8,8 @@ import { FormService } from 'src/app/services/form.service';
 import { Option } from 'src/app/models/option.model';
 import { Criteria } from 'src/app/models/criteria.model';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ProConDialogComponent } from 'src/app/dialog-components/pro-con-dialog/pro-con-dialog.component';
 
 @Component({
   selector: 'app-add-pros-cons',
@@ -35,7 +37,8 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   constructor(private decisionService: DecisionService,
               private formService : FormService, 
               private fb: FormBuilder, 
-              private router : Router) { }
+              private router : Router, 
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     // Subscribe to form data to get the decisionId
@@ -48,6 +51,11 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
       pros: this.fb.array([this.createPro()]),
       cons: this.fb.array([this.createCon()])
     });  
+
+    if (!localStorage.getItem('hasSeenExplanationDialog')) {
+      this.openDialog();
+    }
+  
 
     // Load existing form data from the service
     this.formService.loadFormDataFromLocalStorage();
@@ -65,6 +73,15 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ProConDialogComponent, {
+      width: '600px'
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      localStorage.setItem('hasSeenExplanationDialog', 'true');
+    });
+  }
+
   private clearExistingProCons(): void {
     console.log("existing pros and cons cleared");
     while (this.pros.length) {

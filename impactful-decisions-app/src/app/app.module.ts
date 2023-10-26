@@ -22,6 +22,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -46,7 +47,12 @@ import { AddCriteriaComponent } from './wizard-components/add-criteria/add-crite
 import { AddProsConsComponent } from './wizard-components/add-pros-cons/add-pros-cons.component';
 import { SummaryComponent } from './wizard-components/summary/summary.component';
 import { DecisionDetailsComponent } from './decision-details/decision-details.component';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from './dialog-components/confirm-dialog/confirm-dialog.component';
+import { ProConDialogComponent } from './dialog-components/pro-con-dialog/pro-con-dialog.component';
+import { CriteriaDialogComponent } from './dialog-components/criteria-dialog/criteria-dialog.component';
+import { WelcomeDialogComponent } from './dialog-components/welcome-dialog/welcome-dialog.component';
+import { OptionsDialogComponent } from './dialog-components/options-dialog/options-dialog.component';
+import { SummaryDialogComponent } from './dialog-components/summary-dialog/summary-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +75,12 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     AddProsConsComponent,
     SummaryComponent,
     DecisionDetailsComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ProConDialogComponent,
+    CriteriaDialogComponent,
+    WelcomeDialogComponent,
+    OptionsDialogComponent,
+    SummaryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +104,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MatDialogModule,
     MatSliderModule,
     MatTabsModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

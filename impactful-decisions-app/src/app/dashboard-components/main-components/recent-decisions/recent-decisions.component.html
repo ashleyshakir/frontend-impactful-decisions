@@ -1,5 +1,7 @@
 <mat-card *ngFor="let decision of recentDecisions" class="decision-card">
-  <div class="image-placeholder"></div>
+  <div class="image-container">
+  <img src="assets/light-blub.png" alt="light bulb"/>
+  </div>
   <div class="decision-content">
     <h3>{{ decision.title }}</h3>
     <p>{{ decision.description }}</p>

@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 import { AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Criteria } from 'src/app/models/criteria.model';
-
+import { MatDialog } from '@angular/material/dialog';
+import { CriteriaDialogComponent } from 'src/app/dialog-components/criteria-dialog/criteria-dialog.component';
 @Component({
   selector: 'app-add-criteria',
   templateUrl: './add-criteria.component.html',
@@ -22,7 +23,8 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
   constructor(private fb: FormBuilder,
               private decisionService: DecisionService, 
               private formService : FormService, 
-              private router: Router) { }
+              private router: Router,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     // Subscribe to form data to get the decisionId
@@ -50,10 +52,25 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
       }
     });
 
+    if (!localStorage.getItem('criteriaDialog')) {
+      this.openDialog();
+    }
+
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CriteriaDialogComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      localStorage.setItem('criteriaDialog', 'true');
+    });
+  }
+
   private clearExistingCriteria(): void {
     while (this.criteria.length) {
       this.criteria.removeAt(0);

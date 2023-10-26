@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { Option } from 'src/app/models/option.model';
+import { MatDialog } from '@angular/material/dialog';
+import { OptionsDialogComponent } from 'src/app/dialog-components/options-dialog/options-dialog.component';
 
 @Component({
   selector: 'app-add-options',
@@ -23,7 +25,8 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, 
               private decisionService: DecisionService, 
               private formService : FormService, 
-              private router: Router) {       
+              private router: Router,
+              public dialog: MatDialog) {       
   }
 
   ngOnInit(): void {
@@ -48,10 +51,26 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
         this.handleNewDecision(formData);
       }
     });
+
+    if (!localStorage.getItem('optionsDialog')) {
+      this.openDialog();
+    }
   }
+  
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(OptionsDialogComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      localStorage.setItem('optionsDialog', 'true');
+    });
+  }
+
   private clearExistingOptions(): void {
     while (this.options.length) {
       this.options.removeAt(0);

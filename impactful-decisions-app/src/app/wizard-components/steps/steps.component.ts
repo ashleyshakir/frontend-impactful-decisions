@@ -17,6 +17,7 @@ export class StepsComponent implements OnInit{
   showDropdown = false;
 
 
+
   constructor(private router: Router, private route: ActivatedRoute, private authService : AuthService) {
     this.router.events.subscribe((event) => {
       if(event instanceof NavigationEnd) {
@@ -31,6 +32,7 @@ export class StepsComponent implements OnInit{
       this.username = this.authService.user? this.authService.user.username : '';
       this.initial = this.authService.user? this.authService.user.username[0].toUpperCase() : '';
     }
+
 
   activeStep: number = 1;
 

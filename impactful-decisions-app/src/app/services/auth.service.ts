@@ -65,6 +65,12 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');  
+    localStorage.removeItem('welcomeDialog');
+    localStorage.removeItem('hasSeenExplanationDialog');
+    localStorage.removeItem('criteriaDialog');
+    localStorage.removeItem('summaryDialog');
+    localStorage.removeItem('optionsDialog');
+
     this.user = null;
     this.userLoggedOut.emit();
   }
@@ -77,6 +83,4 @@ export class AuthService {
       })
     )
   }
-
-
 }

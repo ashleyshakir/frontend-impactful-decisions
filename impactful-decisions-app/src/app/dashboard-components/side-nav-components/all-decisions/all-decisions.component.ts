@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/dialog-components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-all-decisions',

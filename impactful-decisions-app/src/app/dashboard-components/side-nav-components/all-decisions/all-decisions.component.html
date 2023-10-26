@@ -9,7 +9,9 @@
     <div class="decision-container">
       <p id="no-decisions" *ngIf="!hasDecisions">No recent decisions</p>
       <mat-card *ngFor="let decision of allDecisions" class="decision-card">
-        <div class="image-placeholder"></div>
+        <div class="image-container">
+          <img src="assets/light-blub.png" alt="light bulb" />
+        </div>
         <div class="decision-content">
           <h3>{{ decision.title }}</h3>
           <p>{{ decision.description }}</p>
@@ -17,13 +19,23 @@
             {{ decision.creationDate | date }}
           </p>
         </div>
-        <div class="decision-status"
-        [ngStyle]="{ 'background-color': decision.resolved ? '#88E9C2' : '#59D8E5' }">
+        <div
+          class="decision-status"
+          [ngStyle]="{
+            'background-color': decision.resolved ? '#88E9C2' : '#59D8E5'
+          }"
+        >
           {{ decision.resolved ? "Resolved" : "Unresolved" }}
         </div>
         <div class="action-icons">
-          <fa-icon (click)="viewDecisionDetails(decision.id)"  [icon]="faPencil"></fa-icon>
-          <fa-icon (click)="deleteDecision(decision.id)" [icon]="faTrashCan"></fa-icon>
+          <fa-icon
+            (click)="viewDecisionDetails(decision.id)"
+            [icon]="faPencil"
+          ></fa-icon>
+          <fa-icon
+            (click)="deleteDecision(decision.id)"
+            [icon]="faTrashCan"
+          ></fa-icon>
         </div>
       </mat-card>
     </div>

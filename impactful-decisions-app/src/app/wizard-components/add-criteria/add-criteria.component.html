@@ -1,9 +1,9 @@
 <mat-card class="container">
   <app-steps></app-steps>
   <div class="form-container">
-    <h1>Decision Criteria</h1>
+    <h1>Set Decision Factors</h1>
     <h3>
-      Enter the criteria you will be setting to help you make your decision.
+      Specify the Factors or Aspects That Matter Most
     </h3>
     <form [formGroup]="criteriaForm">
       <!-- Form Array - Criteria -->
@@ -17,27 +17,18 @@
           <div class="smaller-input">
             <!-- Criterion Name -->
             <div class="form-group" [formGroupName]="i">
-              <label for="name-{{ i }}">Criterion Name:</label>
+              <label for="name-{{ i }}">Factor:</label>
               <input
                 id="name-{{ i }}"
                 type="text"
                 class="form-control"
                 formControlName="name"
               />
-              <small
-                *ngIf="
-                  criterion.get('name')?.invalid &&
-                  criterion.get('name')?.touched
-                "
-                class="text-danger"
-              >
-                Criterion name is required.
-              </small>
             </div>
 
             <!-- Criterion Weight -->
             <div class="form-group" [formGroupName]="i">
-              <label for="weight-{{ i }}">Weight (%):</label>
+              <label for="weight-{{ i }}">Importance:</label>
               <select
                 id="weight-{{ i }}"
                 class="form-control"
@@ -47,7 +38,7 @@
                   *ngFor="let num of [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
                   [value]="num"
                 >
-                  {{ num }}
+                  {{ num }}%
                 </option>
               </select>
             </div>
@@ -58,14 +49,14 @@
       </div>
 
       <!-- Add Criterion Button -->
-      <button (click)="addCriteria()" id="add">Add Criteria</button>
+      <button (click)="addCriteria()" id="add">Add Factor</button>
       <!-- Save Button -->
       <button type="button" [ngClass]="{'button-disabled-look': !criteriaForm.valid}" (click)="onSave()" id="save" [disabled]="!criteriaForm.valid">
         Save & Next
       </button>
       <!-- Total Weight Validation Message -->
       <p *ngIf="totalWeightInvalid" class="text-danger">
-        The total weight of all criteria must be 100%.
+        Total Importance should equal 100%
       </p>
     </form>
   </div>
