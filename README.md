@@ -155,8 +155,7 @@ While integrating the front-end with my API, I encountered a challenge when atte
 <br>
 While building my full-stack application, I encountered a data serialization bug. The frontend was sending an object containing an array of options, but the backend was expecting a single option object. This mismatch caused an issue known as "HttpMessageNotReadableException" – basically, the server couldn't read the message.
 
-<br>
-To fix this, I had to align the data format on both sides. This involved debugging and adjusting the code on the backend to ensure the data matched. In the end, this resolved the communication problem between the frontend and backend.
+<br>To fix this, I had to align the data format on both sides. This involved debugging and adjusting the code on the backend to ensure the data matched. In the end, this resolved the communication problem between the frontend and backend.
 
 <br>
 </details>
@@ -165,8 +164,8 @@ To fix this, I had to align the data format on both sides. This involved debuggi
 <br>
 I encountered a challenging bug where the decisions displayed on the UI were not updating according to the currently logged-in user. Realized the root cause was stale JWT tokens in the HTTP headers used by the DecisionService. 
 
-<br>
-To resolve this, I integrated a dynamic header retrieval method within AuthService to fetch the most recent JWT token from local storage. This ensured that each HTTP request carried the latest token, aligning the fetched decisions with the current user session. Implementing this not only fixed the issue but also improved the application's overall data consistency and security.
+<br>To resolve this, I integrated a dynamic header retrieval method within AuthService to fetch the most recent JWT token from local storage. This ensured that each HTTP request carried the latest token, aligning the fetched decisions with the current user session. Implementing this not only fixed the issue but also improved the application's overall data consistency and security.
+
 </details>
 
 ## Installation Instructions
