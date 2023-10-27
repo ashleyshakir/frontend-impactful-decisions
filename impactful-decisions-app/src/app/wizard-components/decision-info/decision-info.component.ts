@@ -35,7 +35,6 @@ export class DecisionInfoComponent implements OnInit{
       // Only update the decisionId from the formService if it's not already set
       if (!this.decisionId){
         this.decisionId = data.decisionId;
-        console.log("Decision ID on init: ", this.decisionId);
       }
     });
 
@@ -90,11 +89,7 @@ export class DecisionInfoComponent implements OnInit{
           if (response && response.message === 'Decision updated successfully') {
             this.formService.updateFormData(decisionData);
             this.router.navigate(['/decisions/create/step2']);
-          } else {
-            console.log(response.message);
-          }
-        }, error => {
-          console.log(error);
+          } 
         });
       } else {
         // Create a new decision
@@ -106,13 +101,8 @@ export class DecisionInfoComponent implements OnInit{
           } else  {
             titleControl.setErrors({ 'serverError': response.message });
           }
-        }, error => {
-          console.log(error)
         });
       }
-
-    } else {
-      console.error('Form is not valid');
-    }
+    } 
   }
 }

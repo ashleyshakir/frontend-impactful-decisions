@@ -56,10 +56,13 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
       this.openDialog();
     }
   
-
     // Load existing form data from the service
     this.formService.loadFormDataFromLocalStorage();
-    console.log("Data loaded from local storage: ", this.formService.loadFormDataFromLocalStorage())
+    const storedData = this.formService.getFormData();
+    console.log("stored data: ", storedData)
+    if (storedData && storedData.pros && storedData.cons) {
+      // this.proConForm.patchValue(storedData);
+    } 
 
     this.subscription = this.formService.formData$.subscribe(formData => {
       if(this.decisionId){
@@ -83,7 +86,6 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   }
 
   private clearExistingProCons(): void {
-    console.log("existing pros and cons cleared");
     while (this.pros.length) {
       this.pros.removeAt(0);
     }
@@ -92,78 +94,60 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
     }
   }
   private addProConsToForm(pros: ProConItem[], cons: ProConItem[]): void {
-    console.log("adding pros and cons to form");
     pros.forEach((pro: ProConItem) => {
       this.pros.push(this.createPro(pro.description, pro.rating, pro.criteriaName));
-      console.log("adding ", pro);
-      console.log("criteria: ", pro.criteriaName)
     });
     cons.forEach((con: ProConItem) => {
       this.cons.push(this.createCon(con.description, con.rating, con.criteriaName));
-      console.log("adding ", con);
-      console.log("criteria: ", con.criteriaName)
     });
   }
   private handleNewDecision(formData: any): void {
-    console.log("handleNewDecision method called");
-    console.log("formData.pros: ", formData.pros);
-    console.log("formData.cons: ", formData.cons);
     if((formData && formData.pros && Array.isArray(formData.pros)) || (formData  && formData.cons && Array.isArray(formData.cons))) {
-      console.log("inside the if condition");
       this.clearExistingProCons();
       this.addProConsToForm(formData.pros, formData.cons);
     }
   }
   private handleExistingDecision(decisionId: number): void {
-    console.log("handleExistingDecision method called");
     this.fetchOptions();
-    console.log("Criteria array: ",this.criteria)
   }
 
   fetchOptions(): void {
-    console.log("fetching options method called");
     this.decisionService.getDecisionOptions(this.decisionId!).subscribe(response => {
-      this.options = response.data;
+      this.options = Array.isArray(response.data) ? response.data : [];
       this.currentOption = this.options[this.currentIndex];
 
       // Fetch pros and cons for the current option
       if (this.currentOption && this.currentOption.id) {
-        console.log("inside the condition to fetch pros and cons for current option");
         this.fetchProsAndCons(this.currentOption.id);
         this.fetchCriteria();
       }
     }, error => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 
   fetchCriteria(): void {
     this.decisionService.getDecisionCriteria(this.decisionId!).subscribe(response => {
-      this.criteria = response.data;
-      console.log("Criteria array: ",this.criteria)
+      this.criteria = Array.isArray(response.data) ? response.data : [];
     }, error => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 
   fetchProsAndCons(optionId: number): void {
-    console.log("fetching pros and cons for option with id: ", optionId);
     this.decisionService.getProsAndConsForOption(this.decisionId!, optionId).subscribe(response => {
       if (response.data && Array.isArray(response.data)) {
         this.isNewDecision = false;
         this.clearExistingProCons();
         const fetchedProCons = response.data;
-        console.log("fetched data: ",response.data)
         const fetchedPros = fetchedProCons.filter((item: any) => item.type === 'pro');
         this.originalProData = [...fetchedPros];
-        console.log("fetched pros: ",fetchedPros)
         const fetchedCons = fetchedProCons.filter((item: any) => item.type === 'con');
         this.originalConData = [...fetchedCons];
-        console.log("fetched cons: ",fetchedCons)
         this.addProConsToForm(fetchedPros, fetchedCons);
       }
     }, error => {
-      console.log('Error fetching pros and cons:', error.message);
+      // console.log('Error fetching pros and cons:', error.message);
     });
   }
 
@@ -215,18 +199,18 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   removePro(index: number) {
     this.pros.removeAt(index);
     this.decisionService.deleteProCon(this.decisionId!, this.currentOption!.id!, this.originalProData[index].id!).subscribe(response => {
-      console.log(response);
+      // console.log(response);
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 
   removeCon(index: number) {
     this.cons.removeAt(index);
     this.decisionService.deleteProCon(this.decisionId!, this.currentOption!.id!, this.originalConData[index].id!).subscribe(response => {
-      console.log(response);
+      // console.log(response);
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 
@@ -238,10 +222,12 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
     if(this.isNewDecision){
       this.saveProConsforNewDecision(pros, cons);
       this.moveToNextOption();
+      this.formService.updateFormData(proConFormData);
     // If it is an existing decision update the existing pros and cons
     } else {
       this.updateAndAddProConsForExistingDecision(pros, cons);
       this.moveToNextOption();
+      this.formService.updateFormData(proConFormData);
     }
   }
 
@@ -249,21 +235,19 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
     if (this.decisionId){
       pros.forEach(pro => {
         this.decisionService.addProConToOption(this.decisionId!, this.currentOption.id!, pro, pro.criteria!).subscribe(response => {
-          console.log(response);
+          // console.log(response);
         }, error => { 
-          console.log(error);
+          // console.log(error);
        });
       });
       cons.forEach(con => {
         this.decisionService.addProConToOption(this.decisionId!, this.currentOption.id!, con, con.criteria!).subscribe(response => {
-          console.log(response);
+          // console.log(response);
         }, error => {
-          console.log(error);
+          // console.log(error);
         });
       });
-    } else {
-      console.error('Decision ID not found!');
-    }
+    } 
   }
 
   updateAndAddProConsForExistingDecision(pros: ProConItem[], cons: ProConItem[]) : void {
@@ -271,58 +255,48 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
     const newConsToAdd: ProConItem[] = [];
 
     pros.forEach((newPro, index: number) => {
-      console.log('Processing pro at index', index, ':', newPro);
       const originalPro = this.originalProData[index];
       const proId = originalPro ? originalPro.id : null;
 
       if (proId && Array.isArray(this.currentOption.proConList) && this.currentOption.proConList.length > 0){
-        console.log('Updating existing pro with ID', proId);
         this.updateExistingPro(proId, newPro);
       } else {
-        console.log('Adding new pro: ', newPro)
         newProsToAdd.push(newPro);
       }
     });
     cons.forEach((newCon, index: number)=> {
-      console.log('Processing con at index', index, ':', newCon);
       const originalCon = this.originalConData[index];
       const conId = originalCon ? originalCon.id : null;
       
       if(conId && Array.isArray(this.currentOption.proConList) && this.currentOption.proConList.length > 0){
-        console.log('Updating existing con with ID', conId);
         this.updateExistingCon(conId, newCon);
       } else {
-        console.log('Adding new con: ', newCon)
         newConsToAdd.push(newCon);
       }
     });
     if (newProsToAdd.length > 0){
-      console.log('Creating new pro:', newProsToAdd);
       this.createNewPro(newProsToAdd);
     }
     if (newConsToAdd.length > 0){
-      console.log('Creating new con:', newConsToAdd);
       this.createNewCon(newConsToAdd);
     }
   }
 
   private updateExistingPro(proId: number, newPro: ProConItem) : void {
-    console.log("criteriaName: ", newPro.criteriaName);
-    console.log("criteria", newPro.criteria)
     this.decisionService.updateProCon(this.decisionId!, this.currentOption.id, proId, newPro, newPro.criteria!).subscribe(response => {
-      console.log("Successfully updated pro", response);
+      // console.log("Successfully updated pro", response);
     },
     error => {
-      console.log("Failed to update pro", error);
+      // console.log("Failed to update pro", error);
     }
     );
   }
   private updateExistingCon(conId: number, newCon: ProConItem) : void {
     this.decisionService.updateProCon(this.decisionId!, this.currentOption.id, conId, newCon, newCon.criteria!).subscribe(response => {
-      console.log("Successfully updated con", response);
+      // console.log("Successfully updated con", response);
     },
     error => {
-      console.log("Failed to update con", error);
+      // console.log("Failed to update con", error);
     }
     );
   }
@@ -330,9 +304,9 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   createNewPro(pros: ProConItem[]): void {
     pros.forEach(pro => {
       this.decisionService.addProConToOption(this.decisionId!, this.currentOption.id!, pro, pro.criteria!).subscribe(response => {
-        console.log("Successfully added new pro", response);
+        // console.log("Successfully added new pro", response);
       }, error => { 
-        console.log("Failed to add new pro", error);
+        // console.log("Failed to add new pro", error);
      });
     });
   }
@@ -340,9 +314,9 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
   createNewCon(cons: ProConItem[]): void {
     cons.forEach(con => {
       this.decisionService.addProConToOption(this.decisionId!, this.currentOption.id!, con, con.criteria!).subscribe(response => {
-        console.log("Successfully added new con", response);
+        // console.log("Successfully added new con", response);
       }, error => {
-        console.log("Failed to add new con", error);
+        // console.log("Failed to add new con", error);
       });
     });
   }
@@ -363,9 +337,7 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
         this.fetchProsAndCons(this.currentOption.id);
       }
     } else {
-      // If there are no more options left.
-      console.log("All options covered!");
-      // Navigate to summary page
+      // If there are no more options left, navigate to summary page
       this.router.navigate(['/decisions/create/step5']);
     }
   }

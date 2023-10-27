@@ -24,6 +24,7 @@ export class SideNavComponent {
   navigateToWizard() {
     this.router.navigate(['/decisions/create/step1']);
     this.formService.clearFormData();
+    this.formService.clearOtherData();
   }
 
 }

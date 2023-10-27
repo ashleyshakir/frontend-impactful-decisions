@@ -48,9 +48,7 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
       this.decisionService.getDecisionDetails(decisionId).subscribe(decision => {
         this.decision = decision.data;
       });
-    } else {
-      console.log('no decision id');
-    }
+    } 
   }
 
   ngOnDestroy(): void {
@@ -60,24 +58,16 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/decisions/' + decisionId]);
   }
   deleteDecision(decisionId: number): void {
-    console.log("Attempting to delete decision with ID:", decisionId);
     // Show confirmation dialog
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.decisionService.deleteDecision(decisionId).subscribe(
           (response) => {
-            console.log("Successfully deleted decision:", response);
             this.fetchDecisions(this.authService.user!);
             this.decisionService.decisionsChanged.next();  
-          },
-          (error) => {
-            console.log("Failed to delete decision:", error);
-          }
-        );
-      } else {
-        console.log('User canceled the deletion.');
-      }
+          });
+      } 
     });
   }
 
@@ -88,7 +78,6 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
     this.hasDecisions = false;
     this.decisionService.getDecisions().subscribe(
       (response) => {
-        console.log('Fetched decisions:', response.data);
 
         if (Array.isArray(response.data)) { 
         this.allDecisions = response.data.sort((a, b) => {
@@ -97,15 +86,12 @@ export class RecentDecisionsComponent implements OnInit, OnDestroy {
         this.recentDecisions = this.allDecisions.slice(0, 2);
         this.hasDecisions = this.recentDecisions.length > 0;
       } else {
-        console.log('No decisions available or unexpected data format');
         this.allDecisions = [];
         this.recentDecisions = [];
         }
       },
       (error) => {
-        console.log("Error: ", error);
         if (error && error.error && error.error.message === "You have no decisions!") {
-          console.log('User has no decisions');
           this.hasDecisions = false;
         }
       }

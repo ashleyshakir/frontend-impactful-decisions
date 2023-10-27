@@ -31,16 +31,9 @@ export class AllDecisionsComponent implements OnInit {
       if (result) {
         this.decisionService.deleteDecision(decisionId).subscribe(
           (response) => {
-            console.log("Successfully deleted decision:", response);
             this.fetchAllDecisions(this.authService.user!);
-          },
-          (error) => {
-            console.log("Failed to delete decision:", error);
-          }
-        );
-      } else {
-        console.log('User canceled the deletion.');
-      }
+          });
+      } 
     });
   }
   viewDecisionDetails(decisionId: number): void {
@@ -56,10 +49,8 @@ export class AllDecisionsComponent implements OnInit {
         this.hasDecisions = this.allDecisions.length > 0;
       },
       (error) => {
-        console.log("Error: ", error);
         if (error && error.error && error.error.message === "You have no decisions!") {
           this.hasDecisions = false;
-          console.log('User has no decisions');
         }
       }
     );

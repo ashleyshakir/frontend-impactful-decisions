@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faBell, faHouse, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormService } from 'src/app/services/form.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit{
   public username: string = '';
   public initial: string = '';
 
-  constructor(private authService : AuthService, private router : Router) { }
+  constructor(private authService : AuthService, private formService: FormService, private router : Router) { }
   showDropdown = false;
 
   toggleDropdown(): void {
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit{
   }
 
   home(): void{
+    this.formService.clearOtherData();
     this.router.navigate(['/dashboard']);
   }
 
@@ -42,7 +44,6 @@ export class HeaderComponent implements OnInit{
     this.currentDate = date.toLocaleDateString('en-US', options);
     this.currentDay = date.toLocaleDateString('en-US', { weekday: 'long' });
     
-    console.log("User in AuthService: ", this.authService.user);
     this.username = this.authService.user? this.authService.user.username : '';
     this.initial = this.authService.user? this.authService.user.username[0].toUpperCase() : '';
     

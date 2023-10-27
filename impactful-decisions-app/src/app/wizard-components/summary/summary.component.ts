@@ -34,11 +34,11 @@ export class SummaryComponent implements OnInit {
     // Subscribe to form data to get the decisionId
     this.formService.formData$.subscribe(data => {
       this.decisionId = data.decisionId;
-      console.log("Decision ID on init: ", this.decisionId);
     });
+    
+    const storedDecision = localStorage.getItem('decisionDetails');
 
     this.decisionService.getDecisionDetails(this.decisionId!).subscribe(decision => {
-      console.log(decision);
       if (this.decisionId){
         this.decision = decision.data;
         this.decisionTitle = decision.data.title;
@@ -48,10 +48,19 @@ export class SummaryComponent implements OnInit {
         this.proConList = ([] as ProConItem[]).concat(...this.optionList.map(option => option.proConList || []));
   
         this.criteriaList = decision.data.criteriaList? decision.data.criteriaList : [];
-      } else {
-        console.log("No decision id provided");
-      }
+
+        // Save to localStorage
+        localStorage.setItem('decisionDetails', JSON.stringify(decision.data));
+      } 
     });
+
+    // const decisionData = JSON.parse(storedDecision);
+    // this.decision = decisionData;
+    // this.decisionTitle = decisionData.title;
+    // this.decisionDescription = decisionData.description;
+    // this.optionList = decisionData.optionList ? decisionData.optionList : [];
+    // this.proConList = ([] as ProConItem[]).concat(...this.optionList.map(option => option.proConList || []));
+    // this.criteriaList = decisionData.criteriaList ? decisionData.criteriaList : [];
 
     if (!localStorage.getItem('summaryDialog')) {
       this.openDialog();

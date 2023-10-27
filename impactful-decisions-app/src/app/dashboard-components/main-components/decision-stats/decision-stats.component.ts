@@ -38,11 +38,7 @@ export class DecisionStatsComponent implements OnInit, OnDestroy {
           this.getTotalDecisions()
           this.getResolvedPercentage()
           this.getPendingPercentage()
-      },
-      (error) => {
-        console.log("Error: ", error);
-      }
-    );
+      });
   }
 
   getTotalDecisions(): number {

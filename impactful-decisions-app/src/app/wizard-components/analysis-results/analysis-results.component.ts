@@ -57,9 +57,30 @@ export class AnalysisResultsComponent implements OnInit {
   public pieChartPlugins = [];
 
   ngOnInit(): void {
+
+    // Try retrieving recommendedOption and pie chart data from localStorage
+    this.recommendedOption = localStorage.getItem('recommendedOption') || '';
+
+    const storedLabels = localStorage.getItem('pieChartLabels');
+    const storedDatasetsData = localStorage.getItem('pieChartDatasetsData');
+
+    if (storedLabels && storedDatasetsData) {
+        this.pieChartLabels = JSON.parse(storedLabels);
+        this.pieChartDatasets[0].data = JSON.parse(storedDatasetsData);
+    }
+    // Retrieve decisionId from localStorage
+    const storedDecisionId = localStorage.getItem('decisionId');
+    this.decisionId = storedDecisionId ? +storedDecisionId : null;
+
     // Subscribe to form data to get the decisionId
     this.formService.formData$.subscribe(data => {
       this.decisionId = data.decisionId;
+
+      // Save to localStorage
+      if (this.decisionId !== undefined && this.decisionId !== null) {
+        localStorage.setItem('decisionId', this.decisionId.toString());
+      }
+      
     });
 
     if(this.decisionId){
@@ -74,7 +95,6 @@ export class AnalysisResultsComponent implements OnInit {
   updateChartData() {
     if (this.decisionId){
       this.decisionService.analyzeDecision(this.decisionId).subscribe(results => {
-        console.log(results);
         const optionIds = Object.keys(results.optionScores);
         const scores = Object.values(results.optionScores) as number[];
   
@@ -87,6 +107,12 @@ export class AnalysisResultsComponent implements OnInit {
         this.pieChartLabels = optionIds;
         this.pieChartDatasets = [{ data: percentages, backgroundColor: ['rgb(255, 153, 32)', 'rgb(89, 216, 229)', 'rgb(136, 233, 194)', 'rgb(255, 220, 113)' ], hoverOffset: 4 }];
         this.recommendedOption = results.recommendedOption.name;
+
+        localStorage.setItem('recommendedOption', this.recommendedOption);
+
+        // Saving pie chart data to localStorage
+        localStorage.setItem('pieChartLabels', JSON.stringify(this.pieChartLabels));
+        localStorage.setItem('pieChartDatasetsData', JSON.stringify(this.pieChartDatasets[0].data));
   
       })
     }
@@ -102,7 +128,9 @@ export class AnalysisResultsComponent implements OnInit {
       this.decision = decision.data;
     });
   }
+  
   navigateToDashboard() {
+    this.formService.clearOtherData();
     this.router.navigate(['/dashboard']);
   }
 }

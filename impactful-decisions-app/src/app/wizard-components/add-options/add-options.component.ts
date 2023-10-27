@@ -42,7 +42,11 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
 
     // Load existing form data from the service
     this.formService.loadFormDataFromLocalStorage();
-    console.log("Data loaded from local storage: ", this.formService.loadFormDataFromLocalStorage())
+    const storedData = this.formService.getFormData();
+    console.log("stored data: ", storedData)
+    if (storedData && storedData.options) {
+      this.optionsForm.patchValue(storedData);
+    } 
 
     this.subscription = this.formService.formData$.subscribe(formData => {
       if (this.decisionId) {
@@ -114,9 +118,9 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
   removeOption(index: number): void {
     this.options.removeAt(index);
     this.decisionService.deleteOption(this.decisionId!, this.originalOptions[index].id!).subscribe(response => {
-      console.log(response);
+      // console.log(response);
     }, error => {
-      console.log(error);
+      // console.log(error);
     })
   }
 
@@ -127,15 +131,17 @@ export class AddOptionsComponent implements OnInit, OnDestroy {
  */
 onSave(): void {
   const options = this.optionsForm.value.options;
-
+  const optionsData = this.optionsForm.value;
   // If it's a new decision, add all options
   if (this.isNewDecision) {
     this.saveOptionsForNewDecision(options);
     this.router.navigate(['/decisions/create/step3']);
+    this.formService.updateFormData(optionsData);
   } else {
     // If it's an existing decision, update existing and add new options
     this.updateAndAddOptionsForExistingDecision(options);
     this.router.navigate(['/decisions/create/step3']);
+    this.formService.updateFormData(optionsData);
   }
 }
 
@@ -146,13 +152,11 @@ private saveOptionsForNewDecision(options: Option[]): void {
   if (this.decisionId) {
     this.decisionService.addOptionsToDecision(this.decisionId, options)
       .subscribe(response => {
-        console.log(response);
+        // console.log(response);
       }, error => {
-        console.log(error);
+        // console.log(error);
       });
-  } else {
-    console.error('Decision ID not found!');
-  }
+  } 
 }
 
 /**
@@ -190,10 +194,10 @@ private updateAndAddOptionsForExistingDecision(options: Option[]): void {
 private updateExistingOption(optionId: number, newOption: Option): void {
   this.decisionService.updateOptions(this.decisionId!, optionId, newOption).subscribe(
     response => {
-      console.log("Successfully updated option", response);
+      // console.log("Successfully updated option", response);
     },
     error => {
-      console.log("Failed to update option", error);
+      // console.log("Failed to update option", error);
     }
   );
 }
@@ -205,10 +209,10 @@ private updateExistingOption(optionId: number, newOption: Option): void {
 private createNewOptions(newOptions: Option[]): void {
   this.decisionService.addOptionsToDecision(this.decisionId!, newOptions).subscribe(
     response => {
-      console.log("Successfully added new options", response);
+      // console.log("Successfully added new options", response);
     },
     error => {
-      console.log("Failed to add new options", error);
+      // console.log("Failed to add new options", error);
     }
   );
 }

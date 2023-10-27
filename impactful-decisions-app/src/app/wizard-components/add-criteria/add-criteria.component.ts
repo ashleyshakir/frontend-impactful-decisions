@@ -41,8 +41,11 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
 
     // Load existing form data from the service
     this.formService.loadFormDataFromLocalStorage();
-    console.log("Data loaded from local storage: ", this.formService.loadFormDataFromLocalStorage())
-
+    const storedData = this.formService.getFormData();
+    console.log("stored data: ", storedData)
+    if (storedData && storedData.criteria) {
+      this.criteriaForm.patchValue(storedData);
+    } 
 
     this.subscription = this.formService.formData$.subscribe(formData => {
       if (this.decisionId) {
@@ -149,9 +152,9 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
     this.criteria.removeAt(index);
     this.criteria.updateValueAndValidity();
     this.decisionService.deleteCriteria(this.decisionId!, this.originalCriteria[index].id!).subscribe(response => {
-      console.log(response);
+      // console.log(response);
     }, error => {
-      console.log(error);
+      // console.log(error);
     });
   }
 
@@ -162,15 +165,18 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
   */
   onSave(): void {
     const criteria = this.criteriaForm.value.criteria;
+    const criteriaData = this.criteriaForm.value;
 
     // If it's a new decision, add all criteria
     if(this.isNewDecision) {
       this.saveCriteriaForNewDecision(criteria);
       this.router.navigate(['/decisions/create/step4'])
+      this.formService.updateFormData(criteriaData);
     } else {
     // If it's an existing decision, update existing and add new criteria
       this.updateAndAddCriteriaForExistingDecision(criteria);
-      this.router.navigate(['/decisions/create/step4'])
+      this.router.navigate(['/decisions/create/step4']);
+      this.formService.updateFormData(criteriaData);
     }
   }
 
@@ -181,13 +187,11 @@ private saveCriteriaForNewDecision(criteria: Criteria[]): void {
   if (this.decisionId) {
     this.decisionService.addCriteriaToDecision(this.decisionId, criteria)
       .subscribe(response => {
-        console.log(response);
+        // console.log(response);
       }, error => {
-        console.log(error);
+        // console.log(error);
       });
-  } else {
-    console.error('Decision ID not found!');
-  }
+  } 
 }
 
 /**
@@ -199,22 +203,18 @@ private updateAndAddCriteriaForExistingDecision(criteria: Criteria[]): void {
 
   // Loop through each criterion and check against the original criteria
   criteria.forEach((newCriterion: Criteria, index: number) => {
-    console.log('Processing criterion at index', index, ':', newCriterion);
     const originalCriterion = this.originalCriteria[index];
     const criteriaId = originalCriterion ? originalCriterion.id : null;
 
     if (criteriaId) {
       // Update existing criteria
-      console.log('Updating existing criterion with ID', criteriaId);
       this.updateExistingCriteria(criteriaId, newCriterion);
     } else {
-      console.log('Adding new criterion:', newCriterion);
-      // Collect new options to add
+      // Collect new criteria to add
       newCriterionToAdd.push(newCriterion);
     }
   });
   if (newCriterionToAdd.length > 0) {
-    console.log('Creating new criteria:', newCriterionToAdd);
     // Create new criteria
     this.createNewCriteria(newCriterionToAdd);
   }
@@ -228,10 +228,10 @@ private updateAndAddCriteriaForExistingDecision(criteria: Criteria[]): void {
 private updateExistingCriteria(criteriaId: number, newCriterion: Criteria): void {
   this.decisionService.updateCriteria(this.decisionId!, criteriaId, newCriterion).subscribe(
     response => {
-      console.log("Successfully updated criteria", response);
+      // console.log("Successfully updated criteria", response);
     },
     error => {
-      console.log("Failed to update criteria", error);
+      // console.log("Failed to update criteria", error);
     }
   );
 }
@@ -243,10 +243,10 @@ private updateExistingCriteria(criteriaId: number, newCriterion: Criteria): void
 private createNewCriteria(newCriteria: Criteria[]): void {
   this.decisionService.addCriteriaToDecision(this.decisionId!, newCriteria).subscribe(
     response => {
-      console.log("Successfully added new criteria", response);
+      // console.log("Successfully added new criteria", response);
     },
     error => {
-      console.log("Failed to add new criteria", error);
+      // console.log("Failed to add new criteria", error);
     }
   );
 }

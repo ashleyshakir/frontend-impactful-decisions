@@ -28,7 +28,6 @@ export class StepsComponent implements OnInit{
 
     ngOnInit(): void {
       this.setActiveStep();
-      console.log("User in AuthService: ", this.authService.user);
       this.username = this.authService.user? this.authService.user.username : '';
       this.initial = this.authService.user? this.authService.user.username[0].toUpperCase() : '';
     }

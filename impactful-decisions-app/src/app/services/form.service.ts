@@ -50,5 +50,13 @@ clearFormData(): void {
   this.formDataSubject.next(this.formData);
 }
 
+clearOtherData(): void {
+  localStorage.removeItem('recommendedOption');
+  localStorage.removeItem('pieChartLabels');
+  localStorage.removeItem('pieChartDatasetsData');
+  localStorage.removeItem('decisionId');
+  localStorage.removeItem('decisionDetails');
+}
+
 
 }
