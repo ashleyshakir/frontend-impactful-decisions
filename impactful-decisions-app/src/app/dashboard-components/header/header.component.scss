@@ -1,0 +1,103 @@
+mat-card {
+    z-index: 2;
+    box-shadow: none;
+    width: 100%;
+  }
+  .header {
+      height: 70px;
+      padding: 20px 50px;
+      color:#064663;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .logo{
+          width: 350px;
+      }
+      .logo img{
+        max-width: 50%;
+        padding-top: 5px;
+      }
+      .user {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        font-weight: bold;
+        .user-image {
+          width: 50px;
+          height: 50px;
+          border-radius: 25%;
+          border: 2px solid #fff;
+          background-color: #59D8E5;
+          margin-left: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+        }
+      }
+      .name-details {
+        display: flex;
+        align-items: center;
+        position: relative;
+        align-items: center;
+      }
+      .name-section{
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .name{
+          padding: 8px;
+        }
+        .dropdown-content {
+          display: block;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: #f9f9f9;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          border: 1px solid #e0e0e0;
+          z-index: 1;
+          a{
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            &:hover {
+              background-color: #f1f1f1;
+            }
+          }
+        }
+
+      }
+      .icon {
+        padding: 10px;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .dashboard {
+        align-items: center;
+      }
+      .dashboard h3 {
+        margin-bottom: 4px;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .logo img{
+       display: none;
+      }
+      .header {
+        display: inline;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .dashboard{
+        display: none;
+      }
+      .user {
+        justify-content: center !important;
+      }
+    }

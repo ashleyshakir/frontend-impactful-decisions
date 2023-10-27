@@ -1,0 +1,63 @@
+<mat-card class="container">
+  <app-steps></app-steps>
+  <div class="form-container">
+    <h1>Set Decision Factors</h1>
+    <h3>
+      Specify the Factors or Aspects That Matter Most
+    </h3>
+    <form [formGroup]="criteriaForm">
+      <!-- Form Array - Criteria -->
+      <div formArrayName="criteria">
+        <div
+          *ngFor="
+            let criterion of criteria.controls;
+            let i = index
+          "
+        >
+          <div class="smaller-input">
+            <!-- Criterion Name -->
+            <div class="form-group" [formGroupName]="i">
+              <label for="name-{{ i }}">Factor:</label>
+              <input
+                id="name-{{ i }}"
+                type="text"
+                class="form-control"
+                formControlName="name"
+              />
+            </div>
+
+            <!-- Criterion Weight -->
+            <div class="form-group" [formGroupName]="i">
+              <label for="weight-{{ i }}">Importance:</label>
+              <select
+                id="weight-{{ i }}"
+                class="form-control"
+                formControlName="weight"
+              >
+                <option
+                  *ngFor="let num of [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+                  [value]="num"
+                >
+                  {{ num }}%
+                </option>
+              </select>
+            </div>
+            <!-- Remove Criterion Button -->
+            <button (click)="removeCriteria(i)" id="remove"><span class="text">Remove</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Criterion Button -->
+      <button (click)="addCriteria()" id="add">Add Factor</button>
+      <!-- Save Button -->
+      <button type="button" [ngClass]="{'button-disabled-look': !criteriaForm.valid}" (click)="onSave()" id="save" [disabled]="!criteriaForm.valid">
+        Save & Next
+      </button>
+      <!-- Total Weight Validation Message -->
+      <p *ngIf="totalWeightInvalid" class="text-danger">
+        Total Importance should equal 100%
+      </p>
+    </form>
+  </div>
+</mat-card>

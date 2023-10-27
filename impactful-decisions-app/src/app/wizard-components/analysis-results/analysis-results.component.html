@@ -1,0 +1,34 @@
+<mat-card class="container">
+  <app-steps></app-steps>
+  <div class="results-container">
+    <h1>Your Results are in!</h1>
+    <h2>
+      Your Recommended Option is <span>{{ recommendedOption }}</span>
+    </h2>
+    <canvas
+      baseChart
+      [type]="'pie'"
+      [datasets]="pieChartDatasets"
+      [labels]="pieChartLabels"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+      [legend]="pieChartLegend"
+    >
+    </canvas>
+  </div>
+  <div class="button-container">
+    <div
+      class="decision-status"
+      (click)="resolveDecision()"
+      [ngStyle]="{
+        'background-color': decision.resolved ? '#88E9C2' : '#59D8E5'
+      }"
+    >
+      {{ decision.resolved ? "Resolved" : "Unresolved" }}
+    </div>
+    <div class="to-dashboard" (click)="navigateToDashboard()">
+      Back to Dashboard
+    </div>
+  </div>
+</mat-card>
+

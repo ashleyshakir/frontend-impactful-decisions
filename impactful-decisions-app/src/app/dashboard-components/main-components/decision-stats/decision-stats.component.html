@@ -1,0 +1,28 @@
+<div class="stats-container">
+  <div class="stats-box">
+    <h4>Total Decisions</h4>
+    <div class="main-stat">{{ totalDecisions }}</div>
+  </div>
+
+  <div class="stats-box">
+    <h4>Resolved</h4>
+    <div class="main-stat">{{ resolvedPercentage }}%</div>
+    <div class="progress-bar">
+      <div
+        class="progress-filled"
+        [style.width]="resolvedPercentage + '%'"
+      ></div>
+    </div>
+  </div>
+
+  <div class="stats-box">
+    <h4>Unresolved</h4>
+    <div class="main-stat">{{ pendingPercentage }}%</div>
+    <div class="progress-bar">
+      <div
+        class="progress-filled"
+        [style.width]="pendingPercentage + '%'"
+      ></div>
+    </div>
+  </div>
+</div>

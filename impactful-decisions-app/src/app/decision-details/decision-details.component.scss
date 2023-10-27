@@ -1,0 +1,32 @@
+@import '/src/app/wizard-components/summary/summary.component.scss';
+.container {
+    height: auto !important;
+}
+.editing-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 100%;
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+    }
+}
+.resolve-button, .continue-editing {
+    display: block;
+    margin-left: 30px;
+    padding: 1rem 2rem;
+    margin-top: 30px;
+    background-color: #FF9920; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .continue-editing:hover {
+    background-color: #f99316;
+  }
+
+

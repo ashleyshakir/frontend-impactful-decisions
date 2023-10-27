@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+
+  .text-container {
+    flex: 1;
+    padding: 20px;
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .overlay-image {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-30%, -50%);
+    max-width: 35%;
+  }
+
+  // Media Query for Mobile Devices
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .text-container {
+      text-align: center;
+    }
+
+    .overlay-image {
+      position: static;  
+      transform: none;
+      max-width: 60%;
+      align-self: center;
+    }
+  }
+}

@@ -1,0 +1,90 @@
+<div class="step-sidebar">
+  <ul>
+    <div class="step">
+      <li
+        [ngClass]="{ active: activeStep === 1 }"
+        (click)="navigateTo('step1')"
+      >
+        <span>1</span>
+      </li>
+      <div class="step-info" [ngClass]="{ active: activeStep === 1 }">
+        <p>Step 1</p>
+        <h3>YOUR DECISION</h3>
+      </div>
+    </div>
+    <div class="step">
+      <li
+        [ngClass]="{ active: activeStep === 2 }"
+        (click)="navigateTo('step2')"
+      >
+        <span>2</span>
+      </li>
+      <div class="step-info" [ngClass]="{ active: activeStep === 2 }">
+        <p>Step 2</p>
+        <h3>ADD OPTIONS</h3>
+      </div>
+    </div>
+    <div class="step">
+      <li
+        [ngClass]="{ active: activeStep === 3 }"
+        (click)="navigateTo('step3')"
+      >
+        <span>3</span>
+      </li>
+      <div class="step-info"  [ngClass]="{ active: activeStep === 3 }">
+        <p>Step 3</p>
+        <h3>SET FACTORS</h3>
+      </div>
+    </div>
+    <div class="step">
+      <li
+        [ngClass]="{ active: activeStep === 4 }"
+        (click)="navigateTo('step4')"
+      >
+        <span>4</span>
+      </li>
+      <div class="step-info"  [ngClass]="{ active: activeStep === 4 }">
+        <p>Step 4</p>
+        <h3>ADD PROS AND CONS</h3>
+      </div>
+    </div>
+    <div class="step">
+      <li
+        [ngClass]="{ active: activeStep === 5 }"
+        (click)="navigateTo('step5')"
+      >
+        <span>5</span>
+      </li>
+      <div class="step-info"  [ngClass]="{ active: activeStep === 5 }">
+        <p>Step 5</p>
+        <h3>SUMMARY</h3>
+      </div>
+    </div>
+    <div class="step">
+      <li
+        [ngClass]="{ active: activeStep === 6 }"
+        (click)="navigateTo('step6')"
+      >
+        <span>6</span>
+      </li>
+      <div class="step-info"  [ngClass]="{ active: activeStep === 6 }">
+        <p>Step 6</p>
+        <h3>RESULTS</h3>
+      </div>
+    </div>
+  </ul>
+</div>
+
+<div class="name-details">
+  <fa-icon (click)="home()" class="icon" [icon]="faHouse"></fa-icon>
+  <fa-icon class="icon" [icon]="faBell"></fa-icon>
+  <div class="user-image">{{ initial }}</div>
+  <div class="name-section" (click)="toggleDropdown()">
+    <div class="name">{{ username }}</div>
+    <fa-icon [icon]="faAngleDown"></fa-icon>
+    <div *ngIf="showDropdown" class="dropdown-content">
+      <a (click)="logout()">Logout</a>
+    </div>
+  </div>
+</div>
+

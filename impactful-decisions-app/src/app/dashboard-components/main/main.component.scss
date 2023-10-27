@@ -1,0 +1,44 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+mat-card{
+  box-shadow: none;
+  width: 100%;
+}
+mat-card .main-items {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  
+    .top-section, .middle-section, .bottom-section {
+      padding: 20px;
+    }
+  
+    .top-section {
+      flex: 1;
+      background-color: #59D8E5;
+      border-radius: 10px;
+    }
+  
+    .middle-section {
+      flex: 2;
+  
+      .stat-container {
+        flex: 1;
+        padding: 10px;
+      }
+    }
+  
+    .bottom-section {
+      flex: 1;
+
+      .decision-container {
+        flex: 1;
+        padding: 10px;
+      }
+    }
+  }
+
+
+  
+  

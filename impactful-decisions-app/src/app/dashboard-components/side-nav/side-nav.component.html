@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-content>
+    <div class="nav-items">
+      <div class="add-decision">
+        <p> Create New Decision </p>
+        <fa-icon (click)="navigateToWizard()" class="icon" [icon]="faCirclePlus"></fa-icon>
+      </div>
+      <div (click)="navigateToDashboard()" class="nav-item" id="dash">
+        <p>Dashboard</p>
+        <fa-icon class="icon" [icon]="faHouse"></fa-icon>
+      </div>
+      <div (click)="navigateToDecisions()" class="nav-item">
+        <p>View All Decisions</p>
+        <fa-icon class="icon" [icon]="faListCheck"></fa-icon>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

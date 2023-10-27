@@ -1,0 +1,122 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+mat-card {
+    box-shadow:none;
+}
+h3{
+    color: #aeabab;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 2rem;
+  padding-bottom: 3rem;
+  height: 100vh;
+}
+
+.summary-container {
+    padding: 1.5rem;
+    margin: 0 auto;
+    width: 50%;
+    max-height: 600px;
+  }
+
+  .options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    max-height: 450px;
+    overflow-y: auto;
+  }
+  
+  .option {
+    flex: 0 0 calc(50% - 1rem);
+    margin-bottom: 2rem;
+    margin-left: 15px;
+  
+    @media (max-width: 768px) {
+      flex: 0 0 100%;
+    }
+  }
+  
+  .option-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .criteria-title {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    color: black;
+    font-weight: 300;
+  }
+  
+  .procon {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+  #pro {
+    color: #59d8e5;
+  }
+  #con {
+    color: #E60202;
+  }
+  
+  .description {
+    font-size: 1.1rem;
+    width: 150px;
+    margin-right: 10px;
+  }
+  
+  .rating {
+    .fas.fa-star #pro{
+      color: #59d8e5; // Green for filled pro star
+    }
+    .fas.fa-star #con{
+        color: #E60202; // Red for filled con star
+      }
+  
+    .far.fa-star {
+      color: #dcdcdc; // Grey for empty star
+    }
+  }
+  
+  .decision-status, .analyze-button {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 1rem 2rem;
+    background-color: #FF9920; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .analyze-button:hover {
+    background-color: #f99316;
+  }
+  .analyze-button {
+    max-height: 50px;
+  }
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+    .summary-container {
+      width: 100%;
+      margin-top: 50px;
+    }
+
+  }
