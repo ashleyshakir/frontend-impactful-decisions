@@ -40,12 +40,12 @@ export class AddCriteriaComponent implements OnInit, OnDestroy{
     });
 
     // Load existing form data from the service
-    this.formService.loadFormDataFromLocalStorage();
-    const storedData = this.formService.getFormData();
-    console.log("stored data: ", storedData)
-    if (storedData && storedData.criteria) {
-      this.criteriaForm.patchValue(storedData);
-    } 
+    // this.formService.loadFormDataFromLocalStorage();
+    // const storedData = this.formService.getFormData();
+    // console.log("stored data: ", storedData)
+    // if (storedData && storedData.criteria) {
+    //   this.criteriaForm.patchValue(storedData);
+    // } 
 
     this.subscription = this.formService.formData$.subscribe(formData => {
       if (this.decisionId) {

@@ -57,12 +57,12 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
     }
   
     // Load existing form data from the service
-    this.formService.loadFormDataFromLocalStorage();
-    const storedData = this.formService.getFormData();
-    console.log("stored data: ", storedData)
-    if (storedData && storedData.pros && storedData.cons) {
-      // this.proConForm.patchValue(storedData);
-    } 
+    // this.formService.loadFormDataFromLocalStorage();
+    // const storedData = this.formService.getFormData();
+    // console.log("stored data: ", storedData)
+    // if (storedData && storedData.pros && storedData.cons) {
+    //   this.proConForm.patchValue(storedData);
+    // } 
 
     this.subscription = this.formService.formData$.subscribe(formData => {
       if(this.decisionId){
@@ -113,7 +113,8 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
 
   fetchOptions(): void {
     this.decisionService.getDecisionOptions(this.decisionId!).subscribe(response => {
-      this.options = Array.isArray(response.data) ? response.data : [];
+      this.options = response.data;
+      // this.options = Array.isArray(response.data) ? response.data : [];
       this.currentOption = this.options[this.currentIndex];
 
       // Fetch pros and cons for the current option
@@ -128,7 +129,8 @@ export class AddProsConsComponent implements OnInit, OnDestroy{
 
   fetchCriteria(): void {
     this.decisionService.getDecisionCriteria(this.decisionId!).subscribe(response => {
-      this.criteria = Array.isArray(response.data) ? response.data : [];
+      this.criteria = response.data;
+      // this.criteria = Array.isArray(response.data) ? response.data : [];
     }, error => {
       // console.log(error.message);
     });
