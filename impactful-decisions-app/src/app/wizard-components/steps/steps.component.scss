@@ -47,7 +47,7 @@
 
         &.active span {
           background-color: #FF9920;
-          color: white; // You might also want to change the text color for better contrast
+          color: white; 
         }
       }
     }
@@ -125,11 +125,14 @@
       flex-direction: row;
       width: 90vw;
       margin-top: 70px;
+      align-items: center;
       ul {
         flex-direction: row;
         width: 100vw;
         flex-wrap: wrap;
         padding-left: 20px;
+        overflow-y: scroll;
+        height: 100px;
         .step{
           width: 33%;
         }
@@ -149,18 +152,18 @@
       }
     }
 
-  .step li{
-      display: none;
-      &.active{
-        display: block; 
-    }
-  }
-  .step-info {
-    display: none;
-    &.active{
-      display:inline;
-    }
-  }
+  // .step li{
+  //     display: none;
+  //     &.active{
+  //       display: block; 
+  //   }
+  // }
+  // .step-info {
+  //   display: none;
+  //   &.active{
+  //     display:inline;
+  //   }
+  // }
 
   }
   

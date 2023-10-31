@@ -12,7 +12,7 @@ import { EventEmitter } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:9093';
+  private baseUrl = 'https://impactful-decisions-1be60030a140.herokuapp.com';
   user: User | null = null; 
   public userLoggedOut: EventEmitter<void> = new EventEmitter<void>();
 
