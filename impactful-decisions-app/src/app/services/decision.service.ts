@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
 
 export class DecisionService {
 
-  private baseUrl = 'http://localhost:9093';
+  private baseUrl = 'https://impactful-decisions-1be60030a140.herokuapp.com';
   private decsionsUrl = `${this.baseUrl}/api/decisions/`;
   
   // for updating decision stats once a user deletes a decision
